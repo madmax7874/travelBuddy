@@ -1,19 +1,18 @@
 import React from "react"
-import Navbar from "./components/Navbar"
+import Head from "./components/Head"
 
 class App extends React.Component{
     constructor(){
         super()
-        this.state = [
-
-        ]
+        this.state = {
+            isLoggedIn : false
+        }
     }
 
     render(){
         return (
-        <div className= {"container"}>
-            <Navbar />
-            <h1>hi</h1>
+        <div className= {""}>
+            <Head />
         </div>
         )
     }
