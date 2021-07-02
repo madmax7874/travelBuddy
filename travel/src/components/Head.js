@@ -1,5 +1,6 @@
 import React from "react"
-import { Navbar,Nav } from 'react-bootstrap';
+import { Navbar,Nav } from 'react-bootstrap'
+const navbar = {backgroundColor: '#3C3577'}
 
 class Head extends React.Component{
     constructor(){
@@ -11,18 +12,26 @@ class Head extends React.Component{
 
     render(){
         return (
-            <div>
-                <Navbar bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+            <div class="container">
+                <Navbar style={navbar} variant="dark" expand="lg">
+                <Navbar.Brand href="#">Logo</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                    className="mr-auto my-2 my-lg-0"
+                    className="mr-auto my-2 my-lg-0"  
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >
-                    <Nav.Link href="/signup">Home</Nav.Link>
-                    <Nav.Link href="/login">Link</Nav.Link>
+                    <Nav.Link href="/home">Home</Nav.Link>
+                    <Nav.Link href="/features">Features</Nav.Link>
+                    </Nav>
+                    <Nav
+                    className="ml-auto my-2 my-lg-0" 
+                    style={{ maxHeight: '100px' }}
+                    navbarScroll
+                    >
+                    <Nav.Link href="/signup">Login</Nav.Link>
+                    <Nav.Link href="/login">Sign Up</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>
