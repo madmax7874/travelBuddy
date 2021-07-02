@@ -1,7 +1,9 @@
 import React from "react"
-import { Navbar,Nav } from 'react-bootstrap'
-const navbar = {backgroundColor: '#3C3577'}
+import { Navbar,Nav,Image } from 'react-bootstrap'
+import logo from "../assets/travelbuddy.jpg"
 
+const navbar = {backgroundColor: 'rgba(60, 53, 119,1)',padding:"0.5rem 3rem",margin:"0rem 2rem",fontSize:"1.2rem"}
+const navLink = {color:"white"}
 class Head extends React.Component{
     constructor(){
         super()
@@ -12,9 +14,9 @@ class Head extends React.Component{
 
     render(){
         return (
-            <div class="container">
-                <Navbar style={navbar} variant="dark" expand="lg">
-                <Navbar.Brand href="#">Logo</Navbar.Brand>
+            <div class="">
+                <Navbar style={navbar} expand="lg">
+                <Navbar.Brand href="/"><Image src={logo} style={{maxHeight:"5rem",maxWidth:"5rem"}}></Image></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -22,16 +24,16 @@ class Head extends React.Component{
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >
-                    <Nav.Link href="/home">Home</Nav.Link>
-                    <Nav.Link href="/features">Features</Nav.Link>
+                    <Nav.Link style={navLink} href="/home">Home</Nav.Link>
+                    <Nav.Link style={navLink} href="/features">Features</Nav.Link>
                     </Nav>
                     <Nav
                     className="ml-auto my-2 my-lg-0" 
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >
-                    <Nav.Link href="/signup">Login</Nav.Link>
-                    <Nav.Link href="/login">Sign Up</Nav.Link>
+                    <Nav.Link style={navLink} href="/signup">Login</Nav.Link>
+                    <Nav.Link style={navLink} href="/login">SignUp</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>
