@@ -2,7 +2,7 @@ import React from "react"
 import { Navbar,Nav,Image } from 'react-bootstrap'
 import logo from "../assets/travelbuddy.jpg"
 
-const navbar = {backgroundColor: 'rgba(60, 53, 119,1)',padding:"0.5rem 3rem",margin:"0rem 2rem",fontSize:"1.2rem"}
+const navbar = {backgroundColor: 'rgba(60, 53, 119,1)',padding:"0.5rem 3rem",fontSize:"1.2rem"}
 const navLink = {color:"white"}
 class Head extends React.Component{
     constructor(){
@@ -15,7 +15,7 @@ class Head extends React.Component{
     render(){
         return (
             <div class="">
-                <Navbar style={navbar} expand="lg">
+                <Navbar style={navbar} expand="lg" variant="dark">
                 <Navbar.Brand href="/"><Image src={logo} style={{maxHeight:"5rem",maxWidth:"5rem"}}></Image></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
