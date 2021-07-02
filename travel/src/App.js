@@ -1,6 +1,6 @@
 import React from "react"
 import Head from "./components/Head"
-import ListIntro from "./components/ListIntro"
+import Features from "./components/Features"
 import Intro from "./components/Intro"
 
 class App extends React.Component{
@@ -16,7 +16,7 @@ class App extends React.Component{
         <div className= {""}>
             <Head />
             <Intro />
-            <ListIntro />
+            <Features />
         </div>
         )
     }
