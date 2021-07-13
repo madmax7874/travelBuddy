@@ -17,7 +17,7 @@ class Head extends React.Component{
         return (
             <div>
                 <Navbar style={navbar} expand="lg" variant="dark">
-                <Navbar.Brand href="/"><Image src={logo} style={{maxHeight:"5rem",maxWidth:"5rem"}}></Image></Navbar.Brand>
+                <Navbar.Brand><Link to="/"><Image src={logo} style={{maxHeight:"5rem",maxWidth:"5rem"}}></Image></Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav

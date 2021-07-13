@@ -13,12 +13,12 @@ const intro = {
 
 
 class Intro extends React.Component{
-    constructor(){
-        super()
-        this.state = [
-            
-        ]
-    }
+    // constructor(){
+    //     super()
+    //     this.state = {
+
+    //     }
+    // }
 
     render(){
         return(

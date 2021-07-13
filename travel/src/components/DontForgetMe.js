@@ -19,7 +19,7 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
         {topack.text}
       </span>
       <div>
-        <Button variant="btn btn-warning" onClick={() => markTopack(index)}>✓</Button>{" "}
+        <Button variant="btn" onClick={() => markTopack(index)} style={{ backgroundColor: topack.isDone ? "green" : "orange" ,color:"white"}}>✓</Button>{" "}
         <Button variant="btn btn-danger" onClick={() => removeTopack(index)}>✕</Button>
       </div>
     </div>

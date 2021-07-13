@@ -22,6 +22,10 @@ class App extends React.Component{
                         <Head />
                         <DontForgetMe />
                     </Route>
+                    <Route path="/features">
+                        <Head />
+                        <DontForgetMe />
+                    </Route>
                     <Route path="/">
                         <Head />
                         <Intro />
