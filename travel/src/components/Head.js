@@ -21,19 +21,20 @@ class Head extends React.Component{
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                    className="mr-auto my-2 my-lg-0"  
+                    className="mr-auto my-2 my-lg-0"
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >
                     {/* <Nav.Link style={navLink} href="/home">Home</Nav.Link>
-                    <Nav.Link style={navLink} href="/features">Features</Nav.Link> */}
-                    {/* <Nav.Link style={navLink} href="/list">List</Nav.Link> */}
+                    <Nav.Link style={navLink} href="/features">Features</Nav.Link> /}
+                    {/ <Nav.Link style={navLink} href="/list">List</Nav.Link> */}
                     <Link style={navLink} className="nav-link" aria-current="page" to="/">Home</Link>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/features">Features</Link>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/list">List</Link>
+                    <Link style={navLink} className="nav-link" aria-current="page" to="/expenseTracker">ExpenseTracker</Link>
                     </Nav>
                     <Nav
-                    className="ml-auto my-2 my-lg-0" 
+                    className="ml-auto my-2 my-lg-0 pt-2" 
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >

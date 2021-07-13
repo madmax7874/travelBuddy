@@ -4,6 +4,7 @@ import Head from "./components/Head"
 import Features from "./components/Features"
 import Intro from "./components/Intro"
 import DontForgetMe from "./components/DontForgetMe"
+import ExpenseTracker from "./components/ExpenseTracker";
 
 class App extends React.Component{
     constructor(){
@@ -26,10 +27,15 @@ class App extends React.Component{
                         <Head />
                         <DontForgetMe />
                     </Route>
+                    <Route path="/expenseTracker">
+                        <Head />
+                        <ExpenseTracker />
+                    </Route>
                     <Route path="/">
                         <Head />
                         <Intro />
                         <Features />
+                        <ExpenseTracker />
                     </Route>
                 </Switch>
             </Router>    
