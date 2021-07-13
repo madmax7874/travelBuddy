@@ -1,7 +1,7 @@
 import React from "react"
 const intro = {
     backgroundImage: `url("https://images.unsplash.com/photo-1433838552652-f9a46b332c40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80")`,
-    height:"25rem",
+    height:"30rem",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     display: "flex",
