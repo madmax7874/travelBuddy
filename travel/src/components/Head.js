@@ -6,16 +6,16 @@ import logo from "../assets/logo.PNG"
 const navbar = {backgroundColor: 'rgba(60, 53, 119,1)',padding:"0.5rem 3rem",fontSize:"1.2rem"}
 const navLink = {color:"white"}
 class Head extends React.Component{
-    constructor(){
-        super()
-        this.state = [
-            
-        ]
-    }
+    // constructor(){
+    //     super()
+    //     this.state = {
+
+    //     }
+    // }
 
     render(){
         return (
-            <div class="">
+            <div>
                 <Navbar style={navbar} expand="lg" variant="dark">
                 <Navbar.Brand href="/"><Image src={logo} style={{maxHeight:"5rem",maxWidth:"5rem"}}></Image></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
