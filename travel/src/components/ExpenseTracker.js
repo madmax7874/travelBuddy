@@ -185,7 +185,8 @@ function ExpenseTracker() {
   return (
     <GlobalProvider>
     <Header/>
-    <div className="container">
+    <div className="container" style={{backgroundImage : `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`
+}}>
      <Balance/>
      <IncomeExpenses/>
      <TransactionList/>
