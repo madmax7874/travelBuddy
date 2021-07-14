@@ -23,10 +23,11 @@ class App extends React.Component{
                         <Head />
                         <DontForgetMe />
                     </Route>
-                    <Route path="/features">
+                    {/* <Route path="/features">
                         <Head />
                         <DontForgetMe />
-                    </Route>
+                        <ExpenseTracker />
+                    </Route> */}
                     <Route path="/expenseTracker">
                         <Head />
                         <ExpenseTracker />
@@ -35,7 +36,6 @@ class App extends React.Component{
                         <Head />
                         <Intro />
                         <Features />
-                        <ExpenseTracker />
                     </Route>
                 </Switch>
             </Router>    
