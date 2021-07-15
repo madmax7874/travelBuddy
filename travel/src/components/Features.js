@@ -11,7 +11,7 @@ class Features extends React.Component {
 render(){
     return(
         <div style={{backgroundColor:"#293241"}}>
-            <div className="" style={{textAlign:"center",padding:"1.5rem",margin:"0rem 3rem"}}>
+            <div className="" style={{textAlign:"center",padding:" 0rem 1.5rem",margin:"0rem 3rem"}}>
                 <h1 style={{padding:"1rem",color:"#FFFFFF"}}>Features</h1>
                 <div className="row">
                     <div className="col-lg-4 my-1" >
