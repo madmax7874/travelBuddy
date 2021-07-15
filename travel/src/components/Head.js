@@ -29,7 +29,6 @@ class Head extends React.Component{
                     <Nav.Link style={navLink} href="/features">Features</Nav.Link> /}
                     {/ <Nav.Link style={navLink} href="/list">List</Nav.Link> */}
                     <Link style={navLink} className="nav-link" aria-current="page" to="/">Home</Link>
-                    {/* <Link style={navLink} className="nav-link" aria-current="page" to="/features">Features</Link> */}
                     <Link style={navLink} className="nav-link" aria-current="page" to="/list">List</Link>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/expenseTracker">ExpenseTracker</Link>
                     </Nav>
