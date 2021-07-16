@@ -30,12 +30,14 @@ import React, {useState} from "react"
 
 
 function Trying(){
-    const [word, setword] = useState(0)
+    const [word, setword] = useState("")
     const fetchworldData = () => {
         fetch("/api")
             .then(response => response.json())
             .then(data => setword(word => word = data))
     }
+
+    
 
     return (
         <div>
