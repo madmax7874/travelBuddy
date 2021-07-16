@@ -1,33 +1,5 @@
-import { response } from "express"
-import React, {useState} from "react"
-
-// class Trying extends React.Component{
-//     constructor() {
-//         super()
-//         this.state = {
-//             charac : ""
-//         }
-//     }
-
-//     componentDidMount(){
-//         fetch("/api")
-//             .then(response => response.json())
-//             .then(data => {
-//                 this.setState(
-//                     {charac : data}
-//                 )
-//             })
-//     }
-
-//     render(){
-//         return(
-//             <div>
-//                 {this.state.charac}
-//             </div>
-//         )
-//     }
-// }
-
+import React, {useEffect, useState} from "react"
+const axios = require('axios');
 
 function Trying(){
     const [word, setword] = useState("")
@@ -37,11 +9,26 @@ function Trying(){
             .then(data => setword(word => word = data))
     }
 
-    
+    useEffect(()=>{
+        fetchworldData()
+    },[word])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        fetch('/postreq' , {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(e.madmax.value)
+            })
+    }
 
     return (
         <div>
-
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="madmax"/>
+            </form>
         </div>
     )
 }
