@@ -13,21 +13,24 @@ function Trying(){
         fetchworldData()
     },[word])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        fetch('/postreq' , {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(e.madmax.value)
-            })
-    }
+    const handleSubmit = e => {
+        e.preventDefault();
+        const myvalue = e.target.elements.madmax.value;
+        axios
+          .post('/postreq', {myname : myvalue})
+          .then(() => console.log('done'))
+          .catch(err => {
+            console.error(err);
+          });
+      };
 
     return (
         <div>
+
+            <h1>{word}</h1>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="madmax"/>
+                <button type="submit">sub</button>
             </form>
         </div>
     )
