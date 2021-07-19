@@ -27,7 +27,7 @@ const userDetails= new mongoose.Schema({
     password:{
         type : String,
         required : true
-    }
+    },
 })
 const User = mongoose.model('User', userDetails);
 
@@ -44,11 +44,13 @@ app.post('/postreq',(req,res)=>{
     res.send(req.body)
 })
 
-app.post('/details', (req,res)=>{
+app.post('/details',async (req,res)=>{
         const {firstName, lastName, email, password} = req.body;
-        const user = User.create({firstName: firstName,lastName: lastName,email: email,password: password});
-        User.findOne({email:email}).then((data) => {
+        // console.log(firstName,lastName,email,password)
+        const user =await User.create({firstName: firstName,lastName: lastName,email: email,password: password});
+        await User.findOne({email:email}).then((data) => {
             console.log(data);
+            res.send(data)
         });
 }) 
 
