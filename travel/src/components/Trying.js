@@ -15,9 +15,18 @@ function Trying(){
 
     const handleSubmit = e => {
         e.preventDefault();
-        const myvalue = e.target.elements.madmax.value;
+        const firstName = e.target.elements.firstName.value;
+        const lastName = e.target.elements.lastName.value;
+        const email = e.target.elements.email.value;
+        const password = e.target.elements.password.value;
         axios
-          .post('/postreq', {myname : myvalue})
+          .post('/postreq', 
+          {
+            FirstName : firstName,
+            LastName : lastName,
+            Email : email,
+            Password : password
+        })
           .then(() => console.log('done'))
           .catch(err => {
             console.error(err);
@@ -29,8 +38,11 @@ function Trying(){
 
             <h1>{word}</h1>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="madmax"/>
-                <button type="submit">sub</button>
+                <input type="text" name="firstName" placeholder="First Name" />
+                <input type="text" name="lastName" placeholder="Last Name" />
+                <input type="text" name="email" placeholder="Email address" />
+                <input type="password" name="password" placeholder="Password" />
+                <button type="submit">Submit</button>
             </form>
         </div>
     )
