@@ -5,7 +5,8 @@ import Features from "./components/Features"
 import Intro from "./components/Intro"
 import DontForgetMe from "./components/DontForgetMe"
 import ExpenseTracker from "./components/ExpenseTracker"
-import Trying from "./components/Trying";
+import SignUp from "./components/SignUp"
+import Login from "./components/Login"
 
 class App extends React.Component{
     constructor(){
@@ -33,11 +34,18 @@ class App extends React.Component{
                         <Head />
                         <ExpenseTracker />
                     </Route>
+                    <Route path="/signup">
+                        <Head />
+                        <SignUp />
+                    </Route>
+                    <Route path="/login">
+                        <Head />
+                        <Login />
+                    </Route>
                     <Route path="/">
                         <Head />
                         <Intro />
                         <Features />
-                        <Trying />
                     </Route>
                 </Switch>
             </Router>    
