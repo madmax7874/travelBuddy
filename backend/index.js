@@ -19,9 +19,7 @@ app.post('/signup', async (req,res)=>{
         const passwordHash =await bcrypt.hash(password,10);
         const user = await User.create({firstName: firstName,lastName: lastName,email: email,password: passwordHash});
         await User.findOne({email:email}).then((data) => {
-            console.log(data);
             const token = generateToken(data._id)
-            console.log(token);
             res.cookie('nToken',token,{maxAge:36000000,httpOnly:true});
             res.send(token)
         }); 

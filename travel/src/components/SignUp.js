@@ -39,20 +39,20 @@ function SignUp() {
     <h2>Sign Up</h2>
     <form className="row g-3" onSubmit={handleSubmit}>
       <div className="col-lg-6">
-        <label for="validationCustom01" class="form-label">First name</label>
-        <input type="text" class="form-control" id="validationCustom01" name="firstName" placeholder="First Name" required />
+        <label htmlFor="validationCustom01" className="form-label">First name</label>
+        <input type="text" className="form-control" id="validationCustom01" name="firstName" placeholder="First Name" required />
       </div>
       <div className="col-lg-6">
-        <label for="validationCustom02" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="validationCustom02" name="lastName" placeholder="Last Name" required />
+        <label htmlFor="validationCustom02" className="form-label">Last name</label>
+        <input type="text" className="form-control" id="validationCustom02" name="lastName" placeholder="Last Name" required />
       </div>
       <div className="col-lg-6">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Email" required />
+        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+        <input type="email" className="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Email" required />
       </div>
       <div className="col-lg-6">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required />
+        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+        <input type="password" className="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required />
       </div>
       <div className="col-12">
       <p> Already have an account? <a href="/login">Login</a></p>
