@@ -35,6 +35,7 @@ function Head(){
                     >
                     <Nav.Link style={navLink} href="/login">Login</Nav.Link>
                     <Nav.Link style={navLink} href="/signup">SignUp</Nav.Link>
+                    <Nav.Link style={navLink} href="/logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>

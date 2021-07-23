@@ -7,6 +7,7 @@ import DontForgetMe from "./components/DontForgetMe"
 import ExpenseTracker from "./components/ExpenseTracker"
 import SignUp from "./components/SignUp"
 import Login from "./components/Login"
+import Logout from "./components/Logout"
 
 class App extends React.Component{
     constructor(){
@@ -41,6 +42,9 @@ class App extends React.Component{
                     <Route path="/login">
                         <Head />
                         <Login />
+                    </Route>
+                    <Route path="/logout">
+                        <Logout />
                     </Route>
                     <Route path="/">
                         <Head />

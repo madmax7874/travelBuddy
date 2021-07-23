@@ -1,0 +1,12 @@
+a.navLink:hover {
+    cursor: pointer;
+    color: green; 
+}
+  
+  a.navLink:visited {
+    color: red; 
+}
+  
+  a.NavLink:active {
+    color: red; 
+}

@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const generateToken = require('./utils/generateToken.js');
+const authenticate = require('./middleware/authenticate.js')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
@@ -24,9 +25,15 @@ app.use(express.urlencoded({extended:true}));
 //     }
 // });
 
-// app.get('/signup',(req,res)=>{
-//     res.send(req.token);
+// app.get('/logout',authenticate,(req,res)=>{
+//     console.log("logout");
+//     res.send(req.rootUser);
 // })
+
+app.get('/logout',async (req, res) => {
+    res.clearCookie('nToken');
+    return res.redirect('/');
+})
 
 app.post('/signup', async (req,res)=>{
     try{
@@ -35,12 +42,13 @@ app.post('/signup', async (req,res)=>{
         const user = await User.create({firstName: firstName,lastName: lastName,email: email,password: passwordHash});
         await User.findOne({email:email}).then((data) => {
             console.log(data);
-            const token = generateToken(data._id)
+            const token = data.generateToken();
             res.cookie('nToken',token,{maxAge:36000000,httpOnly:true});
             res.send(token)
+            console.log(token)
         }); 
     } catch (e) {
-        res.send(error);
+        res.send(false);
     }
 });
 
@@ -50,7 +58,7 @@ app.post('/login',async(req,res)=>{
         User.findOne({email:email}).then(async (data) => {
             const comparePassword =await bcrypt.compare(password,data.password);
             if(comparePassword){
-                const token = generateToken(data._id)
+                const token = data.generateToken();
                 res.cookie('nToken',token,{maxAge:36000000,httpOnly:true})
                 res.json(true)
             }
@@ -59,7 +67,7 @@ app.post('/login',async(req,res)=>{
             }
         })
     }catch (e) {
-        res.send(error);
+        res.send(false);
     }  
 })
 
