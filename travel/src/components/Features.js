@@ -10,7 +10,7 @@ class Features extends React.Component {
 
 render(){
     return(
-        <div style={{backgroundColor:"#293241"}}>
+        <div style={{backgroundColor:"#293241",paddingBottom:"3rem"}}>
             <div className="" style={{textAlign:"center",padding:" 0rem 1.5rem",margin:"0rem 3rem"}}>
                 <h1 style={{padding:"1rem",color:"#FFFFFF"}}>Features</h1>
                 <div className="row">

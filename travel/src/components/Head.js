@@ -19,11 +19,7 @@ function Head(){
                     <Nav
                     className="mr-auto my-2 my-lg-0"
                     style={{ maxHeight: '100px' }}
-                    navbarScroll
-                    >
-                    {/* <Nav.Link style={navLink} href="/home">Home</Nav.Link>
-                    <Nav.Link style={navLink} href="/features">Features</Nav.Link> /}
-                    {/ <Nav.Link style={navLink} href="/list">List</Nav.Link> */}
+                    navbarScroll>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/">Home</Link>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/list">List</Link>
                     <Link style={navLink} className="nav-link" aria-current="page" to="/expenseTracker">ExpenseTracker</Link>
@@ -33,9 +29,9 @@ function Head(){
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                     >
-                    <Nav.Link style={navLink} href="/login">Login</Nav.Link>
-                    <Nav.Link style={navLink} href="/signup">SignUp</Nav.Link>
-                    <Nav.Link style={navLink} href="/logout">Logout</Nav.Link>
+                    <Link style={navLink} className="nav-link" to="/login">Login</Link>
+                    <Link style={navLink} className="nav-link" to="/signup">SignUp</Link>
+                    {/* <Link style={navLink} className="nav-link" to="/logout">Logout</Link> */}
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>

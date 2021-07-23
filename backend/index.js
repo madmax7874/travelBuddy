@@ -32,7 +32,6 @@ app.use(express.urlencoded({extended:true}));
 
 app.get('/logout',async (req, res) => {
     res.clearCookie('nToken');
-    return res.redirect('/');
 })
 
 app.post('/signup', async (req,res)=>{
@@ -59,6 +58,7 @@ app.post('/login',async(req,res)=>{
             const comparePassword =await bcrypt.compare(password,data.password);
             if(comparePassword){
                 const token = data.generateToken();
+                console.log(token)
                 res.cookie('nToken',token,{maxAge:36000000,httpOnly:true})
                 res.json(true)
             }
