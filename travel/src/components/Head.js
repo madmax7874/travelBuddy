@@ -5,15 +5,11 @@ import logo from "../assets/logo.PNG"
 
 const navbar = {backgroundColor: 'rgba(60, 53, 119,1)',padding:"0.5rem 3rem",fontSize:"1.2rem"}
 const navLink = {color:"white"}
-class Head extends React.Component{
-    // constructor(){
-    //     super()
-    //     this.state = {
 
-    //     }
-    // }
+function Head(){
+    // const loggedIn = useContext(AuthContext);
+    // console.log(loggedIn);
 
-    render(){
         return (
             <div>
                 <Navbar style={navbar} expand="lg" variant="dark">
@@ -44,7 +40,6 @@ class Head extends React.Component{
                 </Navbar>
             </div>
         )
-    }
 }
 
 export default Head
