@@ -1,16 +1,23 @@
-import React from "react";
+import React,{useContext} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import axios from "axios"
+
+import{UserContext} from "../App"
+
 import {useHistory} from "react-router-dom";
 
 function SignUp() {
+  const {dispatch} = useContext(UserContext);
+
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     const {firstName,lastName,email,password} = e.target.elements
     axios.post("/signup", {firstName: firstName.value,lastName: lastName.value,email: email.value,password: password.value,})
-      .then(() => history.push("/"))
+      .then(() => 
+      dispatch({type:"USER",payload:true}),
+      history.push("/"))
       .catch((err) => {console.error(err);});
   };
 
@@ -20,19 +27,19 @@ function SignUp() {
       <h2>Sign Up</h2>
       <form className="row g-3" onSubmit={handleSubmit}>
         <div className="col-lg-6">
-          <label for="validationCustom01" className="form-label">First name</label>
+          <label htmlFor="validationCustom01" className="form-label">First name</label>
           <input type="text" className="form-control" id="validationCustom01" name="firstName" placeholder="First Name" required />
         </div>
         <div className="col-lg-6">
-          <label for="validationCustom02" className="form-label">Last name</label>
+          <label htmlFor="validationCustom02" className="form-label">Last name</label>
           <input type="text" className="form-control" id="validationCustom02" name="lastName" placeholder="Last Name" required />
         </div>
         <div className="col-lg-6">
-          <label for="exampleInputEmail1" className="form-label">Email address</label>
+          <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
           <input type="email" className="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Email" required />
         </div>
         <div className="col-lg-6">
-          <label for="exampleInputPassword1" className="form-label">Password</label>
+          <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
           <input type="password" className="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required />
         </div>
         <div className="col-12">

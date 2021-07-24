@@ -25,15 +25,6 @@ app.use(express.urlencoded({extended:true}));
 //     }
 // });
 
-// app.get('/logout',authenticate,(req,res)=>{
-//     console.log("logout");
-//     res.send(req.rootUser);
-// })
-
-app.get('/logout',async (req, res) => {
-    res.clearCookie('nToken');
-})
-
 app.post('/signup', async (req,res)=>{
     try{
         const {firstName, lastName, email, password} = req.body;
@@ -69,7 +60,12 @@ app.post('/login',async(req,res)=>{
     }catch (e) {
         res.send(false);
     }  
-})
+});
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('nToken',{path:'/'});
+    res.status(200).send("User logged out")
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {

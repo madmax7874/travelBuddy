@@ -1,7 +1,9 @@
-import React,{useState} from "react";
+import React,{useContext, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+
+import{UserContext} from "../App"
 
 function Login() {
   // const {loggedIn} = useContext(AuthContext);
@@ -21,6 +23,8 @@ function Login() {
   //     });
   // };
 
+  const {dispatch} = useContext(UserContext);
+
   const history = useHistory();
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
@@ -31,6 +35,7 @@ function Login() {
     const myData = await axios.post("/login", {email: email.value,password: password.value})
       console.log(myData.data)
       if(myData.data){
+        dispatch({type:"USER",payload:true})
         history.push('/');
       }
     };
