@@ -14,47 +14,46 @@ import { initialState,reducer } from "./reducer/UseReducer";
 export const UserContext = createContext();
 
 function App() {
-    const [state,dispatch] = useReducer(reducer,initialState)
-
-  return (
-    <div className={""}> 
-    <UserContext.Provider value = {{state,dispatch}}>
-      <Router>
-        <Switch>
-          <Route path="/list">
-            <Head />
-            <DontForgetMe />
-          </Route>
-          {/* <Route path="/features">
-                        <Head />
-                        <DontForgetMe />
-                        <ExpenseTracker />
-                    </Route> */}
-          <Route path="/expenseTracker">
-            <Head />
-            <ExpenseTracker />
-          </Route>
-          <Route path="/signup">
-            <Head />
-            <SignUp />
-          </Route>
-          <Route path="/login">
-            <Head />
-            <Login />
-          </Route>
-          <Route path="/logout">
-            <Logout />
-          </Route>
-          <Route path="/">
-            <Head />
-            <Intro />
-            <Features />
-          </Route>
-        </Switch>
-      </Router>
-      </UserContext.Provider>
-    </div>
-  );
+    const [state,dispatch] = useReducer(reducer,initialState)   
+    return (
+      <div className={""}> 
+      <UserContext.Provider value = {{state,dispatch}}>
+        <Router>
+          <Switch>
+            <Route path="/list">
+              <Head />
+              <DontForgetMe />
+            </Route>
+            {/* <Route path="/features">
+                          <Head />
+                          <DontForgetMe />
+                          <ExpenseTracker />
+                      </Route> */}
+            <Route path="/expenseTracker">
+              <Head />
+              <ExpenseTracker />
+            </Route>
+            <Route path="/signup">
+              <Head />
+              <SignUp />
+            </Route>
+            <Route path="/login">
+              <Head />
+              <Login />
+            </Route>
+            <Route path="/logout">
+              <Logout />
+            </Route>
+            <Route path="/">
+              <Head />
+              <Intro />
+              <Features />
+            </Route>
+          </Switch>
+        </Router>
+        </UserContext.Provider>
+      </div>
+    );
 }
 
 export default App;

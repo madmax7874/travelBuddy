@@ -5,6 +5,8 @@ import {useHistory} from "react-router-dom";
 
 import{UserContext} from "../App"
 
+const Swal = require('sweetalert2')
+
 function Login() {
   // const {loggedIn} = useContext(AuthContext);
   // const handleSubmit = (e) => {
@@ -35,8 +37,16 @@ function Login() {
     const myData = await axios.post("/login", {email: email.value,password: password.value})
       console.log(myData.data)
       if(myData.data){
-        dispatch({type:"USER",payload:true})
-        history.push('/');
+        console.log(myData.data);
+        // dispatch({type:"USER",payload:true})
+        // history.push('/');
+      }else{
+        Swal.fire({
+          title: 'Error!',
+          text: 'Invalid credentials',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
       }
     };
 

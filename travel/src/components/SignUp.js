@@ -1,23 +1,35 @@
-import React,{useContext} from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import axios from "axios"
 
-import{UserContext} from "../App"
+// import{UserContext} from "../App"
+// import {useHistory} from "react-router-dom";
 
-import {useHistory} from "react-router-dom";
+const Swal = require('sweetalert2')
 
 function SignUp() {
-  const {dispatch} = useContext(UserContext);
+  // const {dispatch} = useContext(UserContext);
 
-  const history = useHistory();
+  // const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     const {firstName,lastName,email,password} = e.target.elements
     axios.post("/signup", {firstName: firstName.value,lastName: lastName.value,email: email.value,password: password.value,})
-      .then(() => 
-      dispatch({type:"USER",payload:true}),
-      history.push("/"))
+      .then((response) => {
+        if(response.data){
+          dispatch({type:"USER",payload:true}),
+          console.log(response.data,"done")
+          // history.push("/");
+        }else{
+          Swal.fire({
+            title: 'Error!',
+            text: 'Email already in use!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      })     
       .catch((err) => {console.error(err);});
   };
 
