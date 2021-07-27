@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 // Screens
-import PrivateScreen from "./components/screens/PrivateScreen";
 import LoginScreen from "./components/screens/LoginScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/ForgotPasswordScreen";

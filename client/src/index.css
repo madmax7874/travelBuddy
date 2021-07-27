@@ -35,7 +35,7 @@ body {
   border-bottom: 3px solid coral;
 }
 
-/* .btn {
+.btn {
   padding: 10px 20px;
   cursor: pointer;
   width: 100%;
@@ -50,7 +50,7 @@ body {
 .btn-primary {
   background-color: coral;
   color: #fff;
-} */
+}
 
 .error-message {
   width: 100%;
