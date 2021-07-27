@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./config.env" });
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const connectDB = require("./config/db");
@@ -14,12 +14,12 @@ app.get("/", (req, res, next) => {
 
 // Connecting Routes
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/private", require("./routes/private"));
+app.use("/api/private", require("./routes/private"));    
 
 // Error Handler Middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () =>
   console.log(`Sever running on port ${PORT}`)
