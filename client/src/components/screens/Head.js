@@ -43,14 +43,6 @@ function Head(props) {
               style={navLink}
               className="nav-link"
               aria-current="page"
-              to="/"
-            >
-              Home
-            </Link>
-            <Link
-              style={navLink}
-              className="nav-link"
-              aria-current="page"
               to="/list"
             >
               List
@@ -85,7 +77,7 @@ function Head(props) {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <Link to="/">
+          <Link to="/home">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}
@@ -99,14 +91,6 @@ function Head(props) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Link
-              style={navLink}
-              className="nav-link"
-              aria-current="page"
-              to="/"
-            >
-              Home
-            </Link>
           </Nav>
           <Nav
             className="my-2 my-lg-0 pt-2"

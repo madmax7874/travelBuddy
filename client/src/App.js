@@ -20,6 +20,7 @@ const App = () => {
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/list" component={DontForgetMe} />
           <PrivateRoute exact path="/expensetracker" component={ExpenseTracker} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
 
