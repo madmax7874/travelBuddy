@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Head from "./Head"
 import "./RegisterScreen.css";
 
 const RegisterScreen = ({ history }) => {
-  const [username, setUsername] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname,setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      history.push("/");
+    }
+  }, [history]);
 
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -32,7 +40,8 @@ const RegisterScreen = ({ history }) => {
       const { data } = await axios.post(
         "/api/auth/register",
         {
-          username,
+          firstname,
+          lastname,
           email,
           password,
         },
@@ -51,19 +60,32 @@ const RegisterScreen = ({ history }) => {
   };
 
   return (
-    <div className="register-screen">
+    <div>
+      <Head />
+      <div className="register-screen">
       <form onSubmit={registerHandler} className="register-screen__form">
         <h3 className="register-screen__title">Register</h3>
         {error && <span className="error-message">{error}</span>}
         <div className="form-group">
-          <label htmlFor="name">Username:</label>
+          <label htmlFor="name">First Name:</label>
           <input
             type="text"
             required
             id="name"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="First Name"
+            value={firstname}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Last Name:</label>
+          <input
+            type="text"
+            required
+            id="name"
+            placeholder="Last Name"
+            value={lastname}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -110,6 +132,7 @@ const RegisterScreen = ({ history }) => {
         </span>
       </form>
     </div>
+    </div>    
   );
 };
 

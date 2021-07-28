@@ -22,6 +22,7 @@ const App = () => {
           <PrivateRoute exact path="/expensetracker" component={ExpenseTracker} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
+
           <Route
             exact
             path="/forgotpassword"

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./LoginScreen.css";
+import Head from "./Head"
 
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -42,7 +43,9 @@ const LoginScreen = ({ history }) => {
   };
 
   return (
-    <div className="login-screen">
+    <div>
+      <Head />
+      <div className="login-screen">
       <form onSubmit={loginHandler} className="login-screen__form">
         <h3 className="login-screen__title">Login</h3>
         {error && <span className="error-message">{error}</span>}
@@ -85,6 +88,7 @@ const LoginScreen = ({ history }) => {
         </span>
       </form>
     </div>
+    </div>  
   );
 };
 

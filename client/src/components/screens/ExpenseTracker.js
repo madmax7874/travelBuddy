@@ -1,9 +1,10 @@
 import React, { createContext, useReducer, useContext, useState } from "react";
 import "../styles/ExpenseTracker.css";
+import Head from "./Head";
 
 const Header = () => {
   return (
-    <div style={{textAlign: "center",padding:"2rem"}}>
+    <div style={{ textAlign: "center", padding: "2rem" }}>
       <span
         className="text-center mb-4"
         style={{
@@ -12,7 +13,10 @@ const Header = () => {
           fontSize: "2rem",
           padding: "0.5rem",
           borderRadius: "1rem",
-        }}>Expense Tracker</span>
+        }}
+      >
+        Expense Tracker
+      </span>
     </div>
   );
 };
@@ -128,8 +132,7 @@ const AddTransaction = () => {
         </div>
         <div>
           <label htmlFor="amount">
-            Amount {" "}
-            (negative : expense, positive : income)
+            Amount (negative : expense, positive : income)
           </label>
           <input
             type="number"
@@ -208,7 +211,12 @@ const GlobalProvider = ({ children }) => {
 function ExpenseTracker() {
   return (
     <GlobalProvider>
-      <div style={{backgroundImage : `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`}}>
+      <div
+        style={{
+          backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
+        }}
+      >
+        <Head />
         <Header />
         <div className="container">
           <Balance />

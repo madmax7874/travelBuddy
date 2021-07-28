@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Head from "./Head"
 import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -131,7 +132,9 @@ function DontForgetMe() {
   };
 
   return (
-    <div
+    <div>
+      <Head />
+      <div
       className="app"
       style={{
         padding: "1rem",
@@ -177,6 +180,7 @@ function DontForgetMe() {
         </Container>
       </div>
     </div>
+    </div>   
   );
 }
 
