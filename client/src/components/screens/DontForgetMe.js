@@ -99,7 +99,7 @@ function FormTopack({ addTopack }) {
 function DontForgetMe() {
   const [topacks, setTopacks] = useState([]);
 
-  const fetchPrivateDate = async () => {
+  const fetchPrivateData = async () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -111,12 +111,12 @@ function DontForgetMe() {
       setTopacks(data);
     } catch (error) {
       console.log("err")
-      // localStorage.removeItem("authToken");
+      localStorage.removeItem("authToken");
     }
   };
 
   useEffect(() => {
-    fetchPrivateDate();
+    fetchPrivateData();
   }, []);
 
   const addTopack = (text) => {
