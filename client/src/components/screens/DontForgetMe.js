@@ -42,10 +42,27 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
 function FormTopack({ addTopack }) {
   const [value, setValue] = React.useState("");
 
+  const sendData = async (value) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.post("/api/private/sendData",{value}, config);
+      console.log(data)
+    } catch (error) {
+      console.log("err")
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!value) return;
-        addTopack(value);
+    if (!value) 
+      return;
+    addTopack(value);
+    sendData(value)
     setValue("");
   };
 
@@ -80,7 +97,8 @@ function FormTopack({ addTopack }) {
 }
 
 function DontForgetMe() {
-  const [List, getList] = useState([]);
+  const [topacks, setTopacks] = useState([]);
+
   const fetchPrivateDate = async () => {
     const config = {
       headers: {
@@ -90,27 +108,16 @@ function DontForgetMe() {
     };
     try {
       const { data } = await axios.get("/api/private/list", config);
-      getList(data);
+      setTopacks(data);
     } catch (error) {
-      localStorage.removeItem("authToken");
+      console.log("err")
+      // localStorage.removeItem("authToken");
     }
   };
 
   useEffect(() => {
     fetchPrivateDate();
   }, []);
-
-  const [topacks, setTopacks] = React.useState([
-    {
-      text: "Tickets",
-      isDone: false,
-    },...List
-  ]);
-
-  useEffect(() => {
-    console.log(List);
-    // console.log(topacks.push(...List));
-  }, [List]);
 
   const addTopack = (text) => {
     const newTopacks = [...topacks, { text }];
@@ -139,7 +146,6 @@ function DontForgetMe() {
       style={{
         padding: "1rem",
         backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
-        // backgroundImage: `url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZG9udCUyMGZvcmdldCUyMG1lJTIwZHVyaW5nJTIwdHJhdmVsJTIwYmFja2dyb3VuZCUyMGltYWdlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")`
       }}
     >
       <div className="container">

@@ -25,7 +25,7 @@ function Head(props) {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <Link to="/">
+          <Link to="/home">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}
@@ -77,7 +77,7 @@ function Head(props) {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <Link to="/home">
+          <Link to="/">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}

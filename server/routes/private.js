@@ -26,5 +26,9 @@ router.route("/list").get(protect, (req, res) => {
   console.log(req.user);
   res.status(200).send(myList);
 });
+router.route("/sendData").post(protect, (req, res) => {
+  console.log(req.body);
+  res.status(200).send("hi");
+});
 
 module.exports = router;
