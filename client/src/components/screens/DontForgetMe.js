@@ -50,7 +50,7 @@ function FormTopack({ addTopack }) {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/sendData",{value}, config);
+      const { data } = await axios.post("/api/private/list",{value}, config);
       console.log(data)
     } catch (error) {
       console.log("err")

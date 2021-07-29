@@ -8,14 +8,14 @@ const User = require("../models/User");
 
 router.route("/").get(protect, getPrivateRoute);
 
-router.route("/list").get(protect,async (req, res) => {
+router.route("/list").get(protect, async (req, res) => {
   token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const user = await User.findById(decoded.id);
   res.status(200).send(user.list);
 });
 
-router.route("/sendData").post(protect,async (req, res) => {
+router.route("/list").post(protect, async (req, res) => {
 try{ 
   token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
