@@ -27,9 +27,15 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  list:[{
+    text: String,
+    isCompleted : Boolean,
+  }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
+
+
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
