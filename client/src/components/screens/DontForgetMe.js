@@ -108,10 +108,11 @@ function DontForgetMe() {
     };
     try {
       const { data } = await axios.get("/api/private/list", config);
-      setTopacks(data);
+      console.log(data)
+      setTopacks(data)
     } catch (error) {
-      console.log("err")
-      localStorage.removeItem("authToken");
+      console.log(error)
+      // localStorage.removeItem("authToken");
     }
   };
 

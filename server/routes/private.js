@@ -2,41 +2,34 @@ const express = require("express");
 const router = express.Router();
 const { getPrivateRoute } = require("../controllers/private");
 const { protect } = require("../middleware/auth");
-
-const myList = [
-  {
-    text: "Tickets",
-    isDone: false,
-  },
-  {
-    text: "Bags",
-    isDone: true,
-  },
-  {
-    text: "Mobile",
-    isDone: true,
-  },
-  {
-    text: "Vidhi",
-    isDone: false,
-  },
-];
+const jwt = require("jsonwebtoken");
+const ErrorResponse = require("../utils/errorResponse");
+const User = require("../models/User");
 
 router.route("/").get(protect, getPrivateRoute);
-router.route("/list").get(protect, (req, res) => {
-  
-  console.log(req.user);
-  res.status(200).send(myList);
+
+router.route("/list").get(protect,async (req, res) => {
+  token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await User.findById(decoded.id);
+  res.status(200).send(user.list);
 });
-router.route("/sendData").post(protect, (req, res) => {
-  console.log(req.body);
+
+router.route("/sendData").post(protect,async (req, res) => {
+try{ 
+  token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const newData = {
     text: req.body.value,
     isDone: false 
   }
-  myList.push(newData);
-  console.log(myList);
-  res.status(200).send("hi");
+  const query = { _id: decoded.id };
+  const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
+  console.log(user)
+  res.status(200).send(true);
+}catch(err){
+  console.log(err)
+}
 });
 
 module.exports = router;

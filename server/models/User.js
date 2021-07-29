@@ -16,10 +16,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide email address"],
     unique: true,
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please provide a valid email",
-    ],
+    match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    "Please provide a valid email",],
   },
   password: {
     type: String,
@@ -28,8 +26,14 @@ const UserSchema = new mongoose.Schema({
     select: false,
   },
   list:[{
-    text: String,
-    isCompleted : Boolean,
+    text: {
+      type : String,
+      required: true,
+    },
+    isDone : {
+      type : Boolean,
+      required: true,
+    },
   }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
