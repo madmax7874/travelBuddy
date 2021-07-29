@@ -3,6 +3,7 @@ import axios from "axios";
 import Head from "./Head"
 import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
+import Swal from 'sweetalert2'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -51,7 +52,13 @@ function FormTopack({ addTopack }) {
     };
     try {
       const { data } = await axios.post("/api/private/list",{value}, config);
-      console.log(data)
+      if(data){
+        Swal.fire(
+          'Item added!',
+          'List updated successfully',
+          'success'
+        )
+      }
     } catch (error) {
       console.log("err")
     }
@@ -108,7 +115,6 @@ function DontForgetMe() {
     };
     try {
       const { data } = await axios.get("/api/private/list", config);
-      console.log(data)
       setTopacks(data)
     } catch (error) {
       console.log(error)
@@ -169,7 +175,7 @@ function DontForgetMe() {
         <Container>
           <Row>
             {topacks.map((topack, index) => (
-              <Col key={index} md="6">
+              <Col key={index} md="4">
                 <Card style={{ margin: "0.5rem" }}>
                   <Card.Body style={{ padding: "0.7rem" }}>
                     <ToPack
