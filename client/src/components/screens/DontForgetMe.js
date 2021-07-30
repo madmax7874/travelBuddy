@@ -142,8 +142,8 @@ function DontForgetMe() {
       const { data } = await axios.post("/api/private/appendlist",{value}, config);
       if(data){
         Swal.fire(
-          'Item appended',
-          'List appended successfully',
+          'Item updated',
+          'List updated successfully',
           'success'
         )
       }
