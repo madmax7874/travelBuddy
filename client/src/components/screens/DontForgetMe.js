@@ -131,18 +131,41 @@ function DontForgetMe() {
     setTopacks(newTopacks);
   };
 
+  const removeData = async (value) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.post("/api/private/appendlist",{value}, config);
+      if(data){
+        Swal.fire(
+          'Item appended',
+          'List appended successfully',
+          'success'
+        )
+      }
+    } catch (error) {
+      console.log("err")
+    }
+  };
+
   const markTopack = (index) => {
     const newTopacks = [...topacks];
     if (newTopacks[index].isDone === true) {
       newTopacks[index].isDone = false;
     } else newTopacks[index].isDone = true;
     setTopacks(newTopacks);
+    removeData(newTopacks)
   };
 
   const removeTopack = (index) => {
     const newTopacks = [...topacks];
     newTopacks.splice(index, 1);
     setTopacks(newTopacks);
+    removeData(newTopacks)
   };
 
   return (

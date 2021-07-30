@@ -36,4 +36,17 @@ try{
 }
 });
 
+router.route("/appendlist").post(protect, async (req, res) => {
+  try{ 
+    token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(req.body)
+    const query = { _id: decoded.id };
+    const user = await User.findOneAndUpdate(query, {  list : req.body.value })
+    res.status(200).send(true);
+  }catch(err){
+    return next(new ErrorResponse("No user found with this id", 404));
+  }
+  });
+
 module.exports = router;
