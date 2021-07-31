@@ -10,6 +10,7 @@ import ForgotPasswordScreen from "./components/screens/ForgotPasswordScreen";
 import ResetPasswordScreen from "./components/screens/ResetPasswordScreen";
 import DontForgetMe from "./components/screens/DontForgetMe";
 import ExpenseTracker from "./components/screens/ExpenseTracker";
+import TravelDetails from "./components/screens/TravelDetails";
 import Home from "./components/screens/Home";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/list" component={DontForgetMe} />
           <PrivateRoute exact path="/expensetracker" component={ExpenseTracker} />
+          <PrivateRoute exact path="/addtrip" component={TravelDetails} />
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />

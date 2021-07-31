@@ -36,7 +36,7 @@ try{
 }
 });
 
-router.route("/appendlist").post(protect, async (req, res) => {
+router.route("/modifylist").post(protect, async (req, res) => {
   try{ 
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

@@ -139,10 +139,10 @@ function DontForgetMe() {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/appendlist",{value}, config);
+      const { data } = await axios.post("/api/private/modifylist",{value}, config);
       if(data){
         Swal.fire(
-          'Item updated',
+          'Item modified',
           'List updated successfully',
           'success'
         )

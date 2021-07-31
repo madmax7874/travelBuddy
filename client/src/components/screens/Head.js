@@ -55,6 +55,14 @@ function Head(props) {
             >
               ExpenseTracker
             </Link>
+            <Link
+              style={navLink}
+              className="nav-link"
+              aria-current="page"
+              to="/addtrip"
+            >
+              AddTravelDetails
+            </Link>
           </Nav>
 
           <Nav
