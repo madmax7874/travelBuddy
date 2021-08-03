@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../../assets/logo.png";
 
@@ -9,7 +9,7 @@ const navbar = {
   padding: "0.5rem 3rem",
   fontSize: "1.2rem",
 };
-const navLink = { color: "white" };
+const navLink = { color: "rgba(255,255,255,0.8)" };
 
 function Head(props) {
   function logoutHandler() {
@@ -25,12 +25,12 @@ function Head(props) {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <Link to="/home">
+          <NavLink to="/home">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}
             ></Image>
-          </Link>
+          </NavLink>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -39,30 +39,45 @@ function Head(props) {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Link
+            <NavLink
               style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
               className="nav-link"
               aria-current="page"
               to="/list"
             >
               List
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
               className="nav-link"
               aria-current="page"
               to="/expenseTracker"
             >
               ExpenseTracker
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
               className="nav-link"
               aria-current="page"
               to="/addtrip"
             >
               AddTravelDetails
-            </Link>
+            </NavLink>
           </Nav>
 
           <Nav
@@ -70,13 +85,20 @@ function Head(props) {
             style={{ maxHeight: "100px", marginLeft: "auto" }}
             navbarScroll
           >
-            <Nav.Link
+            <NavLink
               style={navLink}
               onClick={() => logoutHandler()}
-              href="/login"
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
+              className="nav-link"
+              aria-current="page"
+              to="/login"
             >
               Logout
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -85,12 +107,12 @@ function Head(props) {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <Link to="/">
+          <NavLink to="/">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}
             ></Image>
-          </Link>
+          </NavLink>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -98,19 +120,38 @@ function Head(props) {
             className="mr-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
-          >
-          </Nav>
+          ></Nav>
           <Nav
             className="my-2 my-lg-0 pt-2"
             style={{ maxHeight: "100px", marginLeft: "auto" }}
             navbarScroll
           >
-            <Nav.Link style={navLink} href="/login">
+            <NavLink
+              style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
+              className="nav-link"
+              aria-current="page"
+              to="/login"
+            >
               Login
-            </Nav.Link>
-            <Nav.Link style={navLink} href="/register">
+            </NavLink>
+            <NavLink
+              style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
+              className="nav-link"
+              aria-current="page"
+              to="/register"
+            >
               SignUp
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

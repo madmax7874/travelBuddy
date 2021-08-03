@@ -35,6 +35,20 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   }],
+  details:[{
+    destination: {
+      type: String,
+      required: true,
+    },
+    sdate: {
+      type: Date,
+      required: true,
+    },
+    edate: {
+      type: Date,
+      required: true,
+    },
+  }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

@@ -71,7 +71,7 @@ const RegisterScreen = ({ history }) => {
           <input
             type="text"
             required
-            id="name"
+            id="fname"
             placeholder="First Name"
             value={firstname}
             onChange={(e) => setFirstName(e.target.value)}
@@ -82,7 +82,7 @@ const RegisterScreen = ({ history }) => {
           <input
             type="text"
             required
-            id="name"
+            id="lname"
             placeholder="Last Name"
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}

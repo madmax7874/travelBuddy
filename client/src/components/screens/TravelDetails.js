@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "./Head";
 import { useForm } from "react-hook-form";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 export default function TravelDetails() {
   const {
@@ -36,7 +36,7 @@ export default function TravelDetails() {
               Add Travel Details
             </span>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
               <Form.Label>Destination</Form.Label>
               <Form.Control
@@ -85,10 +85,10 @@ export default function TravelDetails() {
                 {...register("Additional Details")}
               />
             </Form.Group>
-            <button type="submit" className="btn btn-primary">
+            <Button variant="primary mb-3" type="submit">
               Save details
-            </button>
-          </form>
+            </Button>
+          </Form>
         </div>
       </div>
     </div>
