@@ -36,18 +36,36 @@ const UserSchema = new mongoose.Schema({
     },
   }],
   details:[{
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
     destination: {
       type: String,
       required: true,
     },
-    sdate: {
-      type: Date,
-      required: true,
-    },
-    edate: {
-      type: Date,
-      required: true,
-    },
+    perDayDetails:[{
+      morningPlace:{
+        type: String,
+        required: true,
+      },
+      morningFood:{
+        type: String,
+        required: true, 
+      },
+      nightPlace:{
+        type: String,
+        required: true,
+      },
+      nightFood:{
+        type: String,
+        required: true,
+      }
+    }]
   }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,

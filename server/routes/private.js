@@ -9,29 +9,31 @@ router.route("/").get(protect , async(req,res) => {
   res.status(200).send(true);
 });
 
-router.route("/list").get(protect, async (req, res) => {
-  token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  try{
-    const user = await User.findById(decoded.id);
-    res.status(200).send(user.list);
-  }catch(err){
-    return next(new ErrorResponse("No user found with this id", 404));
-  }
-}).post(protect, async (req, res) => {
-  try{ 
+router.route("/list")
+  .get(protect, async (req, res) => {
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const newData = {
-      text: req.body.value,
-      isDone: false 
+    try{
+      const user = await User.findById(decoded.id);
+      res.status(200).send(user.list);
+    }catch(err){
+      return next(new ErrorResponse("No user found with this id", 404));
     }
-    const query = { _id: decoded.id };
-    const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
-    res.status(200).send(true);
-  }catch(err){
-    return next(new ErrorResponse("No user found with this id", 404));
-  }
+  })
+  .post(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const newData = {
+        text: req.body.value,
+        isDone: false 
+      }
+      const query = { _id: decoded.id };
+      const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
+      res.status(200).send(true);
+    }catch(err){
+      return next(new ErrorResponse("No user found with this id", 404));
+    }
   });
 
 router.route("/modifylist").post(protect, async (req, res) => {

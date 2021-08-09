@@ -1,161 +1,244 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import Head from "./Head";
-import { useForm } from "react-hook-form";
-import { Button, Form } from "react-bootstrap";
+import "./styles.scss";
+// import Swal from 'sweetalert2'
 
-export default function TravelDetails() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+import "bootstrap/dist/css/bootstrap.min.css";
+const axios = require("axios");
+const Swal = require("sweetalert2");
+
+function ToPack({ topack, index, markTopack, removeTopack }) {
+  return (
+    <div
+      className="topack"
+      style={{
+        alignItems: "center",
+        display: "flex",
+        fontSize: "18px",
+        justifyContent: "space-between",
+      }}
+    >
+      <span>
+        Day{topack.day} : {topack.place}
+      </span>
+      <div>
+        <Button variant="btn btn-danger" onClick={() => removeTopack(index)}>
+          ✕
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function FormTopack({ addTopack }) {
+  const [value, setValue] = React.useState({
+    day: "",
+    place: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!value) return;
+    addTopack(value);
+    // sendData(value)
+    setValue({
+      day: "",
+      place: "",
+    });
+  };
+  useEffect(() => {}, [value]);
+
+  return (
+    <Form className="input-form" onSubmit={handleSubmit}>
+      <div className="row" style={{ borderRadius: "0.3rem", margin: "0.5rem" }}>
+        <div className="col-lg-6">
+          <Form.Group>
+            <Form.Label style={{ marginBottom: "1rem" }}>
+              Per Day Details
+            </Form.Label>
+            <Form.Control
+              type="number"
+              name="day"
+              className="input"
+              onChange={(e) => handleChange(e)}
+              value={value.day}
+              placeholder="Add day as a number"
+            />
+          </Form.Group>
+        </div>
+
+        <div className="col-lg-6">
+          <Form.Group>
+            <Form.Label style={{ marginBottom: "1rem" }}>
+              Per Day Details
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="place"
+              className="input"
+              onChange={(e) => handleChange(e)}
+              value={value.place}
+              placeholder="Add places to visit each day"
+            />
+          </Form.Group>
+        </div>
+      </div>
+
+      <Button variant="primary mb-3" type="submit">
+        Add
+      </Button>
+    </Form>
+  );
+}
+
+function TravelDetails(props) {
+  const [topacks, setTopacks] = useState([]);
+
+  const addTopack = (details) => {
+    const newTopacks = [...topacks, details];
+    setTopacks(newTopacks);
+  };
+
+  // const markTopack = (index) => {
+  //   const newTopacks = [...topacks];
+  //   if (newTopacks[index].isDone === true) {
+  //     newTopacks[index].isDone = false;
+  //   } else newTopacks[index].isDone = true;
+  //   setTopacks(newTopacks);
+  //   // removeData(newTopacks)
+  // };
+
+  const removeTopack = (index) => {
+    const newTopacks = [...topacks];
+    newTopacks.splice(index, 1);
+    setTopacks(newTopacks);
+    // removeData(newTopacks)
+  };
+
+  const saveClick = async () => {
+    const url = `/api/private/parties/${props.id}`;
+    const response = await axios.post(url, topacks);
+    if (response.data) {
+      Swal.fire("Good job!", "Profile Updated Successfully", "success");
+    }
+  };
+
+  const Days = () => {
+    if (topacks.length === 0)
+      return (
+        <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
+          No details added
+        </h6>
+      );
+    else return null;
+  };
 
   return (
     <div>
       <Head />
       <div
+        className="app"
         style={{
           padding: "1rem",
           backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
         }}
       >
-        <div className="container">
+        <div style={{ textAlign: "center" }}>
+          <span
+            className="text-center mb-4"
+            style={{
+              backgroundColor: "rgba(255,255,255,0.6)",
+              fontWeight: "500",
+              fontSize: "2rem",
+              padding: "0.5rem",
+              borderRadius: "1rem",
+            }}
+          >
+            Add your trip details
+          </span>
+        </div>
+        <div className="row">
+            <h4 style={{ textAlign: "center", padding: "1rem" }}>
+              Per Day Details
+            </h4>
+            <Days />
+            {topacks.map((topack, index) => {
+              return (
+                <div key={index}>
+                  <Card style={{ margin: "0.5rem" }}>
+                    <Card.Body style={{ padding: "0.7rem" }}>
+                      <ToPack
+                        key={index}
+                        index={index}
+                        topack={topack}
+                        // markTopack={markTopack}
+                        removeTopack={removeTopack}
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
+              );
+            })}
+          <FormTopack addTopack={addTopack} />
+
           <div style={{ textAlign: "center" }}>
-            <span
-              className="text-center mb-4"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.6)",
-                fontWeight: "500",
-                fontSize: "2rem",
-                padding: "0.5rem",
-                borderRadius: "1rem",
-              }}
+            <Button
+              variant="primary"
+              onClick={saveClick}
+              style={{ marginTop: "1rem" }}
             >
-              Add Travel Details
-            </span>
-          </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group>
-              <Form.Label>Destination</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your destination"
-                {...register("Destination", { required: true })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="Start Date"
-                {...register("Start Date", { required: true })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="End Date"
-                {...register("End Date", { required: true })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Day</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter day as a number"
-                {...register("Day", { required: true, max: 100, min: 1 })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Place</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter place"
-                {...register("Place", { required: true })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Additional Details</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter other details if any"
-                {...register("Additional Details")}
-              />
-            </Form.Group>
-            <Button variant="primary mb-3" type="submit">
-              Save details
+              Save
             </Button>
-          </Form>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-/* <input type="date" placeholder="Start Date" {...register("Start Date", {required: true, maxLength: 100})} />
-      <input type="date" placeholder="End Date" {...register("End Date", {required: true})} />
-      <input type="number" placeholder="Day" {...register("Day", {required: true, max: 100, min: 1})} />
-      <input type="text" placeholder="Place" {...register("Place", {required: true})} />
-      <input type="text" placeholder="Additional Details" {...register("Additional Details", {required: true})} /> */
+export default TravelDetails;
 
-// function TravelDetails() {
-//   const [destination, setDestination] = useState("");
-//   const [details, setDetails] = useState("");
-//   const [sdate,setSdate] =useState("");
-//   const [edate,setEdate] =useState("");
-//   const [day,setDay] =useState("");
-//   const [place,setPlace] =useState("");
+{
+  /* <div className="col-lg-6">
+          <Form.Group className="">
+            <Form.Label>Start Date</Form.Label>
+            <Form.Control
+              type="date"
+              name="startDate"
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group>
+        </div>
+        <div className="col-lg-6">
+          <Form.Group className="">
+            <Form.Label>End Date</Form.Label>
+            <Form.Control
+              type="date"
+              name="endDate"
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group>
+        </div>
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log(`Place: ${place}, Details: ${details}, SDate: ${sdate}, EDate: ${edate}`);
-//   }
-
-//   return (
-//       <div>
-//         <Head />
-//         <div style={{padding: "1rem" , backgroundImage : `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`}}>
-//         <div className="container">
-//         <div style={{textAlign:"center"}}>
-//         <span className="text-center mb-4" style={{backgroundColor:"rgba(255,255,255,0.6)", fontWeight:"500", fontSize:"2rem",padding:"0.5rem",borderRadius:"1rem"}}>Add Travel Details</span>
-//         </div>
-//         <form method="POST" onSubmit={handleSubmit}>
-//         <div className="mb-3">
-//             <label className="form-label">Destination</label>
-//             <input type="text" className="form-control" name="destination" value={destination} onChange={(e) => setDestination(e.target.value)} required />
-//           </div>
-//           <div className="mb-3">
-//             <label className="form-label">Start date</label>
-//             <input type="date" className="form-control" name="sdate" value={sdate} onChange={(e) => setSdate(e.target.value)} required />
-//           </div>
-//           <div className="mb-3">
-//             <label className="form-label">End date</label>
-//             <input type="date" className="form-control" name="edate" value={edate} onChange={(e) => setEdate(e.target.value)} required />
-//           </div>
-//           <div className="row g-3">
-//           <div className="col-lg-6">
-//             <label className="form-label">Day</label>
-//             <input type="number" className="form-control" name="day" value={day} onChange={(e) => setDay(e.target.value)} required />
-//           </div>
-//           <div className="col-lg-6">
-//             <label className="form-label">Place</label>
-//             <input type="text" className="form-control" name="place" value={place} onChange={(e) => setPlace(e.target.value)} required />
-//           </div>
-//           </div>
-//           <div className="mb-3">
-//             <label className="form-label">Additional details</label>
-//             <input type="text" className="form-control" id="details" name="details" value={details} onChange={(e) => setDetails(e.target.value)} />
-//           </div>
-//           <button type="submit" className="btn btn-primary">Save details</button>
-//         </form>
-//         </div>
-//         </div>
-//       </div>
-
-//   );
-// }
-
-// export default TravelDetails;
+        <div className="col-lg-12">
+          <Form.Group>
+            <Form.Label style={{ marginBottom: "1rem" }}>Destination</Form.Label>
+            <Form.Control
+              type="text"
+              name="destination"
+              className="input"
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter Destination"
+            />
+          </Form.Group>
+        </div> */
+}
