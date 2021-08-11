@@ -142,6 +142,33 @@ function TravelDetails(props) {
     else return null;
   };
 
+  const [value, setValue] = React.useState({
+    startDate:"",
+    endDate:"",
+    destination:"",
+  });
+
+    const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!value) return;
+    addTopack(value);
+    // sendData(value)
+    setValue({
+      startDate:"",
+      endDate:"",
+      destination:"",
+    });
+  };
+  useEffect(() => {}, [value]);
+
   return (
     <div>
       <Head />
@@ -166,49 +193,9 @@ function TravelDetails(props) {
             Add your trip details
           </span>
         </div>
+        <Form className="input-form" onSubmit={handleSubmit}>
         <div className="row">
-            <h4 style={{ textAlign: "center", padding: "1rem" }}>
-              Per Day Details
-            </h4>
-            <Days />
-            {topacks.map((topack, index) => {
-              return (
-                <div key={index}>
-                  <Card style={{ margin: "0.5rem" }}>
-                    <Card.Body style={{ padding: "0.7rem" }}>
-                      <ToPack
-                        key={index}
-                        index={index}
-                        topack={topack}
-                        // markTopack={markTopack}
-                        removeTopack={removeTopack}
-                      />
-                    </Card.Body>
-                  </Card>
-                </div>
-              );
-            })}
-          <FormTopack addTopack={addTopack} />
-
-          <div style={{ textAlign: "center" }}>
-            <Button
-              variant="primary"
-              onClick={saveClick}
-              style={{ marginTop: "1rem" }}
-            >
-              Save
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default TravelDetails;
-
-{
-  /* <div className="col-lg-6">
+        <div className="col-lg-6">
           <Form.Group className="">
             <Form.Label>Start Date</Form.Label>
             <Form.Control
@@ -240,5 +227,80 @@ export default TravelDetails;
               placeholder="Enter Destination"
             />
           </Form.Group>
-        </div> */
+        </div> 
+        </div> 
+        </Form>
+            <h4 style={{ textAlign: "center"}}>
+              Per Day Details
+            </h4>
+            <Days />
+            {topacks.map((topack, index) => {
+              return (
+                <div key={index}>
+                  <Card style={{ margin: "0.5rem" }}>
+                    <Card.Body style={{ padding: "0.7rem" }}>
+                      <ToPack
+                        key={index}
+                        index={index}
+                        topack={topack}
+                        // markTopack={markTopack}
+                        removeTopack={removeTopack}
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
+              );
+            })}
+          <FormTopack addTopack={addTopack} />
+
+          <div style={{ textAlign: "center" }}>
+            <Button
+              variant="primary"
+              onClick={saveClick}
+              style={{ marginTop: "1rem" }}
+            >
+              Save
+            </Button>
+          </div>
+      </div>
+    </div>
+  );
 }
+
+export default TravelDetails;
+
+// {
+//    <div className="col-lg-6">
+//           <Form.Group className="">
+//             <Form.Label>Start Date</Form.Label>
+//             <Form.Control
+//               type="date"
+//               name="startDate"
+//               onChange={(e) => handleChange(e)}
+//             />
+//           </Form.Group>
+//         </div>
+//         <div className="col-lg-6">
+//           <Form.Group className="">
+//             <Form.Label>End Date</Form.Label>
+//             <Form.Control
+//               type="date"
+//               name="endDate"
+//               onChange={(e) => handleChange(e)}
+//             />
+//           </Form.Group>
+//         </div>
+
+//         <div className="col-lg-12">
+//           <Form.Group>
+//             <Form.Label style={{ marginBottom: "1rem" }}>Destination</Form.Label>
+//             <Form.Control
+//               type="text"
+//               name="destination"
+//               className="input"
+//               onChange={(e) => handleChange(e)}
+//               placeholder="Enter Destination"
+//             />
+//           </Form.Group>
+//         </div> 
+// }
