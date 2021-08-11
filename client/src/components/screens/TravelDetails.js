@@ -20,7 +20,7 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
       }}
     >
       <span>
-        Day{topack.day} : {topack.place}
+        {topack.morningPlace} - {topack.morningFood} 
       </span>
       <div>
         <Button variant="btn btn-danger" onClick={() => removeTopack(index)}>
@@ -33,8 +33,10 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
 
 function FormTopack({ addTopack }) {
   const [value, setValue] = React.useState({
-    day: "",
-    place: "",
+    morningPlace: "",
+    morningFood:"",
+    nightPlace:"",
+    nightFood:"",
   });
 
   const handleChange = (e) => {
@@ -45,14 +47,38 @@ function FormTopack({ addTopack }) {
     }));
   };
 
+  const sendData = async (value) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.post("/api/private/traveldetails",value, config);
+      if(data){
+        Swal.fire(
+          'Item added!',
+          'List updated successfully',
+          'success'
+        )
+      }
+    } catch (error) {
+      console.log("err")
+    }
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
     addTopack(value);
-    // sendData(value)
+    sendData(value)
     setValue({
-      day: "",
-      place: "",
+      morningPlace: "",
+      morningFood:"",
+      nightPlace:"",
+      nightFood:"",
     });
   };
   useEffect(() => {}, [value]);
@@ -62,32 +88,62 @@ function FormTopack({ addTopack }) {
       <div className="row" style={{ borderRadius: "0.3rem", margin: "0.5rem" }}>
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{ marginBottom: "1rem" }}>
-              Per Day Details
+            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+              Morning Place to visit
             </Form.Label>
             <Form.Control
-              type="number"
-              name="day"
+              type="text"
+              name="morningPlace"
               className="input"
               onChange={(e) => handleChange(e)}
-              value={value.day}
-              placeholder="Add day as a number"
+              value={value.morningPlace}
+              placeholder="Morning Place to visit"
             />
           </Form.Group>
         </div>
 
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{ marginBottom: "1rem" }}>
-              Per Day Details
+            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+              Morning Dine at
             </Form.Label>
             <Form.Control
               type="text"
-              name="place"
+              name="morningFood"
               className="input"
               onChange={(e) => handleChange(e)}
-              value={value.place}
-              placeholder="Add places to visit each day"
+              value={value.morningFood}
+              placeholder="Morning Dine at"
+            />
+          </Form.Group>
+        </div>
+        <div className="col-lg-6">
+          <Form.Group>
+            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+              Night place to visit
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="nightPlace"
+              className="input"
+              onChange={(e) => handleChange(e)}
+              value={value.nightPlace}
+              placeholder="Night place to visit"
+            />
+          </Form.Group>
+        </div>
+        <div className="col-lg-6">
+          <Form.Group>
+            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+              Night dine at
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="nightFood"
+              className="input"
+              onChange={(e) => handleChange(e)}
+              value={value.nightFood}
+              placeholder="Night dine at"
             />
           </Form.Group>
         </div>
