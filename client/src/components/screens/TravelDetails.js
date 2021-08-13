@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import {Link} from "react-router-dom";
+import { Button, Form, Table } from "react-bootstrap";
 import Head from "./Head";
 import "./styles.scss";
 // import Swal from 'sweetalert2'
@@ -10,33 +11,27 @@ const Swal = require("sweetalert2");
 
 function ToPack({ topack, index, markTopack, removeTopack }) {
   return (
-    <div
-      className="topack"
-      style={{
-        alignItems: "center",
-        display: "flex",
-        fontSize: "18px",
-        justifyContent: "space-between",
-      }}
-    >
-      <span>
-        {topack.morningPlace} - {topack.morningFood} 
-      </span>
-      <div>
-        <Button variant="btn btn-danger" onClick={() => removeTopack(index)}>
-          ✕
-        </Button>
-      </div>
-    </div>
+    <tr>
+      <th>{index+1}</th>
+      <td>{topack.morningPlace}</td>
+      <td>{topack.morningFood}</td>
+      <td>{topack.nightPlace}</td>
+      <td>{topack.nightFood}</td>
+      <td>
+        <Link to="#" onClick={() => removeTopack(index)}>
+          Delete
+        </Link>
+      </td>
+    </tr>
   );
 }
 
 function FormTopack({ addTopack }) {
   const [value, setValue] = React.useState({
     morningPlace: "",
-    morningFood:"",
-    nightPlace:"",
-    nightFood:"",
+    morningFood: "",
+    nightPlace: "",
+    nightFood: "",
   });
 
   const handleChange = (e) => {
@@ -55,30 +50,29 @@ function FormTopack({ addTopack }) {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/traveldetails",value, config);
-      if(data){
-        Swal.fire(
-          'Item added!',
-          'List updated successfully',
-          'success'
-        )
+      const { data } = await axios.post(
+        "/api/private/traveldetails",
+        value,
+        config
+      );
+      if (data) {
+        Swal.fire("Item added!", "List updated successfully", "success");
       }
     } catch (error) {
-      console.log("err")
+      console.log("err");
     }
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
     addTopack(value);
-    sendData(value)
+    sendData(value);
     setValue({
       morningPlace: "",
-      morningFood:"",
-      nightPlace:"",
-      nightFood:"",
+      morningFood: "",
+      nightPlace: "",
+      nightFood: "",
     });
   };
   useEffect(() => {}, [value]);
@@ -88,7 +82,7 @@ function FormTopack({ addTopack }) {
       <div className="row" style={{ borderRadius: "0.3rem", margin: "0.5rem" }}>
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
               Morning Place to visit
             </Form.Label>
             <Form.Control
@@ -104,7 +98,7 @@ function FormTopack({ addTopack }) {
 
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
               Morning Dine at
             </Form.Label>
             <Form.Control
@@ -119,7 +113,7 @@ function FormTopack({ addTopack }) {
         </div>
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
               Night place to visit
             </Form.Label>
             <Form.Control
@@ -134,7 +128,7 @@ function FormTopack({ addTopack }) {
         </div>
         <div className="col-lg-6">
           <Form.Group>
-            <Form.Label style={{fontWeight:"600",fontSize:"0.9rem" }}>
+            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
               Night dine at
             </Form.Label>
             <Form.Control
@@ -199,12 +193,12 @@ function TravelDetails(props) {
   };
 
   const [value, setValue] = React.useState({
-    startDate:"",
-    endDate:"",
-    destination:"",
+    startDate: "",
+    endDate: "",
+    destination: "",
   });
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValue((prevState) => ({
       ...prevState,
@@ -218,9 +212,9 @@ function TravelDetails(props) {
     addTopack(value);
     // sendData(value)
     setValue({
-      startDate:"",
-      endDate:"",
-      destination:"",
+      startDate: "",
+      endDate: "",
+      destination: "",
     });
   };
   useEffect(() => {}, [value]);
@@ -250,74 +244,86 @@ function TravelDetails(props) {
           </span>
         </div>
         <Form className="input-form" onSubmit={handleSubmit}>
-        <div className="row">
-        <div className="col-lg-6">
-          <Form.Group className="">
-            <Form.Label>Start Date</Form.Label>
-            <Form.Control
-              type="date"
-              name="startDate"
-              onChange={(e) => handleChange(e)}
-            />
-          </Form.Group>
-        </div>
-        <div className="col-lg-6">
-          <Form.Group className="">
-            <Form.Label>End Date</Form.Label>
-            <Form.Control
-              type="date"
-              name="endDate"
-              onChange={(e) => handleChange(e)}
-            />
-          </Form.Group>
-        </div>
+          <div className="row">
+            <div className="col-lg-6">
+              <Form.Group className="">
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="startDate"
+                  onChange={(e) => handleChange(e)}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-lg-6">
+              <Form.Group className="">
+                <Form.Label>End Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="endDate"
+                  onChange={(e) => handleChange(e)}
+                />
+              </Form.Group>
+            </div>
 
-        <div className="col-lg-12">
-          <Form.Group>
-            <Form.Label style={{ marginBottom: "1rem" }}>Destination</Form.Label>
-            <Form.Control
-              type="text"
-              name="destination"
-              className="input"
-              onChange={(e) => handleChange(e)}
-              placeholder="Enter Destination"
-            />
-          </Form.Group>
-        </div> 
-        </div> 
+            <div className="col-lg-12">
+              <Form.Group>
+                <Form.Label style={{ marginBottom: "1rem" }}>
+                  Destination
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="destination"
+                  className="input"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Enter Destination"
+                />
+              </Form.Group>
+            </div>
+          </div>
         </Form>
-            <h4 style={{ textAlign: "center"}}>
-              Per Day Details
-            </h4>
-            <Days />
+        <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
+        <br />
+        <Days />
+        <div style={{textAlign:"center"}}>
+        <Table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Morning Place</th>
+              <th>Morning Food</th>
+              <th>Night Place</th>
+              <th>Night Food</th>
+              <th>Operation</th>
+            </tr>
+          </thead>
+          <tbody>
             {topacks.map((topack, index) => {
               return (
-                <div key={index}>
-                  <Card style={{ margin: "0.5rem" }}>
-                    <Card.Body style={{ padding: "0.7rem" }}>
-                      <ToPack
-                        key={index}
-                        index={index}
-                        topack={topack}
-                        // markTopack={markTopack}
-                        removeTopack={removeTopack}
-                      />
-                    </Card.Body>
-                  </Card>
-                </div>
+                <ToPack
+                  key={index}
+                  index={index}
+                  topack={topack}
+                  // markTopack={markTopack}
+                  removeTopack={removeTopack}
+                />
               );
             })}
-          <FormTopack addTopack={addTopack} />
+          </tbody>
+        </Table>
+        </div>
+        
+        <FormTopack addTopack={addTopack} />
 
-          <div style={{ textAlign: "center" }}>
-            <Button
-              variant="primary"
-              onClick={saveClick}
-              style={{ marginTop: "1rem" }}
-            >
-              Save
-            </Button>
-          </div>
+        <div style={{ textAlign: "center" }}>
+          <Button
+            variant="primary"
+            onClick={saveClick}
+            style={{ marginTop: "1rem" }}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -358,5 +364,5 @@ export default TravelDetails;
 //               placeholder="Enter Destination"
 //             />
 //           </Form.Group>
-//         </div> 
+//         </div>
 // }

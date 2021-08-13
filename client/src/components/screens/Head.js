@@ -15,7 +15,6 @@ function Head(props) {
   function logoutHandler() {
     try {
       localStorage.removeItem("authToken");
-      props.history.push("/login");
     } catch (err) {
       console.log(err);
     }

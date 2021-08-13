@@ -54,8 +54,9 @@ router.route("/traveldetails")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { $push : { "details.perDayDetails" : req.body } })
-      console.log(user);
+      // const user = await User.findOneAndUpdate(query, { $push : { "details.perDayDetails" : req.body } })
+      // console.log(user);
+      console.log(req.body);
       res.status(200).send(true);
     }catch(err){
       // return next(new ErrorResponse("No user found with this id", 404));
