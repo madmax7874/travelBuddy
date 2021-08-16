@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { Button, Form, Table } from "react-bootstrap";
 import Head from "./Head";
 import "./styles.scss";
@@ -12,7 +13,7 @@ const Swal = require("sweetalert2");
 function ToPack({ topack, index, markTopack, removeTopack }) {
   return (
     <tr>
-      <th>{index+1}</th>
+      <th>{index + 1}</th>
       <td>{topack.morningPlace}</td>
       <td>{topack.morningFood}</td>
       <td>{topack.nightPlace}</td>
@@ -151,7 +152,53 @@ function FormTopack({ addTopack }) {
 }
 
 function TravelDetails(props) {
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [topacks, setTopacks] = useState([]);
+  const [details, setDetails] = useState({});
+
+  const fetchPrivateData = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    }; 
+
+    // try {
+    //   const { data } = await axios.get("/api/private/list", config);
+    //   setDetails(data)
+    // } catch (error) {
+    //   console.log(error)
+    //   // localStorage.removeItem("authToken");
+    // }
+  };
+
+  useEffect(() => {
+    fetchPrivateData();
+  }, []);
+
+  useEffect(() => {
+    setValue("start_date", details.start_date);
+    setValue("end_date", details.end_date);
+    setValue("destination", details.destination);
+
+  }, [details, setValue]);
+
+  const onSubmit = (data) => {
+    // axios
+    //   .post("/api/private/property", data)
+    //   .then((response) => console.log(response.data))
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+    console.log(data);
+  };
 
   const addTopack = (details) => {
     const newTopacks = [...topacks, details];
@@ -174,15 +221,7 @@ function TravelDetails(props) {
     // removeData(newTopacks)
   };
 
-  const saveClick = async () => {
-    const url = `/api/private/parties/${props.id}`;
-    const response = await axios.post(url, topacks);
-    if (response.data) {
-      Swal.fire("Good job!", "Profile Updated Successfully", "success");
-    }
-  };
-
-  const Days = () => {
+  const PerDayDetails = () => {
     if (topacks.length === 0)
       return (
         <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
@@ -191,33 +230,6 @@ function TravelDetails(props) {
       );
     else return null;
   };
-
-  const [value, setValue] = React.useState({
-    startDate: "",
-    endDate: "",
-    destination: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValue((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!value) return;
-    addTopack(value);
-    // sendData(value)
-    setValue({
-      startDate: "",
-      endDate: "",
-      destination: "",
-    });
-  };
-  useEffect(() => {}, [value]);
 
   return (
     <div>
@@ -243,126 +255,98 @@ function TravelDetails(props) {
             Add your trip details
           </span>
         </div>
-        <Form className="input-form" onSubmit={handleSubmit}>
+        <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <div className="col-lg-6">
-              <Form.Group className="">
-                <Form.Label>Start Date</Form.Label>
+              <Form.Group controlId="start_date" style={{ paddingTop: "1rem" }}>
+                <Form.Label>Start date</Form.Label>
                 <Form.Control
                   type="date"
-                  name="startDate"
-                  onChange={(e) => handleChange(e)}
+                  name="start_date"
+                  placeholder="Enter start date"
+                  autoComplete="off"
+                  {...register("start_date", { required: true })}
                 />
+                {errors.start_date && (
+                  <p className="">Start Date is required</p>
+                )}
               </Form.Group>
             </div>
             <div className="col-lg-6">
-              <Form.Group className="">
+              <Form.Group controlId="end_date" style={{ paddingTop: "1rem" }}>
                 <Form.Label>End Date</Form.Label>
                 <Form.Control
                   type="date"
-                  name="endDate"
-                  onChange={(e) => handleChange(e)}
+                  name="end_date"
+                  placeholder="Enter End Date"
+                  autoComplete="off"
+                  {...register("end_date", { required: true })}
                 />
+                {errors.floor && <p className="">End Date is required</p>}
               </Form.Group>
             </div>
-
             <div className="col-lg-12">
-              <Form.Group>
-                <Form.Label style={{ marginBottom: "1rem" }}>
-                  Destination
-                </Form.Label>
+              <Form.Group
+                controlId="destination"
+                style={{ paddingTop: "1rem" }}
+              >
+                <Form.Label>Destination</Form.Label>
                 <Form.Control
                   type="text"
                   name="destination"
-                  className="input"
-                  onChange={(e) => handleChange(e)}
                   placeholder="Enter Destination"
+                  autoComplete="off"
+                  {...register("destination", { required: true })}
                 />
+                {errors.floor && <p className="">Destination is required</p>}
               </Form.Group>
             </div>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ marginTop: "1rem" }}
+            >
+              Save
+            </Button>
           </div>
         </Form>
         <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
         <br />
-        <Days />
-        <div style={{textAlign:"center"}}>
-        <Table>
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Morning Place</th>
-              <th>Morning Food</th>
-              <th>Night Place</th>
-              <th>Night Food</th>
-              <th>Operation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {topacks.map((topack, index) => {
-              return (
-                <ToPack
-                  key={index}
-                  index={index}
-                  topack={topack}
-                  // markTopack={markTopack}
-                  removeTopack={removeTopack}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
-        </div>
-        
-        <FormTopack addTopack={addTopack} />
-
+        <PerDayDetails />
         <div style={{ textAlign: "center" }}>
-          <Button
-            variant="primary"
-            onClick={saveClick}
-            style={{ marginTop: "1rem" }}
-          >
-            Save
-          </Button>
+          <Table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Morning Place</th>
+                <th>Morning Food</th>
+                <th>Night Place</th>
+                <th>Night Food</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topacks.map((topack, index) => {
+                return (
+                  <ToPack
+                    key={index}
+                    index={index}
+                    topack={topack}
+                    // markTopack={markTopack}
+                    removeTopack={removeTopack}
+                  />
+                );
+              })}
+            </tbody>
+          </Table>
         </div>
+
+        <FormTopack addTopack={addTopack} />
       </div>
     </div>
   );
 }
 
 export default TravelDetails;
-
-// {
-//    <div className="col-lg-6">
-//           <Form.Group className="">
-//             <Form.Label>Start Date</Form.Label>
-//             <Form.Control
-//               type="date"
-//               name="startDate"
-//               onChange={(e) => handleChange(e)}
-//             />
-//           </Form.Group>
-//         </div>
-//         <div className="col-lg-6">
-//           <Form.Group className="">
-//             <Form.Label>End Date</Form.Label>
-//             <Form.Control
-//               type="date"
-//               name="endDate"
-//               onChange={(e) => handleChange(e)}
-//             />
-//           </Form.Group>
-//         </div>
-
-//         <div className="col-lg-12">
-//           <Form.Group>
-//             <Form.Label style={{ marginBottom: "1rem" }}>Destination</Form.Label>
-//             <Form.Control
-//               type="text"
-//               name="destination"
-//               className="input"
-//               onChange={(e) => handleChange(e)}
-//               placeholder="Enter Destination"
-//             />
-//           </Form.Group>
-//         </div>
-// }

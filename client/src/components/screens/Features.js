@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ReactCardCarousel from "react-card-carousel";
 
-// import React from "react";
-
 // function Features() {
 //     return(
 //         <div style={{backgroundColor:"#293241",paddingBottom:"3rem"}}>
