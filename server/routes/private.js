@@ -84,12 +84,13 @@ router.route("/traveldetails")
         perDayDetails : []
       }]      
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { $push : {details : Details } })
-      // const user = await User.findOneAndUpdate(query, { $push : {"details.0.perDayDetails" : newDetails } })
-      console.log(user)
-      res.status(200).send(user.details[user.details.length-1]._id);
+
+      const user = await User.findOneAndUpdate(query, { $push : {details : Details }})
+
+      const findUser = await User.findById(decoded.id);
+
+      res.status(200).send(findUser.details[findUser.details.length-1]._id);
     }catch(err){
-      // return next(new ErrorResponse("No user found with this id", 404));
       console.log(err);
     }
   });

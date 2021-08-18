@@ -24,7 +24,6 @@ function MyTrip(props) {
       const { data } = await axios.get(url, config);
       data.startDate = data.startDate.split("T")[0];
       data.endDate = data.endDate.split("T")[0];
-      console.log(data)
       setTrip(data)
     } catch (error) {
       console.log(error)
