@@ -77,6 +77,19 @@ function Head(props) {
             >
               AddTravelDetails
             </NavLink>
+            <NavLink
+              style={navLink}
+              activeStyle={{
+                color: "rgba(255,255,255,1)",
+                fontWeight: "600",
+                borderBottom: "3px solid #FFFFFF",
+              }}
+              className="nav-link"
+              aria-current="page"
+              to="/trips"
+            >
+              My Trips
+            </NavLink>
           </Nav>
 
           <Nav

@@ -48,6 +48,30 @@ router.route("/modifylist").post(protect, async (req, res) => {
   }
 });
 
+//get all trips
+router.route("/trips").get(protect, async (req, res) => {
+  try{ 
+    token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    res.status(200).send(user.details)
+  }catch(err){
+    console.log(err);
+  }
+});
+
+//get a trip
+router.route("/mytrip/:id").get(protect, async (req, res) => {
+  try{ 
+    token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.find({'_id': decoded.id}, {details: {$elemMatch: {_id: req.params.id}}});
+    res.status(200).send(user[0].details[0])
+  }catch(err){
+    console.log(err);
+  }
+});
+
 router.route("/traveldetails")
   .post(protect, async (req, res) => {
     try{ 
@@ -63,7 +87,7 @@ router.route("/traveldetails")
       const user = await User.findOneAndUpdate(query, { $push : {details : Details } })
       // const user = await User.findOneAndUpdate(query, { $push : {"details.0.perDayDetails" : newDetails } })
       console.log(user)
-      res.status(200).send(user.details[details.length-1]._id);
+      res.status(200).send(user.details[user.details.length-1]._id);
     }catch(err){
       // return next(new ErrorResponse("No user found with this id", 404));
       console.log(err);
