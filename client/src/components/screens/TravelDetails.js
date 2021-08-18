@@ -53,7 +53,7 @@ function FormTopack({ addTopack }) {
     try {
       const { data } = await axios.post(
         "/api/private/traveldetails",
-        value,
+        value,      
         config
       );
       if (data) {
@@ -170,13 +170,13 @@ function TravelDetails(props) {
       },
     }; 
 
-    // try {
-    //   const { data } = await axios.get("/api/private/list", config);
-    //   setDetails(data)
-    // } catch (error) {
-    //   console.log(error)
-    //   // localStorage.removeItem("authToken");
-    // }
+    try {
+      const { data } = await axios.get("/api/private/traveldetails", config);
+      setDetails(data)
+    } catch (error) {
+      console.log(error)
+      // localStorage.removeItem("authToken");
+    }
   };
 
   useEffect(() => {
@@ -190,15 +190,27 @@ function TravelDetails(props) {
 
   }, [details, setValue]);
 
-  const onSubmit = (data) => {
-    // axios
-    //   .post("/api/private/property", data)
-    //   .then((response) => console.log(response.data))
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-    console.log(data);
+  const  onSubmit = async (data) => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      try {
+        const response = await axios.post(
+          "/api/private/traveldetails",
+          data,      
+          config
+        );
+        if (response.data) {
+          Swal.fire("Item added!", "List updated successfully", "success");
+        }
+      } catch (error) {
+        console.log(error);
+      }
   };
+
 
   const addTopack = (details) => {
     const newTopacks = [...topacks, details];

@@ -53,11 +53,17 @@ router.route("/traveldetails")
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const Details = [{
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        destination: req.body.destination,
+        perDayDetails : []
+      }]      
       const query = { _id: decoded.id };
-      // const user = await User.findOneAndUpdate(query, { $push : { "details.perDayDetails" : req.body } })
-      // console.log(user);
-      console.log(req.body);
-      res.status(200).send(true);
+      const user = await User.findOneAndUpdate(query, { $push : {details : Details } })
+      // const user = await User.findOneAndUpdate(query, { $push : {"details.0.perDayDetails" : newDetails } })
+      console.log(user)
+      res.status(200).send(user.details[details.length-1]._id);
     }catch(err){
       // return next(new ErrorResponse("No user found with this id", 404));
       console.log(err);
