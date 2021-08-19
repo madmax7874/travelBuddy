@@ -48,7 +48,7 @@ function Trips(props) {
       const response = await axios.post("/api/private/traveldetails",data,config);
       if (response.data) {
         Swal.fire("Item added!", "List updated successfully", "success");
-        props.history.push(`/mytrip/${response.data}`)
+        props.history.push(`/mytrip/${response.data}/${trips.length}`)
       }
     } catch (error) {
       console.log(error);
@@ -64,7 +64,7 @@ function Trips(props) {
         <td>{trip.destination}</td>
         <td>{trip.startDate}</td>
         <td>{trip.endDate}</td>
-        <td><Link to={`/mytrip/${trip._id}`}>View</Link></td>
+        <td><Link to={`/mytrip/${trip._id}/${index}`}>View</Link></td>
       </tr>
     );
   });

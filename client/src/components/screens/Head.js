@@ -62,7 +62,7 @@ function Head(props) {
               aria-current="page"
               to="/trips"
             >
-              My Trips
+              MyTrips
             </NavLink>
             <NavLink
               style={navLink}

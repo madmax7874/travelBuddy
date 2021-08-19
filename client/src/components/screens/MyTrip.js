@@ -26,7 +26,7 @@ function ToPack({ topack, index, removeTopack }) {
 }
 
 function FormTopack({ addTopack }) {
-  const {id} = useParams()
+  const {id, index} = useParams()
   const [value, setValue] = React.useState({
     morningPlace: "",
     morningFood: "",
@@ -49,7 +49,7 @@ function FormTopack({ addTopack }) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/perdaydetails/${id}`
+    const url = `/api/private/perdaydetails/${id}/${index}`
     try {
       const { data } = await axios.post(url, value, config);
       if (data) {
@@ -148,8 +148,9 @@ function FormTopack({ addTopack }) {
   );
 }
 function MyTrip(props) {
-  const { id } = useParams();
+  const { id, index } = useParams();
   const _id = id;
+  console.log(id,index)
 
   const [trip, setTrip] = useState({});
   const [topacks, setTopacks] = useState([]);  
@@ -189,7 +190,7 @@ function MyTrip(props) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/modifyperdaydetails/${_id}`
+    const url = `/api/private/modifyperdaydetails/${_id}/${index}`
     try {
       const { data } = await axios.post(url, value, config);
       if(data){

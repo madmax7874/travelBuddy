@@ -48,6 +48,30 @@ router.route("/modifylist").post(protect, async (req, res) => {
   }
 });
 
+ //create a trip
+router.route("/traveldetails")
+  .post(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const Details = [{
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        destination: req.body.destination,
+        perDayDetails : []
+      }]      
+      const query = { _id: decoded.id };
+
+      const user = await User.findOneAndUpdate(query, { $push : {details : Details }})
+
+      const findUser = await User.findById(decoded.id);
+
+      res.status(200).send(findUser.details[findUser.details.length-1]._id);
+    }catch(err){
+      console.log(err);
+    }
+  });
+
 //get all trips
 router.route("/trips").get(protect, async (req, res) => {
   try{ 
@@ -72,34 +96,11 @@ router.route("/mytrip/:id").get(protect, async (req, res) => {
   }
 });
 
-router.route("/traveldetails")
-  .post(protect, async (req, res) => {
-    try{ 
-      token = req.headers.authorization.split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const Details = [{
-        startDate: req.body.start_date,
-        endDate: req.body.end_date,
-        destination: req.body.destination,
-        perDayDetails : []
-      }]      
-      const query = { _id: decoded.id };
-
-      const user = await User.findOneAndUpdate(query, { $push : {details : Details }})
-
-      const findUser = await User.findById(decoded.id);
-
-      res.status(200).send(findUser.details[findUser.details.length-1]._id);
-    }catch(err){
-      console.log(err);
-    }
-  });
-
-router.route("/perdaydetails/:id")
+router.route("/perdaydetails/:id/:index")
   .post(protect, async (req, res) => {
     try{
-      const object_id = req.params.id
-      const user = await User.findOneAndUpdate({'details._id': object_id},{ $push : {'details.0.perDayDetails' : req.body } })
+      const {id,index} = req.params
+      const user = await User.findOneAndUpdate({'details._id': id},{ $push : {[`details.${index}.perDayDetails`] : req.body } })
       console.log(user)
 
       res.status(200).send(true)
@@ -108,11 +109,11 @@ router.route("/perdaydetails/:id")
     }
   });
 
-  router.route("/modifyperdaydetails/:id").post(protect, async (req, res) => {
+  router.route("/modifyperdaydetails/:id/:index").post(protect, async (req, res) => {
     try{ ;
-      const object_id = req.params.id
+      const {id,index} = req.params
 
-      const user = await User.findOneAndUpdate({'details._id': object_id}, { 'details.0.perDayDetails' : req.body })
+      const user = await User.findOneAndUpdate({'details._id': id}, { [`details.${index}.perDayDetails`] : req.body })
       res.status(200).send(true);
     }catch(err){
       console.log(err)
