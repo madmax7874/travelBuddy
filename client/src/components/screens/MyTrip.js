@@ -26,6 +26,7 @@ function ToPack({ topack, index, removeTopack }) {
 }
 
 function FormTopack({ addTopack }) {
+  const {id} = useParams()
   const [value, setValue] = React.useState({
     morningPlace: "",
     morningFood: "",
@@ -48,14 +49,11 @@ function FormTopack({ addTopack }) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
+    const url = `/api/private/perdaydetails/${id}`
     try {
-      const { data } = await axios.post(
-        "/api/private/traveldetails",
-        value,
-        config
-      );
+      const { data } = await axios.post(url, value, config);
       if (data) {
-        Swal.fire("Item added!", "List updated successfully", "success");
+        Swal.fire("Day added!", "Detals for the day added successfully", "success");
       }
     } catch (error) {
       console.log("err");
@@ -67,7 +65,7 @@ function FormTopack({ addTopack }) {
     if (!value) return;
     console.log(value);
     addTopack(value);
-    // sendData(value);
+    sendData(value);
     setValue({
       morningPlace: "",
       morningFood: "",
@@ -154,41 +152,63 @@ function MyTrip(props) {
   const _id = id;
 
   const [trip, setTrip] = useState({});
-  const [topacks, setTopacks] = useState([]);
-
-  const fetchPrivateData = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    const url = `/api/private/mytrip/${_id}`;
-
-    try {
-      const { data } = await axios.get(url, config);
-      data.startDate = data.startDate.split("T")[0];
-      data.endDate = data.endDate.split("T")[0];
-      setTrip(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [topacks, setTopacks] = useState([]);  
 
   useEffect(() => {
+    const fetchPrivateData = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const url = `/api/private/mytrip/${_id}`;
+  
+      try {
+        const { data } = await axios.get(url, config);
+        data.startDate = data.startDate.split("T")[0];
+        data.endDate = data.endDate.split("T")[0];
+        setTopacks(data.perDayDetails)
+        setTrip(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchPrivateData();
-  }, []);
+  }, [_id]);
 
   const addTopack = (details) => {
     const newTopacks = [...topacks, details];
     setTopacks(newTopacks);
   };
 
+  const removeData = async (value) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    const url = `/api/private/modifyperdaydetails/${_id}`
+    try {
+      const { data } = await axios.post(url, value, config);
+      if(data){
+        Swal.fire(
+          'Item modified',
+          'List updated successfully',
+          'success'
+        )
+      }
+    } catch (error) {
+      console.log("err")
+    }
+  };
+
   const removeTopack = (index) => {
     const newTopacks = [...topacks];
     newTopacks.splice(index, 1);
     setTopacks(newTopacks);
-    // removeData(newTopacks)
+    removeData(newTopacks)
   };
 
   const PerDayDetails = () => {

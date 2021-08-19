@@ -41,7 +41,7 @@ router.route("/modifylist").post(protect, async (req, res) => {
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const query = { _id: decoded.id };
-    const user = await User.findOneAndUpdate(query, {  list : req.body.value })
+    const user = await User.findOneAndUpdate(query, { list : req.body.value })
     res.status(200).send(true);
   }catch(err){
     return next(new ErrorResponse("No user found with this id", 404));
@@ -92,6 +92,30 @@ router.route("/traveldetails")
       res.status(200).send(findUser.details[findUser.details.length-1]._id);
     }catch(err){
       console.log(err);
+    }
+  });
+
+router.route("/perdaydetails/:id")
+  .post(protect, async (req, res) => {
+    try{
+      const object_id = req.params.id
+      const user = await User.findOneAndUpdate({'details._id': object_id},{ $push : {'details.0.perDayDetails' : req.body } })
+      console.log(user)
+
+      res.status(200).send(true)
+    }catch(err){
+      console.log(err);
+    }
+  });
+
+  router.route("/modifyperdaydetails/:id").post(protect, async (req, res) => {
+    try{ ;
+      const object_id = req.params.id
+
+      const user = await User.findOneAndUpdate({'details._id': object_id}, { 'details.0.perDayDetails' : req.body })
+      res.status(200).send(true);
+    }catch(err){
+      console.log(err)
     }
   });
 
