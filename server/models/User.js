@@ -67,6 +67,16 @@ const UserSchema = new mongoose.Schema({
       }
     }]
   }],
+  expense:[{
+    text: {
+      type : String,
+      required: true,
+    },
+    amount : {
+      type : Number,
+      required: true,
+    },
+  }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

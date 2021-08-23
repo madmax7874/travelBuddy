@@ -1,7 +1,8 @@
 import React, { createContext, useReducer, useContext, useState } from "react";
 import "../styles/ExpenseTracker.css";
 import Head from "./Head";
-
+import { Button, Form } from "react-bootstrap";
+ 
 const Header = () => {
   return (
     <div style={{ textAlign: "center", padding: "2rem" }}>
@@ -21,43 +22,19 @@ const Header = () => {
   );
 };
 
-const Balance = () => {
-  const { transactions } = useContext(GlobalContext);
-  const amounts = transactions.map((transaction) => transaction.amount);
-
-  const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
-  return (
-    <div style={{ textAlign: "center" }}>
-      <h4>Your Balance</h4>
-      <h1>${total}</h1>
-    </div>
-  );
-};
-
 const IncomeExpenses = () => {
   const { transactions } = useContext(GlobalContext);
 
   const amounts = transactions.map((transaction) => transaction.amount);
 
-  const income = amounts
-    .filter((item) => item > 0)
-    .reduce((acc, item) => (acc += item), 0)
-    .toFixed(2);
-
-  const expense = (
-    amounts.filter((item) => item < 0).reduce((acc, item) => (acc += item), 0) *
-    -1
-  ).toFixed(2);
+  const expense =
+    amounts.filter((item) => item > 0).reduce((acc, item) => (acc += item), 0).toFixed(2);
 
   return (
     <div className="inc-exp-container">
       <div>
-        <h4>Income</h4>
-        <p className="money plus">{income}</p>
-      </div>
-      <div>
-        <h4>Expense</h4>
-        <p className="money minus">{expense}</p>
+        <h4>Total Expenses</h4>
+        <p className="money minus">₹{expense}</p>
       </div>
     </div>
   );
@@ -66,19 +43,17 @@ const IncomeExpenses = () => {
 const Transaction = ({ transaction }) => {
   const { deleteTransaction } = useContext(GlobalContext);
 
-  const sign = transaction.amount < 0 ? "-" : "+";
-
   return (
-    <li className={transaction.amount < 0 ? "minus" : "plus"}>
+    <li className="minus">
       {transaction.text}{" "}
       <span>
-        {sign}${Math.abs(transaction.amount)}
+      ₹{Math.abs(transaction.amount)}
       </span>
       <button
         onClick={() => deleteTransaction(transaction.id)}
         className="delete-btn"
       >
-        x
+        ✕
       </button>
     </li>
   );
@@ -105,7 +80,7 @@ const AddTransaction = () => {
 
   const { addTransaction } = useContext(GlobalContext);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const newTransaction = {
@@ -119,32 +94,36 @@ const AddTransaction = () => {
 
   return (
     <>
-      <h3>Add new transaction</h3>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor="text">Text</label>
-          <input
-            type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Enter text"
-          />
-        </div>
-        <div>
-          <label htmlFor="amount">
-            Amount (negative : expense, positive : income)
-          </label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-          />
-        </div>
-        <button className="btn btn-primary" style={{ margin: "1rem 0rem" }}>
-          Add transaction
-        </button>
-      </form>
+    <h3>Add new transaction</h3>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group>
+        <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "0.9rem" }}>
+        Text
+        </Form.Label>
+        <Form.Control
+          type="text"
+          className="input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter text"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "0.9rem" }}>
+        Amount (in ₹)
+        </Form.Label>
+        <Form.Control
+          type="number"
+          className="input"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter amount"
+        />
+      </Form.Group>
+      <Button variant="primary mb-3" type="submit">
+        Add transaction
+      </Button>
+    </Form>
     </>
   );
 };
@@ -219,7 +198,6 @@ function ExpenseTracker() {
         <Head />
         <Header />
         <div className="container">
-          <Balance />
           <IncomeExpenses />
           <TransactionList />
           <AddTransaction />

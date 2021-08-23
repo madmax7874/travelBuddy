@@ -101,7 +101,7 @@ function Trips(props) {
                   controlId="start_date"
                   style={{ paddingTop: "1rem" }}
                 >
-                  <Form.Label>Start date</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>Start date</Form.Label>
                   <Form.Control
                     type="date"
                     name="start_date"
@@ -116,7 +116,7 @@ function Trips(props) {
               </div>
               <div className="col-lg-6">
                 <Form.Group controlId="end_date" style={{ paddingTop: "1rem" }}>
-                  <Form.Label>End Date</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>End Date</Form.Label>
                   <Form.Control
                     type="date"
                     name="end_date"
@@ -132,7 +132,7 @@ function Trips(props) {
                   controlId="destination"
                   style={{ paddingTop: "1rem" }}
                 >
-                  <Form.Label>Destination</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>Destination</Form.Label>
                   <Form.Control
                     type="text"
                     name="destination"
@@ -181,7 +181,7 @@ function Trips(props) {
                 <tr>
                   <th>Place</th>
                   <th>Departure</th>
-                  <th>Ends on</th>
+                  <th>Arrival</th>
                   <th>Operation</th>
                 </tr>
               </thead>

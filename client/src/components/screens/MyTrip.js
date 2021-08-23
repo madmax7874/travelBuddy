@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Button, Form, Table } from "react-bootstrap";
+import { Button, Form, Table,Card } from "react-bootstrap";
 import Head from "./Head";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.scss"
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
@@ -53,7 +54,7 @@ function FormTopack({ addTopack }) {
     try {
       const { data } = await axios.post(url, value, config);
       if (data) {
-        Swal.fire("Day added!", "Detals for the day added successfully", "success");
+        Swal.fire("Day added!", "Details for the day added successfully", "success");
       }
     } catch (error) {
       console.log("err");
@@ -245,21 +246,38 @@ function MyTrip(props) {
           >
             Your trip
           </span>
+          <br/>
+          <br/>
         </div>
-        <div className='row' style={{textAlign:"center",fontSize:"1.7rem"}}>
-          <div className="col-12" style={{ padding: "1rem" }}>
+        <div style={{position: "relative",
+          height: "40vh",
+          width: "100%",
+          display: "flex",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "middle",}}>
+          <Card style={{ height: "200px",
+          width: "500px",
+          paddingTop: "50px",
+          paddingLeft:"10px",
+          textAlign: "center",
+          borderRadius:"0.8rem",
+          background: "#98c1d9",
+          fontSize: "20px"}}>
+          <Card.Title style={{fontSize:"25px"}}>Destination : {trip.destination}</Card.Title>
+          <Card.Body>From : {trip.startDate}<br/> To : {trip.endDate}</Card.Body>
+        </Card>
+        </div>       
+          {/* <div className="col-12" style={{ padding: "1rem" }}>
             <b>Destination : </b> {trip.destination}
-          </div>
-          <div className="col-lg-6" style={{ padding: "1rem" }}>
+          </div> */}
+          {/* <div className="col-lg-6" style={{ padding: "1rem" }}>
             <b>Starts at : </b> {trip.startDate}
           </div>
           <div className="col-lg-6" style={{ padding: "1rem" }}>
             <b>Ends at : </b> {trip.endDate}
-          </div>
-        </div>
-
-        <br/>
-        <hr/>
+          </div> */}
+        <hr />
         <br/>
 
         <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
