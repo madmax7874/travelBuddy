@@ -120,4 +120,33 @@ router.route("/perdaydetails/:id/:index")
     }
   });
 
+  router.route("/expensetracker")
+  .get(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id);
+      // console.log(user)
+      res.status(200).send(user.expense)
+    }catch(err){
+      console.log(err);
+    }
+  })
+  .post(async (req, res) => {
+    try{ 
+      console.log("hi");
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const newData = {
+        text: req.body.text,
+        amount: req.body.amount,
+      }
+      const query = { _id: decoded.id };
+      const user = await User.findOneAndUpdate(query, { $push : { expense : newData } })
+      res.status(200).send(true);
+    }catch(err){
+      return next(new ErrorResponse("No user found with this id", 404));
+    }
+  }); 
+
 module.exports = router;

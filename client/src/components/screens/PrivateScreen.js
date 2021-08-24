@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./PrivateScreen.css";
 
-const PrivateScreen = () => {
+const PrivateScreen = ({history}) => {
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
 
@@ -20,6 +20,7 @@ const PrivateScreen = () => {
         setPrivateData(data.data);
       } catch (error) {
         localStorage.removeItem("authToken");
+        history.push("/login")
         setError("You are not authorized please login");
       }
     };

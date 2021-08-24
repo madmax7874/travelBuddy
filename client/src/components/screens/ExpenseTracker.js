@@ -1,6 +1,9 @@
-import React, { createContext, useReducer, useContext, useState } from "react";
+import React, { createContext, useReducer, useContext, useState,useEffect } from "react";
 import "../styles/ExpenseTracker.css";
 import Head from "./Head";
+import axios from "axios";
+import Swal from 'sweetalert2'
+
 import { Button, Form } from "react-bootstrap";
  
 const Header = () => {
@@ -80,6 +83,27 @@ const AddTransaction = () => {
 
   const { addTransaction } = useContext(GlobalContext);
 
+    const sendData = async (text,amount) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.post("/api/private/expensetracker",{text,amount}, config);
+      if(data){
+        Swal.fire(
+          'Expense added!',
+          'Information saved successfully',
+          'success'
+        )
+      }
+    } catch (error) {
+      console.log("err")
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -90,6 +114,12 @@ const AddTransaction = () => {
     };
 
     addTransaction(newTransaction);
+
+    if (!amount) 
+    return;
+    sendData(text,amount)
+    setText("")
+    setAmount("");
   };
 
   return (
@@ -118,6 +148,7 @@ const AddTransaction = () => {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Enter amount"
+          required= {true}
         />
       </Form.Group>
       <Button variant="primary mb-3" type="submit">
@@ -188,6 +219,29 @@ const GlobalProvider = ({ children }) => {
 };
 
 function ExpenseTracker() {
+  const [topacks, setTopacks] = useState([]);
+
+  const fetchPrivateData = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get("/api/private/expensetracker", config);
+      console.log(data)
+      setTopacks(data)
+    } catch (error) {
+      console.log(error)
+      // localStorage.removeItem("authToken");
+    }
+  };
+
+  useEffect(() => {
+    fetchPrivateData();
+  }, []);
+
   return (
     <GlobalProvider>
       <div
