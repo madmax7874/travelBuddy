@@ -134,7 +134,6 @@ router.route("/perdaydetails/:id/:index")
   })
   .post(async (req, res) => {
     try{ 
-      console.log("hi");
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const newData = {
@@ -148,5 +147,17 @@ router.route("/perdaydetails/:id/:index")
       return next(new ErrorResponse("No user found with this id", 404));
     }
   }); 
+
+  router.route("/deleteexpense").post(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const query = { _id: decoded.id };
+      const user = await User.findOneAndUpdate(query, { expense : req.body.value })
+      res.status(200).send(true);
+    }catch(err){
+      return next(new ErrorResponse("No user found with this id", 404));
+    }
+  });
 
 module.exports = router;

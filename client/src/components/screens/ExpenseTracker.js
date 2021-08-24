@@ -1,263 +1,189 @@
-import React, { createContext, useReducer, useContext, useState,useEffect } from "react";
-import "../styles/ExpenseTracker.css";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import Head from "./Head";
-import axios from "axios";
-import Swal from 'sweetalert2'
 
-import { Button, Form } from "react-bootstrap";
- 
-const Header = () => {
+import "../styles/ExpenseTracker.css";
+const axios = require("axios");
+const Swal = require("sweetalert2");
+
+function ToPack({ topack, index, removeTopack }) {
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <span
-        className="text-center mb-4"
+    <div className="topack">
+      <div
         style={{
-          backgroundColor: "rgba(255,255,255,0.6)",
-          fontWeight: "500",
-          fontSize: "2rem",
-          padding: "0.5rem",
-          borderRadius: "1rem",
+          backgroundColor: "#fff",
+          color: "#333",
+          display: "flex",
+          justifyContent: "space-between",
+          position: "relative",
         }}
       >
-        Expense Tracker
-      </span>
-    </div>
-  );
-};
-
-const IncomeExpenses = () => {
-  const { transactions } = useContext(GlobalContext);
-
-  const amounts = transactions.map((transaction) => transaction.amount);
-
-  const expense =
-    amounts.filter((item) => item > 0).reduce((acc, item) => (acc += item), 0).toFixed(2);
-
-  return (
-    <div className="inc-exp-container">
-      <div>
-        <h4>Total Expenses</h4>
-        <p className="money minus">₹{expense}</p>
+        {topack.text} <span> ₹{topack.amount}</span>
+        <Button onClick={() => removeTopack(index)} className="delete-btn">
+          ✕
+        </Button>
       </div>
     </div>
   );
-};
-
-const Transaction = ({ transaction }) => {
-  const { deleteTransaction } = useContext(GlobalContext);
-
-  return (
-    <li className="minus">
-      {transaction.text}{" "}
-      <span>
-      ₹{Math.abs(transaction.amount)}
-      </span>
-      <button
-        onClick={() => deleteTransaction(transaction.id)}
-        className="delete-btn"
-      >
-        ✕
-      </button>
-    </li>
-  );
-};
-
-const TransactionList = () => {
-  const { transactions } = useContext(GlobalContext);
-
-  return (
-    <>
-      <h3>History</h3>
-      <ul className="list">
-        {transactions.map((transaction) => (
-          <Transaction key={transaction.id} transaction={transaction} />
-        ))}
-      </ul>
-    </>
-  );
-};
-
-const AddTransaction = () => {
-  const [text, setText] = useState("");
-  const [amount, setAmount] = useState("");
-
-  const { addTransaction } = useContext(GlobalContext);
-
-    const sendData = async (text,amount) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    try {
-      const { data } = await axios.post("/api/private/expensetracker",{text,amount}, config);
-      if(data){
-        Swal.fire(
-          'Expense added!',
-          'Information saved successfully',
-          'success'
-        )
-      }
-    } catch (error) {
-      console.log("err")
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newTransaction = {
-      id: Math.floor(Math.random() * 100000000),
-      text,
-      amount: +amount,
-    };
-
-    addTransaction(newTransaction);
-
-    if (!amount) 
-    return;
-    sendData(text,amount)
-    setText("")
-    setAmount("");
-  };
-
-  return (
-    <>
-    <h3>Add new transaction</h3>
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "0.9rem" }}>
-        Text
-        </Form.Label>
-        <Form.Control
-          type="text"
-          className="input"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter text"
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "0.9rem" }}>
-        Amount (in ₹)
-        </Form.Label>
-        <Form.Control
-          type="number"
-          className="input"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter amount"
-          required= {true}
-        />
-      </Form.Group>
-      <Button variant="primary mb-3" type="submit">
-        Add transaction
-      </Button>
-    </Form>
-    </>
-  );
-};
-
-function AppReducer(state, action) {
-  switch (action.type) {
-    case "DELETE_TRANSACTION":
-      return {
-        ...state,
-        transactions: state.transactions.filter(
-          (transaction) => transaction.id !== action.payload
-        ),
-      };
-    case "ADD_TRANSACTION":
-      return {
-        ...state,
-        transactions: [action.payload, ...state.transactions],
-      };
-    default:
-      return state;
-  }
 }
 
-// Initial state
-const initialState = {
-  transactions: [],
-};
+function ExpenseTracker(props) {
+  const [expenseHistory, setExpenseHistory] = useState([]);
+  const [value, setValue] = React.useState({
+    text: "",
+    amount: "",
+  });
 
-// Create context
-const GlobalContext = createContext(initialState);
-
-// Provider component
-const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(AppReducer, initialState);
-
-  // Actions
-  function deleteTransaction(id) {
-    dispatch({
-      type: "DELETE_TRANSACTION",
-      payload: id,
-    });
-  }
-
-  function addTransaction(transaction) {
-    dispatch({
-      type: "ADD_TRANSACTION",
-      payload: transaction,
-    });
-  }
-
-  return (
-    <GlobalContext.Provider
-      value={{
-        transactions: state.transactions,
-        deleteTransaction,
-        addTransaction,
-      }}
-    >
-      {children}
-    </GlobalContext.Provider>
-  );
-};
-
-function ExpenseTracker() {
-  const [topacks, setTopacks] = useState([]);
-
-  const fetchPrivateData = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
+  useEffect(() => {
+    const fetchData = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const url = `/api/private/expensetracker`;
+      try {
+        const { data } = await axios.get(url, config);
+        setExpenseHistory(data);
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
     };
+    fetchData();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!value) return;
+
     try {
-      const { data } = await axios.get("/api/private/expensetracker", config);
-      console.log(data)
-      setTopacks(data)
-    } catch (error) {
-      console.log(error)
-      // localStorage.removeItem("authToken");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const url = `/api/private/expensetracker`;
+      const response = await axios.post(url, value, config);
+      if (response.data) {
+        Swal.fire(
+          "Expense added!",
+          "Information saved successfully",
+          "success"
+        );
+        setValue({
+          text: "",
+          amount: "",
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  useEffect(() => {
-    fetchPrivateData();
-  }, []);
+  const removeTopack = async (index) => {
+    const newTopacks = [...expenseHistory];
+    newTopacks.splice(index, 1);
+    setExpenseHistory(newTopacks);
+    const url = `/api/private/deleteexpense`;
+    const response = await axios.post(url, newTopacks);
+    if (response.data) {
+      Swal.fire(
+        "Record deleted!",
+        "Information updated successfully",
+        "success"
+      );
+    }
+  };
+
+  useEffect(() => {}, [value]);
 
   return (
-    <GlobalProvider>
+    <div>
+      <Head />
       <div
+        className="app"
         style={{
+          padding: "1rem",
           backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
         }}
       >
-        <Head />
-        <Header />
         <div className="container">
-          <IncomeExpenses />
-          <TransactionList />
-          <AddTransaction />
+          <div style={{ textAlign: "center" }}>
+            <span
+              className="text-center mb-4"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.6)",
+                fontWeight: "500",
+                fontSize: "2rem",
+                padding: "0.5rem",
+                borderRadius: "1rem",
+              }}
+            >
+              Expense Tracker
+            </span>
+          </div>
+          <h3 style={{ padding: "1rem" }}>History</h3>
+          <div>
+            {expenseHistory.map((topack, index) => {
+              return (
+                <div key={index}>
+                  <Card style={{ margin: "0.5rem" }}>
+                    <Card.Body style={{ padding: "0.7rem" }}>
+                      <ToPack
+                        key={index}
+                        index={index}
+                        topack={topack}
+                        removeTopack={removeTopack}
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
+              );
+            })}
+          </div>
+          <Form className="input-form" onSubmit={handleSubmit}>
+              <h3 style={{ padding: "1rem" }}>Add transaction</h3>
+              <Form.Group style={{ paddingTop: "1rem" }}>
+                <Form.Label style={{ marginBottom: "1rem",fontWeight: "600", fontSize: "0.9rem" }}>Text</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="text"
+                  className="input"
+                  value={value.text}
+                  onChange={handleChange}
+                  placeholder="Enter text"
+                />
+              </Form.Group>
+              <Form.Group style={{ paddingTop: "1rem" }}>
+                <Form.Label style={{ marginBottom: "1rem",fontWeight: "600", fontSize: "0.9rem" }}>Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="amount"
+                  className="input"
+                  value={value.amount}
+                  onChange={handleChange}
+                  placeholder="Enter amount"
+                  required={true}
+                />
+              </Form.Group>
+
+            <Button variant="primary mb-3" type="submit" style={{margin: "30px 0 30px"}}>
+              Add Transaction
+            </Button>
+          </Form>
         </div>
       </div>
-    </GlobalProvider>
+    </div>
   );
 }
 
