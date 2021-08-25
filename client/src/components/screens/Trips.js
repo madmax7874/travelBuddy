@@ -17,23 +17,22 @@ function Trips(props) {
 
   const [trips, setTrips] = useState([]);
 
-  const fetchPrivateData = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-
-    try {
-      const { data } = await axios.get("/api/private/trips", config);
-      setTrips(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPrivateData = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+  
+      try {
+        const { data } = await axios.get("/api/private/trips", config);
+        setTrips(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchPrivateData();
   }, []);
 
@@ -45,10 +44,18 @@ function Trips(props) {
       },
     };
     try {
-      const response = await axios.post("/api/private/traveldetails",data,config);
+      const response = await axios.post(
+        "/api/private/traveldetails",
+        data,
+        config
+      );
       if (response.data) {
-        Swal.fire("Trip added!", "Travel history updated successfully", "success");
-        props.history.push(`/mytrip/${response.data}/${trips.length}`)
+        Swal.fire(
+          "Trip added!",
+          "Travel history updated successfully",
+          "success"
+        );
+        props.history.push(`/mytrip/${response.data}/${trips.length}`);
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +63,6 @@ function Trips(props) {
   };
 
   const TripComponents = trips.map((trip, index) => {
-
     trip.startDate = trip.startDate.split("T")[0];
     trip.endDate = trip.endDate.split("T")[0];
     return (
@@ -64,7 +70,18 @@ function Trips(props) {
         <td>{trip.destination}</td>
         <td>{trip.startDate}</td>
         <td>{trip.endDate}</td>
-        <td><Link style={{color:"#f3722c",textDecoration:"none",fontWeight:"600"}} to={`/mytrip/${trip._id}/${index}`}>View</Link></td>
+        <td>
+          <Link
+            style={{
+              color: "#f3722c",
+              textDecoration: "none",
+              fontWeight: "600",
+            }}
+            to={`/mytrip/${trip._id}/${index}`}
+          >
+            View
+          </Link>
+        </td>
       </tr>
     );
   });
@@ -76,7 +93,7 @@ function Trips(props) {
         className="app"
         style={{
           padding: "1rem",
-          backgroundColor : "#ddbea9",
+          backgroundColor: "#ddbea9",
         }}
       >
         <div>
@@ -99,7 +116,9 @@ function Trips(props) {
                   controlId="start_date"
                   style={{ paddingTop: "1rem" }}
                 >
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>Start date</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Start date
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     name="start_date"
@@ -114,7 +133,9 @@ function Trips(props) {
               </div>
               <div className="col-lg-6">
                 <Form.Group controlId="end_date" style={{ paddingTop: "1rem" }}>
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>End Date</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    End Date
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     name="end_date"
@@ -130,7 +151,9 @@ function Trips(props) {
                   controlId="destination"
                   style={{ paddingTop: "1rem" }}
                 >
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>Destination</Form.Label>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Destination
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="destination"
@@ -146,43 +169,54 @@ function Trips(props) {
               <Button
                 variant="primary"
                 type="submit"
-                style={{ marginTop: "2rem",border:"1px solid #fbd1a2",borderRadius:"2rem",width:"200px",backgroundColor:"#faedcb",fontWeight:"600",fontSize:"18px",color:"#000" }}
+                style={{
+                  marginTop: "2rem",
+                  border: "1px solid #fbd1a2",
+                  borderRadius: "2rem",
+                  width: "200px",
+                  backgroundColor: "#faedcb",
+                  fontWeight: "600",
+                  fontSize: "18px",
+                  color: "#000",
+                }}
               >
-                New trip 
+                New trip
               </Button>
             </div>
           </Form>
         </div>
-        </div>  
-        <div  style={{backgroundColor:"#ffe8d6"}}>         
+      </div>
+
+      <div style={{ backgroundColor: "#ffe8d6" }}>
         <br />
-          <div style={{ textAlign: "center" }}>
-            <span
-              className="text-center mb-4"
-              style={{
-                color:"#cb997e",
-                fontWeight: "700",
-                fontSize: "2rem",
-              }}
-            >
-              Your Past trips
-            </span>
-          </div>
-          <div style={{ textAlign: "center" }}>
-          <br/>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Place</th>
-                  <th>Departure</th>
-                  <th>Arrival</th>
-                  <th>Operation</th>
-                </tr>
-              </thead>
-              <tbody>{TripComponents}</tbody>
-            </Table>
-          </div>
+        <div style={{ textAlign: "center" }}>
+          <span
+            className="text-center mb-4"
+            style={{
+              color: "#cb997e",
+              fontWeight: "700",
+              fontSize: "2rem",
+            }}
+          >
+            Your Past trips
+          </span>
         </div>
+        <div style={{ textAlign: "center" }}>
+          <br />
+          <Table>
+            <thead>
+              <tr>
+                <th>Place</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>{TripComponents}</tbody>
+          </Table>
+        </div>
+      </div>
+    
     </div>
   );
 }
