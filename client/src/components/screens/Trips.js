@@ -74,7 +74,6 @@ function Trips(props) {
           <Link
             style={{
               color: "#f3722c",
-              textDecoration: "none",
               fontWeight: "600",
             }}
             to={`/mytrip/${trip._id}/${index}`}
@@ -101,7 +100,7 @@ function Trips(props) {
             <span
               className="text-center mb-4"
               style={{
-                color: "#f1faee",
+                color: "#a47148",
                 fontWeight: "700",
                 fontSize: "2rem",
               }}

@@ -110,7 +110,7 @@ function ExpenseTracker() {
         <td>{expense.text}</td>
         <td>{expense.amount}</td>
         <td>
-          <Link to="#" onClick={() => deleteExpense(index)}>
+          <Link style={{color:"#9c89b8",fontWeight: "600"}} to="#" onClick={() => deleteExpense(index)}>
             Delete
           </Link>
         </td>
@@ -125,11 +125,11 @@ function ExpenseTracker() {
       <div
         style={{
           paddingTop: "1rem",
-          backgroundColor: "#7dcfb6",
+          backgroundColor: "#aceca1",
         }}
       >
-        <div >
-          <div style={{ textAlign: "center" }}>
+        <div>
+          <div style={{ textAlign: "center"}}>
             <span
               className="text-center"
               style={{
@@ -167,12 +167,12 @@ function ExpenseTracker() {
               </div>
             </div>
           </div>
-          <hr/>
+          <div style={{backgroundColor:"#c9f2c7"}}>
           <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
-          <div>
+          <div style={{paddingBottom:"0.2rem"}}>
             <Table style={{ textAlign: "center" }}>
               <thead>
-                <tr style={{ fontSize: "1.3rem" }}>
+                <tr style={{ fontSize: "1.2rem" }}>
                   <th>Text</th>
                   <th>Amount</th>
                   <th>Operation</th>
@@ -183,10 +183,10 @@ function ExpenseTracker() {
               </tbody>
             </Table>
           </div>
-
-          <Form className="input-form" onSubmit={handleSubmit}>
+          </div>
+          <Form style={{marginBottom:"0"}} className="input-form" onSubmit={handleSubmit}>
             <div className="row">
-              <h3 style={{ padding: "0.5rem", textAlign: "center" }}>
+              <h3 style={{ padding: "0.5rem",paddingTop:"0", textAlign: "center" }}>
                 Add transaction
               </h3>
               <div className="col-md-6">
@@ -239,11 +239,14 @@ function ExpenseTracker() {
                 variant="primary"
                 type="submit"
                 style={{
-                  margin:"0.5rem",
+                  margin: "2.5rem",
+                  border: "1px solid #f896d8",
                   backgroundColor: "#9c89b8",
                   color: "#000",
                   borderRadius: "2rem",
+                  fontSize:"18px",
                   fontWeight: "600",
+                  width: "250px",
                 }}
               >
                 Add Transaction

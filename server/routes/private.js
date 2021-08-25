@@ -170,7 +170,6 @@ router.route("/deleteexpense")
   // delete an expense
   .post(protect, async (req, res) => {
     try{ 
-      console.log("hi")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
