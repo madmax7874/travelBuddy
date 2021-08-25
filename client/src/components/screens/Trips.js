@@ -64,7 +64,7 @@ function Trips(props) {
         <td>{trip.destination}</td>
         <td>{trip.startDate}</td>
         <td>{trip.endDate}</td>
-        <td><Link to={`/mytrip/${trip._id}/${index}`}>View</Link></td>
+        <td><Link style={{color:"#f3722c",textDecoration:"none",fontWeight:"600"}} to={`/mytrip/${trip._id}/${index}`}>View</Link></td>
       </tr>
     );
   });
@@ -76,7 +76,7 @@ function Trips(props) {
         className="app"
         style={{
           padding: "1rem",
-          backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
+          backgroundColor : "#ddbea9",
         }}
       >
         <div>
@@ -84,11 +84,9 @@ function Trips(props) {
             <span
               className="text-center mb-4"
               style={{
-                backgroundColor: "rgba(255,255,255,0.6)",
-                fontWeight: "500",
+                color: "#f1faee",
+                fontWeight: "700",
                 fontSize: "2rem",
-                padding: "0.5rem",
-                borderRadius: "1rem",
               }}
             >
               Going on a new trip?
@@ -148,34 +146,30 @@ function Trips(props) {
               <Button
                 variant="primary"
                 type="submit"
-                style={{ marginTop: "1rem" }}
+                style={{ marginTop: "2rem",border:"1px solid #fbd1a2",borderRadius:"2rem",width:"200px",backgroundColor:"#faedcb",fontWeight:"600",fontSize:"18px",color:"#000" }}
               >
                 New trip 
               </Button>
             </div>
           </Form>
         </div>
-
+        </div>  
+        <div  style={{backgroundColor:"#ffe8d6"}}>         
         <br />
-        <hr />
-        <br />
-
-        <div>
           <div style={{ textAlign: "center" }}>
             <span
               className="text-center mb-4"
               style={{
-                backgroundColor: "rgba(255,255,255,0.6)",
-                fontWeight: "500",
+                color:"#cb997e",
+                fontWeight: "700",
                 fontSize: "2rem",
-                padding: "0.5rem",
-                borderRadius: "1rem",
               }}
             >
               Your Past trips
             </span>
           </div>
           <div style={{ textAlign: "center" }}>
+          <br/>
             <Table>
               <thead>
                 <tr>
@@ -189,7 +183,6 @@ function Trips(props) {
             </Table>
           </div>
         </div>
-      </div>
     </div>
   );
 }
