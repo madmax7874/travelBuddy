@@ -6,7 +6,7 @@ import "../styles/ExpenseTracker.css";
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
-function ToPack({ topack, index, removeTopack }) {
+function ToPack({ topack, index, deleteExpense }) {
   return (
     <div className="topack">
       <div
@@ -19,7 +19,7 @@ function ToPack({ topack, index, removeTopack }) {
         }}
       >
         {topack.text} <span> ₹{topack.amount}</span>
-        <Button onClick={() => removeTopack(index)} className="delete-btn">
+        <Button onClick={() => deleteExpense(index)} className="delete-btn" style={{backgroundColor:"#dc3545"}}>
           ✕
         </Button>
       </div>
@@ -33,6 +33,7 @@ function ExpenseTracker(props) {
     text: "",
     amount: "",
   });
+  const [total,setTotal] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +53,17 @@ function ExpenseTracker(props) {
     };
     fetchData();
   }, []);
+
+  useEffect(() =>{
+    const totalExpense = () => {
+      let myTotal = 0;
+      expenseHistory.map((expense)=>{
+        return myTotal+=parseInt(expense.amount)
+      })
+      setTotal(myTotal)
+    }
+    totalExpense()
+  },[expenseHistory]) 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,12 +102,18 @@ function ExpenseTracker(props) {
     }
   };
 
-  const removeTopack = async (index) => {
+  const deleteExpense = async (index) => {
     const newTopacks = [...expenseHistory];
     newTopacks.splice(index, 1);
     setExpenseHistory(newTopacks);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
     const url = `/api/private/deleteexpense`;
-    const response = await axios.post(url, newTopacks);
+    const response = await axios.post(url, newTopacks,config);
     if (response.data) {
       Swal.fire(
         "Record deleted!",
@@ -106,7 +124,6 @@ function ExpenseTracker(props) {
   };
 
   useEffect(() => {}, [value]);
-
   return (
     <div>
       <Head />
@@ -132,6 +149,14 @@ function ExpenseTracker(props) {
               Expense Tracker
             </span>
           </div>
+          <div>
+          <div className="inc-exp-container">
+      <div>
+        <h4>Total Expenses</h4>
+        <p className="money minus">₹{total}</p>
+      </div>
+    </div>
+          </div>
           <h3 style={{ padding: "1rem" }}>History</h3>
           <div>
             {expenseHistory.map((topack, index) => {
@@ -143,7 +168,7 @@ function ExpenseTracker(props) {
                         key={index}
                         index={index}
                         topack={topack}
-                        removeTopack={removeTopack}
+                        deleteExpense={deleteExpense}
                       />
                     </Card.Body>
                   </Card>
@@ -165,7 +190,7 @@ function ExpenseTracker(props) {
                 />
               </Form.Group>
               <Form.Group style={{ paddingTop: "1rem" }}>
-                <Form.Label style={{ marginBottom: "1rem",fontWeight: "600", fontSize: "0.9rem" }}>Amount</Form.Label>
+                <Form.Label style={{ marginBottom: "1rem",fontWeight: "600", fontSize: "0.9rem" }}>Amount (in ₹)</Form.Label>
                 <Form.Control
                   type="number"
                   name="amount"

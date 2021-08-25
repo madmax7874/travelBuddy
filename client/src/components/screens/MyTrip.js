@@ -54,7 +54,7 @@ function FormTopack({ addTopack }) {
     try {
       const { data } = await axios.post(url, value, config);
       if (data) {
-        Swal.fire("Day added!", "Details for the day added successfully", "success");
+        Swal.fire('Details for the day added','Record saved successfully', "success");
       }
     } catch (error) {
       console.log("err");
@@ -64,7 +64,6 @@ function FormTopack({ addTopack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
-    console.log(value);
     addTopack(value);
     sendData(value);
     setValue({
@@ -151,8 +150,6 @@ function FormTopack({ addTopack }) {
 function MyTrip(props) {
   const { id, index } = useParams();
   const _id = id;
-  console.log(id,index)
-
   const [trip, setTrip] = useState({});
   const [topacks, setTopacks] = useState([]);  
 
@@ -191,13 +188,13 @@ function MyTrip(props) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/modifyperdaydetails/${_id}/${index}`
+    const url = `/api/private/deleteperdaydetails/${_id}/${index}`
     try {
       const { data } = await axios.post(url, value, config);
       if(data){
         Swal.fire(
-          'Item modified',
-          'List updated successfully',
+          'Details for the day deleted',
+          'Record updated successfully',
           'success'
         )
       }

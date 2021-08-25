@@ -10,6 +10,7 @@ router.route("/").get(protect , async(req,res) => {
 });
 
 router.route("/list")
+  // get all list from db 
   .get(protect, async (req, res) => { 
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -17,9 +18,11 @@ router.route("/list")
       const user = await User.findById(decoded.id);
       res.status(200).send(user.list);
     }catch(err){
-      return next(new ErrorResponse("No user found with this id", 404));
+      console.log(err)
+      res.status(500).send(false);
     }
   })
+  // add list to db
   .post(protect, async (req, res) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
@@ -32,24 +35,28 @@ router.route("/list")
       const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
       res.status(200).send(true);
     }catch(err){
-      return next(new ErrorResponse("No user found with this id", 404));
+      console.log(err)
+      res.status(500).send(false);
     }
   });
 
-router.route("/modifylist").post(protect, async (req, res) => {
-  try{ 
-    token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const query = { _id: decoded.id };
-    const user = await User.findOneAndUpdate(query, { list : req.body.value })
-    res.status(200).send(true);
-  }catch(err){
-    return next(new ErrorResponse("No user found with this id", 404));
-  }
-});
+router.route("/modifylist")
+  // edit and delete list
+  .post(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const query = { _id: decoded.id };
+      const user = await User.findOneAndUpdate(query, { list : req.body.value })
+      res.status(200).send(true);
+    }catch(err){
+      console.log(err)
+      res.status(500).send(false);
+    }
+  });
 
- //create a trip
 router.route("/traveldetails")
+  //create a trip
   .post(protect, async (req, res) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
@@ -68,48 +75,55 @@ router.route("/traveldetails")
 
       res.status(200).send(findUser.details[findUser.details.length-1]._id);
     }catch(err){
-      console.log(err);
+      console.log(err)
+      res.status(500).send(false);
+    }
+  }); 
+
+router.route("/trips")
+  //get all trips 
+  .get(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id);
+      res.status(200).send(user.details)
+    }catch(err){
+      console.log(err)
+      res.status(500).send(false);
     }
   });
 
-//get all trips
-router.route("/trips").get(protect, async (req, res) => {
-  try{ 
-    token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-    res.status(200).send(user.details)
-  }catch(err){
-    console.log(err);
-  }
-});
-
-//get a trip
-router.route("/mytrip/:id").get(protect, async (req, res) => {
-  try{ 
-    token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.find({'_id': decoded.id}, {details: {$elemMatch: {_id: req.params.id}}});
-    res.status(200).send(user[0].details[0])
-  }catch(err){
-    console.log(err);
-  }
-});
+router.route("/mytrip/:id")
+  //get my trip details
+  .get(protect, async (req, res) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.find({'_id': decoded.id}, {details: {$elemMatch: {_id: req.params.id}}});
+      res.status(200).send(user[0].details[0])
+    }catch(err){
+      console.log(err)
+      res.status(500).send(false);
+    }
+  });
 
 router.route("/perdaydetails/:id/:index")
+  //add per day details to db
   .post(protect, async (req, res) => {
     try{
       const {id,index} = req.params
       const user = await User.findOneAndUpdate({'details._id': id},{ $push : {[`details.${index}.perDayDetails`] : req.body } })
-      console.log(user)
-
       res.status(200).send(true)
     }catch(err){
-      console.log(err);
+      console.log(err)
+      res.status(500).send(false);
     }
   });
 
-  router.route("/modifyperdaydetails/:id/:index").post(protect, async (req, res) => {
+router.route("/deleteperdaydetails/:id/:index")
+  //delete per day details
+  .post(protect, async (req, res) => {
     try{ ;
       const {id,index} = req.params
 
@@ -117,22 +131,25 @@ router.route("/perdaydetails/:id/:index")
       res.status(200).send(true);
     }catch(err){
       console.log(err)
+      res.status(500).send(false);
     }
   });
 
-  router.route("/expensetracker")
+router.route("/expensetracker")
+  // get expense from db
   .get(protect, async (req, res) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id);
-      // console.log(user)
       res.status(200).send(user.expense)
     }catch(err){
-      console.log(err);
+      console.log(err)
+      res.status(500).send(false);
     }
   })
-  .post(async (req, res) => {
+  //add expense to db
+  .post(protect, async (req, res) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -144,19 +161,25 @@ router.route("/perdaydetails/:id/:index")
       const user = await User.findOneAndUpdate(query, { $push : { expense : newData } })
       res.status(200).send(true);
     }catch(err){
-      return next(new ErrorResponse("No user found with this id", 404));
+      console.log(err)
+      res.status(500).send(false);
     }
   }); 
 
-  router.route("/deleteexpense").post(protect, async (req, res) => {
+router.route("/deleteexpense")
+  // delete an expense
+  .post(protect, async (req, res) => {
     try{ 
+      console.log("hi")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { expense : req.body.value })
+      const user = await User.findOneAndUpdate(query, { expense : req.body})
+
       res.status(200).send(true);
     }catch(err){
-      return next(new ErrorResponse("No user found with this id", 404));
+      console.log(err)
+      res.status(500).send(false);
     }
   });
 

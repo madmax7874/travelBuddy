@@ -47,7 +47,7 @@ function Trips(props) {
     try {
       const response = await axios.post("/api/private/traveldetails",data,config);
       if (response.data) {
-        Swal.fire("Item added!", "List updated successfully", "success");
+        Swal.fire("Trip added!", "Travel history updated successfully", "success");
         props.history.push(`/mytrip/${response.data}/${trips.length}`)
       }
     } catch (error) {
