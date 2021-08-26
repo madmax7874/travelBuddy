@@ -110,13 +110,12 @@ function DontForgetMe() {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    setLoading(true);
     try {
       const { data } = await axios.get("/api/private/list", config);
       setTopacks(data);
+      setLoading(true);
     } catch (error) {
       console.log(error);
-      // localStorage.removeItem("authToken");
     }
   };
 

@@ -25,11 +25,11 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      setLoading(true);
       const url = `/api/private/expensetracker`;
       try {
         const { data } = await axios.get(url, config);
         setExpenseHistory(data);
+        setLoading(true)
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -184,7 +184,7 @@ function ExpenseTracker() {
           </div>
           <div style={{ backgroundColor: "#c9f2c7" }}>
             <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
-            {loading? (
+            {loading ? (
                 <div style={{ paddingBottom: "0.2rem" }}>
                 <Table style={{ textAlign: "center" }}>
                   <thead>
