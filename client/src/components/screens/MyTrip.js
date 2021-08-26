@@ -265,18 +265,8 @@ function MyTrip(props) {
           <Card.Body>From : {trip.startDate}<br/> To : {trip.endDate}</Card.Body>
         </Card>
         </div>       
-          {/* <div className="col-12" style={{ padding: "1rem" }}>
-            <b>Destination : </b> {trip.destination}
-          </div> */}
-          {/* <div className="col-lg-6" style={{ padding: "1rem" }}>
-            <b>Starts at : </b> {trip.startDate}
-          </div>
-          <div className="col-lg-6" style={{ padding: "1rem" }}>
-            <b>Ends at : </b> {trip.endDate}
-          </div> */}
         <hr />
         <br/>
-
         <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
         <br />
         <PerDayDetails />

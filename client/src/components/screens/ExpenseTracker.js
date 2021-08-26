@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Table } from "react-bootstrap";
 import Head from "./Head";
+import { ClipLoader, PulseLoader } from "react-spinners";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const axios = require("axios");
@@ -9,6 +10,7 @@ const Swal = require("sweetalert2");
 
 function ExpenseTracker() {
   const [expenseHistory, setExpenseHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = React.useState({
     text: "",
     amount: "",
@@ -23,6 +25,7 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
+      setLoading(true);
       const url = `/api/private/expensetracker`;
       try {
         const { data } = await axios.get(url, config);
@@ -32,7 +35,7 @@ function ExpenseTracker() {
       }
     };
     fetchData();
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     const totalExpense = () => {
@@ -56,7 +59,6 @@ function ExpenseTracker() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!value) return;
-
     try {
       const config = {
         headers: {
@@ -108,9 +110,13 @@ function ExpenseTracker() {
     return (
       <tr key={index} index={index}>
         <td>{expense.text}</td>
-        <td>{expense.amount}</td>
+        <td>₹{expense.amount}</td>
         <td>
-          <Link style={{color:"#9c89b8",fontWeight: "600"}} to="#" onClick={() => deleteExpense(index)}>
+          <Link
+            style={{ color: "#9c89b8", fontWeight: "600" }}
+            to="#"
+            onClick={() => deleteExpense(index)}
+          >
             Delete
           </Link>
         </td>
@@ -129,7 +135,7 @@ function ExpenseTracker() {
         }}
       >
         <div>
-          <div style={{ textAlign: "center"}}>
+          <div style={{ textAlign: "center" }}>
             <span
               className="text-center"
               style={{
@@ -152,41 +158,70 @@ function ExpenseTracker() {
                 padding: "0.5rem",
               }}
             >
-              <div>
-                <h4>Total Expenses</h4>
-                <p
-                  style={{
-                    color: "#c0392b",
-                    fontWeight: "600",
-                    fontSize: "1.5rem",
-                    marginBottom: "0",
-                  }}
-                >
-                  ₹{total}
-                </p>
-              </div>
+                <div>
+                  <h4>Total Expenses</h4>
+                  {loading? (
+                    <p
+                    style={{
+                      color: "#c0392b",
+                      fontWeight: "600",
+                      fontSize: "1.5rem",
+                      marginBottom: "0",
+                    }}
+                  >
+                    ₹{total}
+                  </p>
+                  ): (
+                    <p style={{ textAlign: "center" }}>
+                    <ClipLoader
+                      color="rgba(60, 53, 119,1)"
+                      size={50}
+                    />
+                  </p>
+                  )}
+                </div>
             </div>
           </div>
-          <div style={{backgroundColor:"#c9f2c7"}}>
-          <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
-          <div style={{paddingBottom:"0.2rem"}}>
-            <Table style={{ textAlign: "center" }}>
-              <thead>
-                <tr style={{ fontSize: "1.2rem" }}>
-                  <th>Text</th>
-                  <th>Amount</th>
-                  <th>Operation</th>
-                </tr>
-              </thead>
-              <tbody style={{ fontSize: "1.1rem" }}>
-                {expenseHistoryComponent}
-              </tbody>
-            </Table>
+          <div style={{ backgroundColor: "#c9f2c7" }}>
+            <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
+            {loading? (
+                <div style={{ paddingBottom: "0.2rem" }}>
+                <Table style={{ textAlign: "center" }}>
+                  <thead>
+                    <tr style={{ fontSize: "1.2rem" }}>
+                      <th>Text</th>
+                      <th>Amount</th>
+                      <th>Operation</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{ fontSize: "1.1rem" }}>
+                    {expenseHistoryComponent}
+                  </tbody>
+                </Table>
+              </div>
+            ):(
+              <div style={{ textAlign: "center" }}>
+              <PulseLoader
+                color="rgba(60, 53, 119,1)"
+                size={15}
+                margin={8}
+              />
+            </div>
+          )}   
           </div>
-          </div>
-          <Form style={{marginBottom:"0"}} className="input-form" onSubmit={handleSubmit}>
+          <Form
+            style={{ marginBottom: "0" }}
+            className="input-form"
+            onSubmit={handleSubmit}
+          >
             <div className="row">
-              <h3 style={{ padding: "0.5rem",paddingTop:"0", textAlign: "center" }}>
+              <h3
+                style={{
+                  padding: "0.5rem",
+                  paddingTop: "0",
+                  textAlign: "center",
+                }}
+              >
                 Add transaction
               </h3>
               <div className="col-md-6">
@@ -221,6 +256,9 @@ function ExpenseTracker() {
                     }}
                   >
                     Amount (in ₹)
+                    <span style={{ color: "#d00000", fontSize: "1.3rem" }}>
+                      *
+                    </span>
                   </Form.Label>
                   <Form.Control
                     type="number"
@@ -234,23 +272,23 @@ function ExpenseTracker() {
                 </Form.Group>
               </div>
 
-              <div style={{textAlign:"center"}}>
-              <Button
-                variant="primary"
-                type="submit"
-                style={{
-                  margin: "2.5rem",
-                  border: "1px solid #f896d8",
-                  backgroundColor: "#9c89b8",
-                  color: "#000",
-                  borderRadius: "2rem",
-                  fontSize:"18px",
-                  fontWeight: "600",
-                  width: "250px",
-                }}
-              >
-                Add Transaction
-              </Button>
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{
+                    margin: "2.5rem",
+                    border: "1px solid #f896d8",
+                    backgroundColor: "#9c89b8",
+                    color: "#000",
+                    borderRadius: "2rem",
+                    fontSize: "18px",
+                    fontWeight: "600",
+                    width: "250px",
+                  }}
+                >
+                  Add Transaction
+                </Button>
               </div>
             </div>
           </Form>

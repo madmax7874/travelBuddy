@@ -90,103 +90,9 @@ function Trips(props) {
       <Head />
       <div
         className="app"
-        style={{
-          padding: "1rem",
-          backgroundColor: "#ddbea9",
-        }}
+        style={{backgroundColor: "#ffe8d6" }}
       >
-        <div>
-          <div style={{ textAlign: "center" }}>
-            <span
-              className="text-center mb-4"
-              style={{
-                color: "#a47148",
-                fontWeight: "700",
-                fontSize: "2rem",
-              }}
-            >
-              Going on a new trip?
-            </span>
-          </div>
-          <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col-lg-6">
-                <Form.Group
-                  controlId="start_date"
-                  style={{ paddingTop: "1rem" }}
-                >
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-                    Start date
-                  </Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="start_date"
-                    placeholder="Enter start date"
-                    autoComplete="off"
-                    {...register("start_date", { required: true })}
-                  />
-                  {errors.start_date && (
-                    <p className="">Start Date is required</p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-lg-6">
-                <Form.Group controlId="end_date" style={{ paddingTop: "1rem" }}>
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-                    End Date
-                  </Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="end_date"
-                    placeholder="Enter End Date"
-                    autoComplete="off"
-                    {...register("end_date", { required: true })}
-                  />
-                  {errors.floor && <p className="">End Date is required</p>}
-                </Form.Group>
-              </div>
-              <div className="col-lg-12">
-                <Form.Group
-                  controlId="destination"
-                  style={{ paddingTop: "1rem" }}
-                >
-                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-                    Destination
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="destination"
-                    placeholder="Enter Destination"
-                    autoComplete="off"
-                    {...register("destination", { required: true })}
-                  />
-                  {errors.floor && <p className="">Destination is required</p>}
-                </Form.Group>
-              </div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <Button
-                variant="primary"
-                type="submit"
-                style={{
-                  marginTop: "2rem",
-                  border: "1px solid #fbd1a2",
-                  borderRadius: "2rem",
-                  width: "200px",
-                  backgroundColor: "#faedcb",
-                  fontWeight: "600",
-                  fontSize: "18px",
-                  color: "#000",
-                }}
-              >
-                New trip
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </div>
-
-      <div style={{ backgroundColor: "#ffe8d6" }}>
+        <div style={{ backgroundColor: "#ffe8d6"}}>
         <br />
         <div style={{ textAlign: "center" }}>
           <span
@@ -213,6 +119,98 @@ function Trips(props) {
             </thead>
             <tbody>{TripComponents}</tbody>
           </Table>
+        </div>
+      </div>
+      <br/>
+        <div style={{backgroundColor:"#ddbea9",paddingBottom:"0.1rem"}}>
+          <br/>
+          <div style={{ textAlign: "center" }}>
+            <span
+              className="text-center mb-4"
+              style={{
+                color: "#a47148",
+                fontWeight: "700",
+                fontSize: "2rem",
+              }}
+            >
+              Going on a new trip?
+            </span>
+          </div>
+          <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="row">
+              <div className="col-lg-6">
+                <Form.Group
+                  controlId="start_date"
+                  style={{ paddingTop: "1rem" }}
+                >
+                  <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
+                    Start date<span style={{color:"#d00000",fontSize:"1.1rem"}}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="start_date"
+                    placeholder="Enter start date"
+                    autoComplete="off"
+                    {...register("start_date", { required: true })}
+                  />
+                  {errors.start_date && (
+                    <p className="" style={{color:"#e85d04"}}>*Start Date is required</p>
+                  )}
+                </Form.Group>
+              </div>
+              <div className="col-lg-6">
+                <Form.Group controlId="end_date" style={{ paddingTop: "1rem" }}>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
+                    End Date<span style={{color:"#d00000",fontSize:"1.1rem"}}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="end_date"
+                    placeholder="Enter End Date"
+                    autoComplete="off"
+                    {...register("end_date", { required: true })}
+                  />
+                  {errors.end_date && <p className="" style={{color:"#e85d04"}}>*End Date is required</p>}
+                </Form.Group>
+              </div>
+              <div className="col-lg-12">
+                <Form.Group
+                  controlId="destination"
+                  style={{ paddingTop: "1rem" }}
+                >
+                  <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
+                    Destination<span style={{color:"#d00000",fontSize:"1.1rem"}}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="destination"
+                    placeholder="Enter Destination"
+                    autoComplete="off"
+                    {...register("destination", { required: true })}
+                  />
+                  {errors.destination && <p className="" style={{color:"#e85d04"}}>*Destination is required</p>}
+                </Form.Group>
+              </div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{
+                  marginTop: "2rem",
+                  border: "1px solid #fbd1a2",
+                  borderRadius: "2rem",
+                  width: "200px",
+                  backgroundColor: "#a47148",
+                  fontWeight: "600",
+                  fontSize: "20px",
+                  color: "#ffe8d6",
+                }}
+              >
+                New trip
+              </Button>
+            </div>
+          </Form>
         </div>
       </div>
     

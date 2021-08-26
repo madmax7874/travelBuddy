@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Head from "./Head"
+import Head from "./Head";
 import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
-import Swal from 'sweetalert2'
+import { ClipLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -51,25 +52,20 @@ function FormTopack({ addTopack }) {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/list",{value}, config);
-      if(data){
-        Swal.fire(
-          'Item added!',
-          'List updated successfully',
-          'success'
-        )
+      const { data } = await axios.post("/api/private/list", { value }, config);
+      if (data) {
+        Swal.fire("Item added!", "List updated successfully", "success");
       }
     } catch (error) {
-      console.log("err")
+      console.log("err");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!value) 
-      return;
+    if (!value) return;
     addTopack(value);
-    sendData(value)
+    sendData(value);
     setValue("");
   };
 
@@ -105,6 +101,7 @@ function FormTopack({ addTopack }) {
 
 function DontForgetMe() {
   const [topacks, setTopacks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchPrivateData = async () => {
     const config = {
@@ -113,18 +110,19 @@ function DontForgetMe() {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
+    setLoading(true);
     try {
       const { data } = await axios.get("/api/private/list", config);
-      setTopacks(data)
+      setTopacks(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // localStorage.removeItem("authToken");
     }
   };
 
   useEffect(() => {
     fetchPrivateData();
-  }, []);
+  }, [loading]);
 
   const addTopack = (text) => {
     const newTopacks = [...topacks, { text }];
@@ -139,16 +137,16 @@ function DontForgetMe() {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/modifylist",{value}, config);
-      if(data){
-        Swal.fire(
-          'Item modified',
-          'List updated successfully',
-          'success'
-        )
+      const { data } = await axios.post(
+        "/api/private/modifylist",
+        { value },
+        config
+      );
+      if (data) {
+        Swal.fire("Item modified", "List updated successfully", "success");
       }
     } catch (error) {
-      console.log("err")
+      console.log("err");
     }
   };
 
@@ -158,64 +156,72 @@ function DontForgetMe() {
       newTopacks[index].isDone = false;
     } else newTopacks[index].isDone = true;
     setTopacks(newTopacks);
-    removeData(newTopacks)
+    removeData(newTopacks);
   };
 
   const removeTopack = (index) => {
     const newTopacks = [...topacks];
     newTopacks.splice(index, 1);
     setTopacks(newTopacks);
-    removeData(newTopacks)
+    removeData(newTopacks);
   };
 
   return (
     <div>
       <Head />
       <div
-      className="app"
-      style={{
-        padding: "1rem",
-        backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
-      }}
-    >
-      <div className="container">
-        <div style={{ textAlign: "center" }}>
-          <span
-            className="text-center mb-4"
-            style={{
-              backgroundColor: "rgba(255,255,255,0.6)",
-              fontWeight: "500",
-              fontSize: "2rem",
-              padding: "0.5rem",
-              borderRadius: "1rem",
-            }}
-          >
-            Dont Forget Me!
-          </span>
+        className="app"
+        style={{
+          padding: "1rem",
+          backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
+        }}
+      >
+        <div className="container">
+          <div style={{ textAlign: "center" }}>
+            <span
+              className="text-center mb-4"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.6)",
+                fontWeight: "500",
+                fontSize: "2rem",
+                padding: "0.5rem",
+                borderRadius: "1rem",
+              }}
+            >
+              Dont Forget Me!
+            </span>
+          </div>
+          {loading ? (
+            <div>
+              <FormTopack addTopack={addTopack} />
+              <Container>
+                <Row>
+                  {topacks.map((topack, index) => (
+                    <Col key={index} md="4">
+                      <Card style={{ margin: "0.5rem" }}>
+                        <Card.Body style={{ padding: "0.7rem" }}>
+                          <ToPack
+                            key={index}
+                            index={index}
+                            topack={topack}
+                            markTopack={markTopack}
+                            removeTopack={removeTopack}
+                          />
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            </div>
+          ) : (
+            <div style={{ textAlign: "center" }}>
+              <ClipLoader color="rgba(60, 53, 119,1)" size={50} />
+            </div>
+          )}
         </div>
-        <FormTopack addTopack={addTopack} />
-        <Container>
-          <Row>
-            {topacks.map((topack, index) => (
-              <Col key={index} md="4">
-                <Card style={{ margin: "0.5rem" }}>
-                  <Card.Body style={{ padding: "0.7rem" }}>
-                    <ToPack
-                      key={index}
-                      index={index}
-                      topack={topack}
-                      markTopack={markTopack}
-                      removeTopack={removeTopack}
-                    />
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
       </div>
     </div>
-    </div>   
   );
 }
 
