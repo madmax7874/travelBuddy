@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Button, Form, Table,Card } from "react-bootstrap";
+import { Button, Form, Table, Card } from "react-bootstrap";
 import Head from "./Head";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles.scss"
+import "./styles.scss";
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
@@ -18,7 +18,7 @@ function ToPack({ topack, index, removeTopack }) {
       <td>{topack.nightPlace}</td>
       <td>{topack.nightFood}</td>
       <td>
-        <Link to="#" onClick={() => removeTopack(index)}>
+        <Link style={{color:"#47126b",fontWeight: "600"}} to="#" onClick={() => removeTopack(index)}>
           Delete
         </Link>
       </td>
@@ -27,7 +27,7 @@ function ToPack({ topack, index, removeTopack }) {
 }
 
 function FormTopack({ addTopack }) {
-  const {id, index} = useParams()
+  const { id, index } = useParams();
   const [value, setValue] = React.useState({
     morningPlace: "",
     morningFood: "",
@@ -50,11 +50,15 @@ function FormTopack({ addTopack }) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/perdaydetails/${id}/${index}`
+    const url = `/api/private/perdaydetails/${id}/${index}`;
     try {
       const { data } = await axios.post(url, value, config);
       if (data) {
-        Swal.fire('Details for the day added','Record saved successfully', "success");
+        Swal.fire(
+          "Details for the day added",
+          "Record saved successfully",
+          "success"
+        );
       }
     } catch (error) {
       console.log("err");
@@ -140,10 +144,24 @@ function FormTopack({ addTopack }) {
           </Form.Group>
         </div>
       </div>
-
-      <Button variant="primary mb-3" type="submit">
+      <br />
+      <div style={{textAlign:"center"}}>       
+      <Button
+        variant="primary"
+        type="submit"
+        style={{
+          border: "1px solid #f896d8",
+          backgroundColor: "#d1b3c4",
+          color: "#000",
+          borderRadius: "2rem",
+          fontSize: "18px",
+          fontWeight: "600",
+          width: "150px",
+        }}
+      >
         Add
       </Button>
+      </div>
     </Form>
   );
 }
@@ -151,7 +169,7 @@ function MyTrip(props) {
   const { id, index } = useParams();
   const _id = id;
   const [trip, setTrip] = useState({});
-  const [topacks, setTopacks] = useState([]);  
+  const [topacks, setTopacks] = useState([]);
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -162,12 +180,12 @@ function MyTrip(props) {
         },
       };
       const url = `/api/private/mytrip/${_id}`;
-  
+
       try {
         const { data } = await axios.get(url, config);
         data.startDate = data.startDate.split("T")[0];
         data.endDate = data.endDate.split("T")[0];
-        setTopacks(data.perDayDetails)
+        setTopacks(data.perDayDetails);
         setTrip(data);
       } catch (error) {
         console.log(error);
@@ -188,18 +206,18 @@ function MyTrip(props) {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/deleteperdaydetails/${_id}/${index}`
+    const url = `/api/private/deleteperdaydetails/${_id}/${index}`;
     try {
       const { data } = await axios.post(url, value, config);
-      if(data){
+      if (data) {
         Swal.fire(
-          'Details for the day deleted',
-          'Record updated successfully',
-          'success'
-        )
+          "Details for the day deleted",
+          "Record updated successfully",
+          "success"
+        );
       }
     } catch (error) {
-      console.log("err")
+      console.log("err");
     }
   };
 
@@ -207,7 +225,7 @@ function MyTrip(props) {
     const newTopacks = [...topacks];
     newTopacks.splice(index, 1);
     setTopacks(newTopacks);
-    removeData(newTopacks)
+    removeData(newTopacks);
   };
 
   const PerDayDetails = () => {
@@ -227,7 +245,7 @@ function MyTrip(props) {
         className="app"
         style={{
           padding: "1rem",
-          backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
+          backgroundColor: "#d1b3c4",
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -243,61 +261,74 @@ function MyTrip(props) {
           >
             Your trip
           </span>
-          <br/>
-          <br/>
+          <br />
+          <br />
         </div>
-        <div style={{position: "relative",
-          height: "40vh",
-          width: "100%",
-          display: "flex",
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "middle",}}>
-          <Card style={{ height: "200px",
-          width: "500px",
-          paddingTop: "50px",
-          paddingLeft:"10px",
-          textAlign: "center",
-          borderRadius:"0.8rem",
-          background: "#98c1d9",
-          fontSize: "20px"}}>
-          <Card.Title style={{fontSize:"25px"}}>Destination : {trip.destination}</Card.Title>
-          <Card.Body>From : {trip.startDate}<br/> To : {trip.endDate}</Card.Body>
-        </Card>
-        </div>       
-        <hr />
-        <br/>
-        <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
-        <br />
-        <PerDayDetails />
-        <div style={{ textAlign: "center" }}>
-          <Table>
-            <thead>
-              <tr>
-                <th>Day</th>
-                <th>Morning Place</th>
-                <th>Morning Food</th>
-                <th>Night Place</th>
-                <th>Night Food</th>
-                <th>Operation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topacks.map((topack, index) => {
-                return (
-                  <ToPack
-                    key={index}
-                    index={index}
-                    topack={topack}
-                    removeTopack={removeTopack}
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
+        <div
+          style={{
+            position: "relative",
+            height: "40vh",
+            width: "100%",
+            display: "flex",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "middle",
+          }}
+        >
+          <Card
+            style={{
+              height: "200px",
+              width: "500px",
+              paddingTop: "40px",
+              paddingLeft: "10px",
+              textAlign: "center",
+              borderRadius: "0.8rem",
+              background: "#98c1d9",
+              fontSize: "20px",
+            }}
+          >
+            <Card.Title style={{ fontSize: "25px" }}>
+              Destination : {trip.destination}
+            </Card.Title>
+            <Card.Body>
+              From : {trip.startDate}
+              <br /> To : {trip.endDate}
+            </Card.Body>
+          </Card>
         </div>
+        <div style={{ backgroundColor: "#fad2e1", paddingBottom: "1rem" ,paddingTop:"1rem"}}>
+          <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
+          <br />
+          <PerDayDetails />
+          <div style={{ textAlign: "center" }}>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Morning Place</th>
+                  <th>Morning Food</th>
+                  <th>Night Place</th>
+                  <th>Night Food</th>
+                  <th>Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topacks.map((topack, index) => {
+                  return (
+                    <ToPack
+                      key={index}
+                      index={index}
+                      topack={topack}
+                      removeTopack={removeTopack}
+                    />
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
 
-        <FormTopack addTopack={addTopack} />
+          <FormTopack addTopack={addTopack} />
+        </div>
       </div>
     </div>
   );

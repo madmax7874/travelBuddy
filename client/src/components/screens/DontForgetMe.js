@@ -73,6 +73,8 @@ function FormTopack({ addTopack }) {
     <Form onSubmit={handleSubmit}>
       <Form.Group>
         <Form.Label style={{ marginBottom: "1rem" }}>
+          <br/>
+          <br/>
           <span
             style={{
               backgroundColor: "rgba(255,255,255,0.7)",
@@ -168,58 +170,59 @@ function DontForgetMe() {
   return (
     <div>
       <Head />
-      <div
-        className="app"
-        style={{
-          padding: "1rem",
-          backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
-        }}
-      >
-        <div className="container">
-          <div style={{ textAlign: "center" }}>
-            <span
-              className="text-center mb-4"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.6)",
-                fontWeight: "500",
-                fontSize: "2rem",
-                padding: "0.5rem",
-                borderRadius: "1rem",
-              }}
-            >
-              Dont Forget Me!
-            </span>
-          </div>
-          {loading ? (
-            <div>
-              <FormTopack addTopack={addTopack} />
-              <Container>
-                <Row>
-                  {topacks.map((topack, index) => (
-                    <Col key={index} md="4">
-                      <Card style={{ margin: "0.5rem" }}>
-                        <Card.Body style={{ padding: "0.7rem" }}>
-                          <ToPack
-                            key={index}
-                            index={index}
-                            topack={topack}
-                            markTopack={markTopack}
-                            removeTopack={removeTopack}
-                          />
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              </Container>
-            </div>
-          ) : (
-            <div style={{ textAlign: "center" }}>
-              <ClipLoader color="rgba(60, 53, 119,1)" size={50} />
-            </div>
-          )}
-        </div>
+      {loading ? (
+         <div
+         className="app"
+         style={{
+           padding: "1rem",
+           paddingBottom:"20rem",
+           backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
+         }}
+       >
+         <div className="container">
+           <div style={{ textAlign: "center" }}>
+             <span
+               className="text-center mb-4"
+               style={{
+                 backgroundColor: "rgba(255,255,255,0.6)",
+                 fontWeight: "500",
+                 fontSize: "2rem",
+                 padding: "0.5rem",
+                 borderRadius: "1rem",
+               }}
+             >
+               Dont Forget Me!
+             </span>
+           </div>
+             <div>
+               <FormTopack addTopack={addTopack} />
+               <Container>
+                 <Row>
+                   {topacks.map((topack, index) => (
+                     <Col key={index} md="4">
+                       <Card style={{ margin: "0.5rem" }}>
+                         <Card.Body style={{ padding: "0.7rem" }}>
+                           <ToPack
+                             key={index}
+                             index={index}
+                             topack={topack}
+                             markTopack={markTopack}
+                             removeTopack={removeTopack}
+                           />
+                         </Card.Body>
+                       </Card>
+                     </Col>
+                   ))}
+                 </Row>
+               </Container>
+             </div>
+         </div>
+       </div>
+      ):(
+        <div style={{ textAlign: "center",paddingTop:"200px"}}>
+        <ClipLoader color="rgba(60, 53, 119,1)" size={70} />
       </div>
+      )}    
     </div>
   );
 }
