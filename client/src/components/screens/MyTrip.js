@@ -61,7 +61,7 @@ function FormTopack({ addTopack }) {
         );
       }
     } catch (error) {
-      console.log("err");
+      console.log(error.response.data.error)
     }
   };
 

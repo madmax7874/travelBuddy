@@ -1,9 +1,29 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Head from "./Head"
 import Intro from "./Intro"
 import Features from "./Features"
 
-const Home = () => {
+const axios = require("axios");
+
+const Home = (props) => {
+
+  useEffect(()=>{
+    const checkAuthToken = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      try {
+        await axios.get("/api/private", config);
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        props.history.push("/login")
+      }
+    };
+    checkAuthToken()
+  }, [props.history])
 
   return  (
     <div>
