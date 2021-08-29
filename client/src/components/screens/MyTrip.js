@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Button, Form, Table, Card } from "react-bootstrap";
+import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import Head from "./Head";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
@@ -11,18 +11,15 @@ const Swal = require("sweetalert2");
 
 function ToPack({ topack, index, removeTopack }) {
   return (
-    <tr>
-      <th>{index + 1}</th>
-      <td>{topack.morningPlace}</td>
-      <td>{topack.morningFood}</td>
-      <td>{topack.nightPlace}</td>
-      <td>{topack.nightFood}</td>
-      <td>
-        <Link style={{color:"#47126b",fontWeight: "600"}} to="#" onClick={() => removeTopack(index)}>
-          Delete
-        </Link>
-      </td>
-    </tr>
+    <div
+      className="topack"
+      style={{
+        alignItems: "center",
+        display: "flex",
+        fontSize: "18px",
+        justifyContent: "space-between",
+      }}
+    ></div>
   );
 }
 
@@ -61,7 +58,7 @@ function FormTopack({ addTopack }) {
         );
       }
     } catch (error) {
-      console.log(error.response.data.error)
+      console.log(error.response.data.error);
     }
   };
 
@@ -145,22 +142,22 @@ function FormTopack({ addTopack }) {
         </div>
       </div>
       <br />
-      <div style={{textAlign:"center"}}>       
-      <Button
-        variant="primary"
-        type="submit"
-        style={{
-          border: "1px solid #f896d8",
-          backgroundColor: "#d1b3c4",
-          color: "#000",
-          borderRadius: "2rem",
-          fontSize: "18px",
-          fontWeight: "600",
-          width: "150px",
-        }}
-      >
-        Add
-      </Button>
+      <div style={{ textAlign: "center" }}>
+        <Button
+          variant="primary"
+          type="submit"
+          style={{
+            border: "1px solid #f896d8",
+            backgroundColor: "#d1b3c4",
+            color: "#000",
+            borderRadius: "2rem",
+            fontSize: "18px",
+            fontWeight: "600",
+            width: "150px",
+          }}
+        >
+          Add
+        </Button>
       </div>
     </Form>
   );
@@ -283,7 +280,7 @@ function MyTrip(props) {
               paddingLeft: "10px",
               textAlign: "center",
               borderRadius: "0.8rem",
-              background: "#98c1d9",
+              backgroundImage:`url("https://images.unsplash.com/photo-1617957718583-e83389e2b317?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTc2fHxncmVlbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")`,
               fontSize: "20px",
             }}
           >
@@ -296,37 +293,61 @@ function MyTrip(props) {
             </Card.Body>
           </Card>
         </div>
-        <div style={{ backgroundColor: "#fad2e1", paddingBottom: "1rem" ,paddingTop:"1rem"}}>
+        <div
+          style={{
+            backgroundColor: "#4f5d75",
+            color:"#FFF",
+            paddingBottom: "1rem",
+            paddingTop: "1rem",
+          }}
+        >
           <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
           <br />
           <PerDayDetails />
-          <div style={{ textAlign: "center" }}>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th>Morning Place</th>
-                  <th>Morning Food</th>
-                  <th>Night Place</th>
-                  <th>Night Food</th>
-                  <th>Operation</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topacks.map((topack, index) => {
-                  return (
-                    <ToPack
-                      key={index}
-                      index={index}
-                      topack={topack}
-                      removeTopack={removeTopack}
-                    />
-                  );
-                })}
-              </tbody>
-            </Table>
+          <div>
+            <Container>
+              <Row className="justify-content-evenly">
+                {topacks.map((topack, index) => (
+                  <Col key={index} sm="6" lg="4" style={{marginBottom:"1rem"}}>
+                    <Card
+                      style={{
+                        paddingTop: "0.5rem 0 0 0.5rem",
+                        color:"#000",
+                        background: "transparent linear-gradient(180deg,#49525f 0%,#a0a0a0 26%,#898989 53%,#a0a0a0 80%, #49525f 100%)"
+                      }}
+                    >
+                      <Card.Title style={{textAlign:"center"}}>Day {index + 1}</Card.Title>
+                      <Card.Body>
+                        Morning Place: {topack.morningPlace}
+                        <br />
+                        Morning Food: {topack.morningFood}
+                        <br />
+                        Night Place: {topack.nightPlace}
+                        <br />
+                        Night Food: {topack.nightFood}
+                        <br />
+                        <div style={{textAlign:"center"}}>
+                        <Link
+                          style={{ color: "#47126b", fontWeight: "600"}}
+                          to="#"
+                          onClick={() => removeTopack(index)}
+                        >
+                          Delete
+                        </Link>
+                        </div>
+                        <ToPack
+                          key={index}
+                          index={index}
+                          topack={topack}
+                          removeTopack={removeTopack}
+                        />
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
           </div>
-
           <FormTopack addTopack={addTopack} />
         </div>
       </div>

@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "caniuse-lite": "^1.0.30001248",
+    "classnames": "^2.3.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.6.1",
     "react-card-carousel": "^1.1.3",
