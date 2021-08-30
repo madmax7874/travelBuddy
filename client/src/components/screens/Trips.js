@@ -222,7 +222,6 @@ function Trips(props) {
         <SyncLoader color="#f3722c" size={20} margin={20} />
       </div>
       )}    
-
     </div>
   );
 }

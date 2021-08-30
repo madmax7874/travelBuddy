@@ -329,7 +329,12 @@ function MyTrip(props) {
                         <Link
                           style={{ color: "#47126b", fontWeight: "600"}}
                           to="#"
-                          onClick={() => removeTopack(index)}
+                          onClick={() => {
+                            const confirmBox = window.confirm("Are you sure you want to delete this?")
+                            if(confirmBox===true){
+                              removeTopack(index)
+                            }
+                          }}
                         >
                           Delete
                         </Link>

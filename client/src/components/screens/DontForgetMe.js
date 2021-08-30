@@ -4,6 +4,9 @@ import Head from "./Head";
 import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
+import { transitions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import { useAlert } from 'react-alert'
 import Swal from "sweetalert2";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -43,6 +46,7 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
 
 function FormTopack({ addTopack }) {
   const [value, setValue] = React.useState("");
+  const alert = useAlert()
 
   const sendData = async (value) => {
     const config = {
@@ -54,7 +58,7 @@ function FormTopack({ addTopack }) {
     try {
       const { data } = await axios.post("/api/private/list", { value }, config);
       if (data) {
-        Swal.fire("Item added!", "List updated successfully", "success");
+        alert.show("Item added!",{type: 'success'});
       }
     } catch (error) {
       console.log("err");
@@ -104,6 +108,13 @@ function FormTopack({ addTopack }) {
 function DontForgetMe() {
   const [topacks, setTopacks] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const options = {
+    position: "bottom center",
+    timeout: 3000,
+    offset: '30px',
+    transition: transitions.SCALE
+  }
 
   const fetchPrivateData = async () => {
     const config = {
@@ -195,7 +206,9 @@ function DontForgetMe() {
              </span>
            </div>
              <div>
-               <FormTopack addTopack={addTopack} />
+               <AlertProvider template={AlertTemplate} {...options}>
+                <FormTopack addTopack={addTopack} />
+               </AlertProvider>
                <Container>
                  <Row>
                    {topacks.map((topack, index) => (

@@ -115,7 +115,12 @@ function ExpenseTracker() {
           <Link
             style={{ color: "#9c89b8", fontWeight: "600" }}
             to="#"
-            onClick={() => deleteExpense(index)}
+            onClick={() => {
+              const confirmBox = window.confirm("Are you sure you want to delete this?")
+              if(confirmBox===true){
+                deleteExpense(index)
+              }
+            }}
           >
             Delete
           </Link>
