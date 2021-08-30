@@ -147,8 +147,8 @@ function FormTopack({ addTopack }) {
           variant="primary"
           type="submit"
           style={{
-            border: "1px solid #f896d8",
-            backgroundColor: "#d1b3c4",
+            border: "1px solid #9a8f97",
+            backgroundColor: "#9c89b8",
             color: "#000",
             borderRadius: "2rem",
             fontSize: "18px",
@@ -242,7 +242,7 @@ function MyTrip(props) {
         className="app"
         style={{
           padding: "1rem",
-          backgroundColor: "#d1b3c4",
+          backgroundColor: "#ffcb96",
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -280,8 +280,8 @@ function MyTrip(props) {
               paddingLeft: "10px",
               textAlign: "center",
               borderRadius: "0.8rem",
-              backgroundImage:`url("https://images.unsplash.com/photo-1617957718583-e83389e2b317?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTc2fHxncmVlbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60")`,
               fontSize: "20px",
+              backgroundColor:"#b2ff7a"
             }}
           >
             <Card.Title style={{ fontSize: "25px" }}>
@@ -295,8 +295,7 @@ function MyTrip(props) {
         </div>
         <div
           style={{
-            backgroundColor: "#4f5d75",
-            color:"#FFF",
+            backgroundColor:"#4ecf6a",
             paddingBottom: "1rem",
             paddingTop: "1rem",
           }}
@@ -313,7 +312,7 @@ function MyTrip(props) {
                       style={{
                         paddingTop: "0.5rem 0 0 0.5rem",
                         color:"#000",
-                        background: "transparent linear-gradient(180deg,#49525f 0%,#a0a0a0 26%,#898989 53%,#a0a0a0 80%, #49525f 100%)"
+                        background: "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)"
                       }}
                     >
                       <Card.Title style={{textAlign:"center"}}>Day {index + 1}</Card.Title>
