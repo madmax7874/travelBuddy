@@ -185,7 +185,7 @@ function ExpenseTracker() {
                 </div>
               </div>
             </div>
-            <div style={{ backgroundColor: "#c9f2c7" }}>
+            <div style={{ backgroundColor: "#c9f2c7",margin:"1rem",borderRadius:"0.5rem",padding:"0.5rem" }}>
               <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
               <div style={{ paddingBottom: "0.2rem" }}>
                 <Table style={{ textAlign: "center" }}>

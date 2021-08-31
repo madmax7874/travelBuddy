@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./LoginScreen.css";
+import "./Login.css";
 import Head from "./Head";
 
-const LoginScreen = ({ history }) => {
+const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -95,4 +95,4 @@ const LoginScreen = ({ history }) => {
   );
 };
 
-export default LoginScreen;
+export default Login;

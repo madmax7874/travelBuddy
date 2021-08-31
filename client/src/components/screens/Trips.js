@@ -104,7 +104,7 @@ function Trips(props) {
                 Your Past trips
               </span>
             </div>
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center",margin:"1rem",padding:"0.5rem"  }}>
               <br />
               <Table>
                 <thead>

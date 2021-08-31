@@ -11,19 +11,18 @@ router.route("/").get(protect , async(req,res) => {
 
 router.route("/list")
   // get all list from db 
-  .get(protect, async (req, res) => { 
+  .get(protect, async (req, res, next) => { 
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     try{
       const user = await User.findById(decoded.id);
       res.status(200).send(user.list);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   })
   // add list to db
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -35,14 +34,13 @@ router.route("/list")
       const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
       res.status(200).send(true);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/modifylist")
   // edit and delete list
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -50,14 +48,13 @@ router.route("/modifylist")
       const user = await User.findOneAndUpdate(query, { list : req.body.value })
       res.status(200).send(true);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/traveldetails")
   //create a trip
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -75,81 +72,75 @@ router.route("/traveldetails")
 
       res.status(200).send(findUser.details[findUser.details.length-1]._id);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   }); 
 
 router.route("/trips")
   //get all trips 
-  .get(protect, async (req, res) => {
+  .get(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id);
       res.status(200).send(user.details)
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/mytrip/:id")
   //get my trip details
-  .get(protect, async (req, res) => {
+  .get(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.find({'_id': decoded.id}, {details: {$elemMatch: {_id: req.params.id}}});
       res.status(200).send(user[0].details[0])
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/perdaydetails/:id/:index")
   //add per day details to db
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{
       const {id,index} = req.params
       const user = await User.findOneAndUpdate({'details._id': id},{ $push : {[`details.${index}.perDayDetails`] : req.body } })
       res.status(200).send(true)
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/deleteperdaydetails/:id/:index")
   //delete per day details
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ ;
       const {id,index} = req.params
 
       const user = await User.findOneAndUpdate({'details._id': id}, { [`details.${index}.perDayDetails`] : req.body })
       res.status(200).send(true);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 
 router.route("/expensetracker")
   // get expense from db
-  .get(protect, async (req, res) => {
+  .get(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id);
       res.status(200).send(user.expense)
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   })
   //add expense to db
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -161,14 +152,13 @@ router.route("/expensetracker")
       const user = await User.findOneAndUpdate(query, { $push : { expense : newData } })
       res.status(200).send(true);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   }); 
 
 router.route("/deleteexpense")
   // delete an expense
-  .post(protect, async (req, res) => {
+  .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -177,8 +167,7 @@ router.route("/deleteexpense")
 
       res.status(200).send(true);
     }catch(err){
-      console.log(err)
-      res.status(500).send(false);
+      next(err)
     }
   });
 

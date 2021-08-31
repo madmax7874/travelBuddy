@@ -6,10 +6,8 @@ import AlertTemplate from "react-alert-template-basic";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 // Screens
-import LoginScreen from "./components/screens/LoginScreen";
-import RegisterScreen from "./components/screens/RegisterScreen";
-import ForgotPasswordScreen from "./components/screens/ForgotPasswordScreen";
-import ResetPasswordScreen from "./components/screens/ResetPasswordScreen";
+import Login from "./components/screens/Login";
+import Register from "./components/screens/Register";
 import DontForgetMe from "./components/screens/DontForgetMe";
 import ExpenseTracker from "./components/screens/ExpenseTracker";
 import Home from "./components/screens/Home";
@@ -37,19 +35,8 @@ const App = () => {
           <PrivateRoute exact path="/trips" component={Trips} />
           <PrivateRoute exact path="/mytrip/:id/:index" component={MyTrip} />
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={LoginScreen} />
-          <Route exact path="/register" component={RegisterScreen} />
-
-          <Route
-            exact
-            path="/forgotpassword"
-            component={ForgotPasswordScreen}
-          />
-          <Route
-            exact
-            path="/passwordreset/:resetToken"
-            component={ResetPasswordScreen}
-          />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
         </Switch>
       </Router>
     </AlertProvider>

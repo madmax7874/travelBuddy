@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Head from "./Head";
-import "./RegisterScreen.css";
+import "./Register.css";
 
-const RegisterScreen = ({ history }) => {
+const Register = ({ history }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -136,4 +136,4 @@ const RegisterScreen = ({ history }) => {
   );
 };
 
-export default RegisterScreen;
+export default Register;
