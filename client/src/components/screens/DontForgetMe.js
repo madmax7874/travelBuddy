@@ -9,103 +9,11 @@ import Swal from "sweetalert2";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Lists({ list, index, editList, deleteList }) {
-  return (
-    <div
-      style={{
-        alignItems: "center",
-        display: "flex",
-        fontSize: "18px",
-        justifyContent: "space-between",
-      }}
-    >
-      <span style={{ textDecoration: list.isDone ? "line-through" : "" }}>
-        {list.text}
-      </span>
-      <div>
-        <Button
-          variant="btn"
-          onClick={() => editList(index)}
-          style={{
-            backgroundColor: list.isDone ? "green" : "orange",
-            color: "white",
-          }}
-        >
-          ✓
-        </Button>{" "}
-        <Button variant="btn btn-danger" onClick={() => deleteList(index)}>
-          ✕
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-function FormTopack({ addList }) {
-  const [value, setValue] = React.useState("");
-  const alert = useAlert();
-
-  const sendData = async (value) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    try {
-      const { data } = await axios.post("/api/private/list", { value }, config);
-      if (data) {
-        alert.show("Item added", { type: "success" });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!value) return;
-    addList(value);
-    sendData(value);
-    setValue("");
-  };
-
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label style={{ marginBottom: "1rem" }}>
-          <br />
-          <br />
-          <span
-            style={{
-              backgroundColor: "rgba(255,255,255,0.7)",
-              fontSize: "1rem",
-              padding: "0.5rem",
-              borderRadius: "0.7rem",
-            }}
-          >
-            Add Items
-          </span>
-        </Form.Label>
-        <Form.Control
-          type="text"
-          className="input"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Add new item"
-        />
-      </Form.Group>
-      <Button variant="primary mb-3" type="submit">
-        Add
-      </Button>
-    </Form>
-  );
-}
-
 function DontForgetMe() {
-  const alert = useAlert(); 
+  const alert = useAlert();
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = React.useState("");
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -129,6 +37,35 @@ function DontForgetMe() {
   const addList = (text) => {
     const newList = [...lists, { text }];
     setLists(newList);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!value) return;
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      try {
+        const { data } = await axios.post(
+          "/api/private/list",
+          { value },
+          config
+        );
+        if (data) {
+          alert.show("Item added", { type: "success" });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    addList(value);
+    setValue("");
   };
 
   const removeData = async (value) => {
@@ -179,7 +116,7 @@ function DontForgetMe() {
         setLists(newList);
         const response = await removeData(newList);
         if (response.data) {
-          alert.show("Item Deleted",{ type: "success" });
+          alert.show("Item Deleted", { type: "success" });
         }
       }
     });
@@ -213,20 +150,78 @@ function DontForgetMe() {
               </span>
             </div>
             <div>
-              <FormTopack addList={addList} />
+              <Form onSubmit={handleSubmit}>
+                <Form.Group>
+                  <Form.Label style={{ marginBottom: "1rem" }}>
+                    <br />
+                    <br />
+                    <span
+                      style={{
+                        backgroundColor: "rgba(255,255,255,0.7)",
+                        fontSize: "1rem",
+                        padding: "0.5rem",
+                        borderRadius: "0.7rem",
+                      }}
+                    >
+                      Add Items
+                    </span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="input"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    placeholder="Add new item"
+                  />
+                </Form.Group>
+                <Button variant="primary mb-3" type="submit">
+                  Add
+                </Button>
+              </Form>
               <Container>
                 <Row>
                   {lists.map((list, index) => (
                     <Col key={index} md="4">
                       <Card style={{ margin: "0.5rem" }}>
                         <Card.Body style={{ padding: "0.7rem" }}>
-                          <Lists
-                            key={index}
-                            index={index}
-                            list={list}
-                            editList={editList}
-                            deleteList={deleteList}
-                          />
+                          <div
+                            style={{
+                              alignItems: "center",
+                              display: "flex",
+                              fontSize: "18px",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span
+                              style={{
+                                textDecoration: list.isDone
+                                  ? "line-through"
+                                  : "",
+                              }}
+                            >
+                              {list.text}
+                            </span>
+                            <div>
+                              <Button
+                                variant="btn"
+                                onClick={() => editList(index)}
+                                style={{
+                                  backgroundColor: list.isDone
+                                    ? "green"
+                                    : "orange",
+                                  color: "white",
+                                }}
+                              >
+                                ✓
+                              </Button>{" "}
+                              <Button
+                                variant="btn btn-danger"
+                                onClick={() => deleteList(index)}
+                              >
+                                ✕
+                              </Button>
+                            </div>
+                          </div>
                         </Card.Body>
                       </Card>
                     </Col>

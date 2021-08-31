@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
+import { useAlert } from "react-alert";
 import Head from "./Head";
 import { SyncLoader } from "react-spinners";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 const axios = require("axios");
-const Swal = require("sweetalert2");
 
 function Trips(props) {
+  const alert = useAlert();
   const {
     register,
     handleSubmit,
@@ -53,11 +54,7 @@ function Trips(props) {
         config
       );
       if (response.data) {
-        Swal.fire(
-          "Trip added!",
-          "Travel history updated successfully",
-          "success"
-        );
+        alert.show("Trip added!", { type: "success" });
         props.history.push(`/mytrip/${response.data}/${trips.length}`);
       }
     } catch (error) {

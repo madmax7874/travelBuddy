@@ -10,162 +10,18 @@ import "./styles.scss";
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
-function MyTripDetails() {
-  return (
-    <div
-      className="topack"
-      style={{
-        alignItems: "center",
-        display: "flex",
-        fontSize: "18px",
-        justifyContent: "space-between",
-      }}
-    ></div>
-  );
-}
-
-function FormMyTrip({ addMytrip }) {
-  const alert = useAlert();
-  const { id, index } = useParams();
-  const [value, setValue] = React.useState({
-    morningPlace: "",
-    morningFood: "",
-    nightPlace: "",
-    nightFood: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValue((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const sendData = async (value) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    const url = `/api/private/perdaydetails/${id}/${index}`;
-    try {
-      const { data } = await axios.post(url, value, config);
-      if (data) {
-        alert.show("Details for the day added", { type: "success" });
-      }
-    } catch (error) {
-      console.log(error.response.data.error);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!value) return;
-    addMytrip(value);
-    sendData(value);
-    setValue({
-      morningPlace: "",
-      morningFood: "",
-      nightPlace: "",
-      nightFood: "",
-    });
-  };
-  useEffect(() => {}, [value]);
-
-  return (
-    <Form className="input-form" onSubmit={handleSubmit}>
-      <div className="row" style={{ borderRadius: "0.3rem", margin: "0.5rem" }}>
-        <div className="col-lg-6">
-          <Form.Group>
-            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-              Morning Place to visit
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="morningPlace"
-              className="input"
-              onChange={(e) => handleChange(e)}
-              value={value.morningPlace}
-              placeholder="Morning Place to visit"
-            />
-          </Form.Group>
-        </div>
-
-        <div className="col-lg-6">
-          <Form.Group>
-            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-              Morning Dine at
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="morningFood"
-              className="input"
-              onChange={(e) => handleChange(e)}
-              value={value.morningFood}
-              placeholder="Morning Dine at"
-            />
-          </Form.Group>
-        </div>
-        <div className="col-lg-6">
-          <Form.Group>
-            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-              Night place to visit
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="nightPlace"
-              className="input"
-              onChange={(e) => handleChange(e)}
-              value={value.nightPlace}
-              placeholder="Night place to visit"
-            />
-          </Form.Group>
-        </div>
-        <div className="col-lg-6">
-          <Form.Group>
-            <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
-              Night dine at
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="nightFood"
-              className="input"
-              onChange={(e) => handleChange(e)}
-              value={value.nightFood}
-              placeholder="Night dine at"
-            />
-          </Form.Group>
-        </div>
-      </div>
-      <br />
-      <div style={{ textAlign: "center" }}>
-        <Button
-          variant="primary"
-          type="submit"
-          style={{
-            border: "1px solid #9a8f97",
-            backgroundColor: "#9c89b8",
-            color: "#000",
-            borderRadius: "2rem",
-            fontSize: "18px",
-            fontWeight: "600",
-            width: "150px",
-          }}
-        >
-          Add
-        </Button>
-      </div>
-    </Form>
-  );
-}
 function MyTrip() {
   const alert = useAlert();
   const { id, index } = useParams();
   const _id = id;
   const [trip, setTrip] = useState({});
   const [myTripDetails, setMyTripDetails] = useState([]);
+  const [value, setValue] = React.useState({
+    morningPlace: "",
+    morningFood: "",
+    nightPlace: "",
+    nightFood: "",
+  });
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -189,6 +45,46 @@ function MyTrip() {
     };
     fetchPrivateData();
   }, [_id]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!value) return;
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const url = `/api/private/perdaydetails/${id}/${index}`;
+      try {
+        const { data } = await axios.post(url, value, config);
+        if (data) {
+          alert.show("Details for the day added", { type: "success" });
+        }
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    addMytrip(value);
+    setValue({
+      morningPlace: "",
+      morningFood: "",
+      nightPlace: "",
+      nightFood: "",
+    });
+  };
+  useEffect(() => {}, [value]);
 
   const addMytrip = (details) => {
     const newTrip = [...myTripDetails, details];
@@ -349,15 +245,18 @@ function MyTrip() {
                               deleteMytrip(index);
                             }}
                           >
-                          Delete
+                            Delete
                           </Link>
                         </div>
-                        <MyTripDetails
-                          key={index}
-                          index={index}
-                          topack={topack}
-                          deleteMytrip={deleteMytrip}
-                        />
+                        <div
+                          className="topack"
+                          style={{
+                            alignItems: "center",
+                            display: "flex",
+                            fontSize: "18px",
+                            justifyContent: "space-between",
+                          }}
+                        ></div>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -365,7 +264,92 @@ function MyTrip() {
               </Row>
             </Container>
           </div>
-          <FormMyTrip addMytrip={addMytrip} />
+          <Form className="input-form" onSubmit={handleSubmit}>
+            <div
+              className="row"
+              style={{ borderRadius: "0.3rem", margin: "0.5rem" }}
+            >
+              <div className="col-lg-6">
+                <Form.Group>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Morning Place to visit
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="morningPlace"
+                    className="input"
+                    onChange={(e) => handleChange(e)}
+                    value={value.morningPlace}
+                    placeholder="Morning Place to visit"
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="col-lg-6">
+                <Form.Group>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Morning Dine at
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="morningFood"
+                    className="input"
+                    onChange={(e) => handleChange(e)}
+                    value={value.morningFood}
+                    placeholder="Morning Dine at"
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-lg-6">
+                <Form.Group>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Night place to visit
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nightPlace"
+                    className="input"
+                    onChange={(e) => handleChange(e)}
+                    value={value.nightPlace}
+                    placeholder="Night place to visit"
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-lg-6">
+                <Form.Group>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+                    Night dine at
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nightFood"
+                    className="input"
+                    onChange={(e) => handleChange(e)}
+                    value={value.nightFood}
+                    placeholder="Night dine at"
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <br />
+            <div style={{ textAlign: "center" }}>
+              <Button
+                variant="primary"
+                type="submit"
+                style={{
+                  border: "1px solid #9a8f97",
+                  backgroundColor: "#9c89b8",
+                  color: "#000",
+                  borderRadius: "2rem",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                  width: "150px",
+                }}
+              >
+                Add
+              </Button>
+            </div>
+          </Form>
         </div>
       </div>
     </div>
