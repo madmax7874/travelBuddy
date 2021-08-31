@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Table } from "react-bootstrap";
 import Head from "./Head";
-import { FadeLoader} from "react-spinners";
+import { FadeLoader } from "react-spinners";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const axios = require("axios");
@@ -29,7 +29,7 @@ function ExpenseTracker() {
       try {
         const { data } = await axios.get(url, config);
         setExpenseHistory(data);
-        setLoading(true)
+        setLoading(true);
       } catch (error) {
         console.log(error.response.data.error);
       }
@@ -116,9 +116,11 @@ function ExpenseTracker() {
             style={{ color: "#9c89b8", fontWeight: "600" }}
             to="#"
             onClick={() => {
-              const confirmBox = window.confirm("Are you sure you want to delete this?")
-              if(confirmBox===true){
-                deleteExpense(index)
+              const confirmBox = window.confirm(
+                "Are you sure you want to delete this?"
+              );
+              if (confirmBox === true) {
+                deleteExpense(index);
               }
             }}
           >
@@ -134,158 +136,164 @@ function ExpenseTracker() {
     <div>
       <Head />
       {loading ? (
+        <div
+          style={{
+            paddingTop: "1rem",
+            backgroundColor: "#aceca1",
+          }}
+        >
+          <div>
+            <div style={{ textAlign: "center" }}>
+              <span
+                className="text-center"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  fontWeight: "500",
+                  fontSize: "2rem",
+                  padding: "0.5rem",
+                  borderRadius: "1rem",
+                }}
+              >
+                Expense Tracker
+              </span>
+            </div>
+            <div>
               <div
-              style={{
-                paddingTop: "1rem",
-                backgroundColor: "#aceca1",
-              }}
-            >
-              <div>
-                <div style={{ textAlign: "center" }}>
-                  <span
-                    className="text-center"
-                    style={{
-                      backgroundColor: "rgba(255,255,255,0.6)",
-                      fontWeight: "500",
-                      fontSize: "2rem",
-                      padding: "0.5rem",
-                      borderRadius: "1rem",
-                    }}
-                  >
-                    Expense Tracker
-                  </span>
-                </div>
+                className="text-center m-4"
+                style={{
+                  backgroundColor: "#efc3e6",
+                  borderRadius: "1.5rem",
+                  padding: "0.5rem",
+                }}
+              >
                 <div>
-                  <div
-                    className="text-center m-4"
+                  <h4>Total Expenses</h4>
+                  <p
                     style={{
-                      backgroundColor: "#efc3e6",
-                      borderRadius: "1.5rem",
-                      padding: "0.5rem",
+                      color: "#c0392b",
+                      fontWeight: "600",
+                      fontSize: "1.5rem",
+                      marginBottom: "0",
                     }}
                   >
-                      <div>
-                        <h4>Total Expenses</h4>
-                          <p
-                          style={{
-                            color: "#c0392b",
-                            fontWeight: "600",
-                            fontSize: "1.5rem",
-                            marginBottom: "0",
-                          }}
-                        >
-                          ₹{total}
-                        </p>
-                      </div>
-                  </div>
+                    ₹{total}
+                  </p>
                 </div>
-                <div style={{ backgroundColor: "#c9f2c7" }}>
-                  <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
-                      <div style={{ paddingBottom: "0.2rem" }}>
-                      <Table style={{ textAlign: "center" }}>
-                        <thead>
-                          <tr style={{ fontSize: "1.2rem" }}>
-                            <th>Text</th>
-                            <th>Amount</th>
-                            <th>Operation</th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "1.1rem" }}>
-                          {expenseHistoryComponent}
-                        </tbody>
-                      </Table>
-                    </div>
-                </div>
-                <Form
-                  style={{ marginBottom: "0" }}
-                  className="input-form"
-                  onSubmit={handleSubmit}
-                >
-                  <div className="row">
-                    <h3
-                      style={{
-                        padding: "0.5rem",
-                        paddingTop: "0",
-                        textAlign: "center",
-                      }}
-                    >
-                      Add transaction
-                    </h3>
-                    <div className="col-md-6">
-                      <Form.Group style={{ paddingTop: "1rem" }}>
-                        <Form.Label
-                          style={{
-                            marginBottom: "1rem",
-                            fontWeight: "600",
-                            fontSize: "1.2rem",
-                          }}
-                        >
-                          Text
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="text"
-                          className="input"
-                          value={value.text}
-                          onChange={handleChange}
-                          placeholder="Enter text"
-                        />
-                      </Form.Group>
-                    </div>
-      
-                    <div className="col-md-6">
-                      <Form.Group style={{ paddingTop: "1rem" }}>
-                        <Form.Label
-                          style={{
-                            marginBottom: "1rem",
-                            fontWeight: "600",
-                            fontSize: "1.2rem",
-                          }}
-                        >
-                          Amount (in ₹)
-                          <span style={{ color: "#d00000", fontSize: "1.3rem" }}>
-                            *
-                          </span>
-                        </Form.Label>
-                        <Form.Control
-                          type="number"
-                          name="amount"
-                          className="input"
-                          value={value.amount}
-                          onChange={handleChange}
-                          placeholder="Enter amount"
-                          required={true}
-                        />
-                      </Form.Group>
-                    </div>
-      
-                    <div style={{ textAlign: "center" }}>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        style={{
-                          margin: "2.5rem",
-                          border: "1px solid #f896d8",
-                          backgroundColor: "#9c89b8",
-                          color: "#000",
-                          borderRadius: "2rem",
-                          fontSize: "18px",
-                          fontWeight: "600",
-                          width: "250px",
-                        }}
-                      >
-                        Add Transaction
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
               </div>
             </div>
-      ):(
-        <div style={{ textAlign: "center",paddingTop:"200px"}}>
-        <FadeLoader color="#80b918" height={15} width={5} radius={2} margin={2} />
-      </div>
-    )}
+            <div style={{ backgroundColor: "#c9f2c7" }}>
+              <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
+              <div style={{ paddingBottom: "0.2rem" }}>
+                <Table style={{ textAlign: "center" }}>
+                  <thead>
+                    <tr style={{ fontSize: "1.2rem" }}>
+                      <th>Text</th>
+                      <th>Amount</th>
+                      <th>Operation</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{ fontSize: "1.1rem" }}>
+                    {expenseHistoryComponent}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
+            <Form
+              style={{ marginBottom: "0" }}
+              className="input-form"
+              onSubmit={handleSubmit}
+            >
+              <div className="row">
+                <h3
+                  style={{
+                    padding: "0.5rem",
+                    paddingTop: "0",
+                    textAlign: "center",
+                  }}
+                >
+                  Add transaction
+                </h3>
+                <div className="col-md-6">
+                  <Form.Group style={{ paddingTop: "1rem" }}>
+                    <Form.Label
+                      style={{
+                        marginBottom: "1rem",
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      Text
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="text"
+                      className="input"
+                      value={value.text}
+                      onChange={handleChange}
+                      placeholder="Enter text"
+                    />
+                  </Form.Group>
+                </div>
+
+                <div className="col-md-6">
+                  <Form.Group style={{ paddingTop: "1rem" }}>
+                    <Form.Label
+                      style={{
+                        marginBottom: "1rem",
+                        fontWeight: "600",
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      Amount (in ₹)
+                      <span style={{ color: "#d00000", fontSize: "1.3rem" }}>
+                        *
+                      </span>
+                    </Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="amount"
+                      className="input"
+                      value={value.amount}
+                      onChange={handleChange}
+                      placeholder="Enter amount"
+                      required={true}
+                    />
+                  </Form.Group>
+                </div>
+
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      margin: "2.5rem",
+                      border: "1px solid #f896d8",
+                      backgroundColor: "#9c89b8",
+                      color: "#000",
+                      borderRadius: "2rem",
+                      fontSize: "18px",
+                      fontWeight: "600",
+                      width: "250px",
+                    }}
+                  >
+                    Add Transaction
+                  </Button>
+                </div>
+              </div>
+            </Form>
+          </div>
+        </div>
+      ) : (
+        <div style={{ textAlign: "center", paddingTop: "200px" }}>
+          <FadeLoader
+            color="#80b918"
+            height={15}
+            width={5}
+            radius={2}
+            margin={2}
+          />
+        </div>
+      )}
     </div>
   );
 }

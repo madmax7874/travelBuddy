@@ -9,7 +9,7 @@ import "./styles.scss";
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
-function ToPack({ topack, index, removeTopack }) {
+function MyTripDetails() {
   return (
     <div
       className="topack"
@@ -23,7 +23,7 @@ function ToPack({ topack, index, removeTopack }) {
   );
 }
 
-function FormTopack({ addTopack }) {
+function FormMyTrip({ addMytrip }) {
   const { id, index } = useParams();
   const [value, setValue] = React.useState({
     morningPlace: "",
@@ -65,7 +65,7 @@ function FormTopack({ addTopack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
-    addTopack(value);
+    addMytrip(value);
     sendData(value);
     setValue({
       morningPlace: "",
@@ -162,11 +162,11 @@ function FormTopack({ addTopack }) {
     </Form>
   );
 }
-function MyTrip(props) {
+function MyTrip() {
   const { id, index } = useParams();
   const _id = id;
   const [trip, setTrip] = useState({});
-  const [topacks, setTopacks] = useState([]);
+  const [myTripDetails, setMyTripDetails] = useState([]);
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -182,7 +182,7 @@ function MyTrip(props) {
         const { data } = await axios.get(url, config);
         data.startDate = data.startDate.split("T")[0];
         data.endDate = data.endDate.split("T")[0];
-        setTopacks(data.perDayDetails);
+        setMyTripDetails(data.perDayDetails);
         setTrip(data);
       } catch (error) {
         console.log(error);
@@ -191,9 +191,9 @@ function MyTrip(props) {
     fetchPrivateData();
   }, [_id]);
 
-  const addTopack = (details) => {
-    const newTopacks = [...topacks, details];
-    setTopacks(newTopacks);
+  const addMytrip = (details) => {
+    const newTopacks = [...myTripDetails, details];
+    setMyTripDetails(newTopacks);
   };
 
   const removeData = async (value) => {
@@ -218,15 +218,15 @@ function MyTrip(props) {
     }
   };
 
-  const removeTopack = (index) => {
-    const newTopacks = [...topacks];
+  const deleteMytrip = (index) => {
+    const newTopacks = [...myTripDetails];
     newTopacks.splice(index, 1);
-    setTopacks(newTopacks);
+    setMyTripDetails(newTopacks);
     removeData(newTopacks);
   };
 
   const PerDayDetails = () => {
-    if (topacks.length === 0)
+    if (myTripDetails.length === 0)
       return (
         <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
           No details added
@@ -306,7 +306,7 @@ function MyTrip(props) {
           <div>
             <Container>
               <Row className="justify-content-evenly">
-                {topacks.map((topack, index) => (
+                {myTripDetails.map((topack, index) => (
                   <Col key={index} sm="6" lg="4" style={{marginBottom:"1rem"}}>
                     <Card
                       style={{
@@ -332,18 +332,18 @@ function MyTrip(props) {
                           onClick={() => {
                             const confirmBox = window.confirm("Are you sure you want to delete this?")
                             if(confirmBox===true){
-                              removeTopack(index)
+                              deleteMytrip(index)
                             }
                           }}
                         >
                           Delete
                         </Link>
                         </div>
-                        <ToPack
+                        <MyTripDetails
                           key={index}
                           index={index}
                           topack={topack}
-                          removeTopack={removeTopack}
+                          deleteMytrip={deleteMytrip}
                         />
                       </Card.Body>
                     </Card>
@@ -352,7 +352,7 @@ function MyTrip(props) {
               </Row>
             </Container>
           </div>
-          <FormTopack addTopack={addTopack} />
+          <FormMyTrip addMytrip={addMytrip} />
         </div>
       </div>
     </div>

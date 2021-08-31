@@ -3,7 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
 const sendEmail = require("../utils/sendEmail");
 
-// @desc    Login user
+// Login user
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -33,7 +33,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// @desc    Register user
+// Register user
 exports.register = async (req, res, next) => {
   const { firstname,lastname, email, password } = req.body;
 
@@ -51,7 +51,7 @@ exports.register = async (req, res, next) => {
   }
 };
 
-// @desc    Forgot Password Initialization
+// Forgot Password Initialization
 exports.forgotPassword = async (req, res, next) => {
   // Send Email to email provided but first check if user exists
   const { email } = req.body;
@@ -101,7 +101,7 @@ exports.forgotPassword = async (req, res, next) => {
   }
 };
 
-// @desc    Reset User Password
+// Reset User Password
 exports.resetPassword = async (req, res, next) => {
   // Compare token in URL params to hashed token
   const resetPasswordToken = crypto

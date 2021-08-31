@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import ReactTextTransition, { presets } from "react-text-transition";
 
 const intro = {
@@ -12,7 +12,7 @@ const intro = {
   textAlign: "center",
 };
 
-const texts = ["memorable","great","joyful","pleasant","delightful"];
+const texts = ["memorable", "great", "joyful", "pleasant", "delightful"];
 
 class Intro extends Component {
   state = {
@@ -26,27 +26,23 @@ class Intro extends Component {
       });
     }, 3000);
   }
-  
-  render(){
+
+  render() {
     return (
       <div style={intro}>
-              <h3 style={{ paddingBottom: "7rem", color: "rgba(0,0,0,0.7)" }}>
-              Make your trip{" "}
-              <ReactTextTransition
-                text={texts[this.state.textIndex % texts.length]}
-                springConfig={presets.gentle}
-                style={{ margin: "0px 4px" }}
-                inline
-              />
-              {" "}with us!
-            </h3>
-        {/* <h3 style={{ paddingBottom: "7rem", color: "rgba(0,0,0,0.7)" }}>
-          Make your trip memorable with us!
-        </h3> */}
+        <h3 style={{ paddingBottom: "7rem", color: "rgba(0,0,0,0.7)" }}>
+          Make your trip{" "}
+          <ReactTextTransition
+            text={texts[this.state.textIndex % texts.length]}
+            springConfig={presets.gentle}
+            style={{ margin: "0px 4px" }}
+            inline
+          />{" "}
+          with us!
+        </h3>
       </div>
     );
   }
-  
 }
 
 export default Intro;
