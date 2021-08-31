@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { Button, Form, Table } from "react-bootstrap";
 import Head from "./Head";
 import { FadeLoader } from "react-spinners";
+import { useAlert } from "react-alert";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
 function ExpenseTracker() {
+  const alert = useAlert();
   const [expenseHistory, setExpenseHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = React.useState({
@@ -70,10 +72,9 @@ function ExpenseTracker() {
       const response = await axios.post(url, value, config);
       if (response.data) {
         setExpenseHistory([...expenseHistory, value]);
-        Swal.fire(
+        alert.show(
           "Expense added!",
-          "Information saved successfully",
-          "success"
+          { type: "success" }
         );
         setValue({
           text: "",
@@ -86,9 +87,7 @@ function ExpenseTracker() {
   };
 
   const deleteExpense = async (index) => {
-    const newTopacks = [...expenseHistory];
-    newTopacks.splice(index, 1);
-    setExpenseHistory(newTopacks);
+    const newExpense = [...expenseHistory];
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -96,14 +95,24 @@ function ExpenseTracker() {
       },
     };
     const url = `/api/private/deleteexpense`;
-    const response = await axios.post(url, newTopacks, config);
-    if (response.data) {
-      Swal.fire(
-        "Record deleted!",
-        "Information updated successfully",
-        "success"
-      );
-    }
+    const response = await axios.post(url, newExpense, config);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        newExpense.splice(index, 1);
+        setExpenseHistory(newExpense);
+        if (response.data) {
+          alert.show("Item Deleted",{ type: "success" });
+        }
+      }
+    });
   };
 
   const expenseHistoryComponent = expenseHistory.map((expense, index) => {
@@ -116,15 +125,10 @@ function ExpenseTracker() {
             style={{ color: "#9c89b8", fontWeight: "600" }}
             to="#"
             onClick={() => {
-              const confirmBox = window.confirm(
-                "Are you sure you want to delete this?"
-              );
-              if (confirmBox === true) {
-                deleteExpense(index);
-              }
+              deleteExpense(index);
             }}
           >
-            Delete
+          Delete
           </Link>
         </td>
       </tr>

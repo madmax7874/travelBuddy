@@ -4,17 +4,14 @@ import Head from "./Head";
 import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
-import { transitions, Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function ToPack({ topack, index, markTopack, removeTopack }) {
+function Lists({ list, index, editList, deleteList }) {
   return (
     <div
-      className="topack"
       style={{
         alignItems: "center",
         display: "flex",
@@ -22,21 +19,21 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
         justifyContent: "space-between",
       }}
     >
-      <span style={{ textDecoration: topack.isDone ? "line-through" : "" }}>
-        {topack.text}
+      <span style={{ textDecoration: list.isDone ? "line-through" : "" }}>
+        {list.text}
       </span>
       <div>
         <Button
           variant="btn"
-          onClick={() => markTopack(index)}
+          onClick={() => editList(index)}
           style={{
-            backgroundColor: topack.isDone ? "green" : "orange",
+            backgroundColor: list.isDone ? "green" : "orange",
             color: "white",
           }}
         >
           ✓
         </Button>{" "}
-        <Button variant="btn btn-danger" onClick={() => removeTopack(index)}>
+        <Button variant="btn btn-danger" onClick={() => deleteList(index)}>
           ✕
         </Button>
       </div>
@@ -44,7 +41,7 @@ function ToPack({ topack, index, markTopack, removeTopack }) {
   );
 }
 
-function FormTopack({ addTopack }) {
+function FormTopack({ addList }) {
   const [value, setValue] = React.useState("");
   const alert = useAlert();
 
@@ -58,17 +55,17 @@ function FormTopack({ addTopack }) {
     try {
       const { data } = await axios.post("/api/private/list", { value }, config);
       if (data) {
-        alert.show("Item added!", { type: "success" });
+        alert.show("Item added", { type: "success" });
       }
     } catch (error) {
-      console.log("err");
+      console.log(error);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
-    addTopack(value);
+    addList(value);
     sendData(value);
     setValue("");
   };
@@ -106,39 +103,32 @@ function FormTopack({ addTopack }) {
 }
 
 function DontForgetMe() {
-  const [topacks, setTopacks] = useState([]);
+  const alert = useAlert(); 
+  const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const options = {
-    position: "bottom center",
-    timeout: 3000,
-    offset: "30px",
-    transition: transitions.SCALE,
-  };
-
-  const fetchPrivateData = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    try {
-      const { data } = await axios.get("/api/private/list", config);
-      setTopacks(data);
-      setLoading(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPrivateData = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      try {
+        const { data } = await axios.get("/api/private/list", config);
+        setLists(data);
+        setLoading(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchPrivateData();
   }, [loading]);
 
-  const addTopack = (text) => {
-    const newTopacks = [...topacks, { text }];
-    setTopacks(newTopacks);
+  const addList = (text) => {
+    const newList = [...lists, { text }];
+    setLists(newList);
   };
 
   const removeData = async (value) => {
@@ -149,33 +139,50 @@ function DontForgetMe() {
       },
     };
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         "/api/private/modifylist",
         { value },
         config
       );
-      if (data) {
-        Swal.fire("Item modified", "List updated successfully", "success");
-      }
+      return response;
     } catch (error) {
-      console.log("err");
+      console.log(error);
     }
   };
 
-  const markTopack = (index) => {
-    const newTopacks = [...topacks];
-    if (newTopacks[index].isDone === true) {
-      newTopacks[index].isDone = false;
-    } else newTopacks[index].isDone = true;
-    setTopacks(newTopacks);
-    removeData(newTopacks);
+  const editList = async (index) => {
+    const newList = [...lists];
+    if (newList[index].isDone === true) {
+      newList[index].isDone = false;
+    } else newList[index].isDone = true;
+    setLists(newList);
+    const response = await removeData(newList);
+    if (!response.data) {
+      alert.show("Error occured", { type: "error" });
+    }
+    alert.show("Item modified", { type: "success" });
   };
 
-  const removeTopack = (index) => {
-    const newTopacks = [...topacks];
-    newTopacks.splice(index, 1);
-    setTopacks(newTopacks);
-    removeData(newTopacks);
+  const deleteList = (index) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const newList = [...lists];
+        newList.splice(index, 1);
+        setLists(newList);
+        const response = await removeData(newList);
+        if (response.data) {
+          alert.show("Item Deleted",{ type: "success" });
+        }
+      }
+    });
   };
 
   return (
@@ -206,21 +213,19 @@ function DontForgetMe() {
               </span>
             </div>
             <div>
-              <AlertProvider template={AlertTemplate} {...options}>
-                <FormTopack addTopack={addTopack} />
-              </AlertProvider>
+              <FormTopack addList={addList} />
               <Container>
                 <Row>
-                  {topacks.map((topack, index) => (
+                  {lists.map((list, index) => (
                     <Col key={index} md="4">
                       <Card style={{ margin: "0.5rem" }}>
                         <Card.Body style={{ padding: "0.7rem" }}>
-                          <ToPack
+                          <Lists
                             key={index}
                             index={index}
-                            topack={topack}
-                            markTopack={markTopack}
-                            removeTopack={removeTopack}
+                            list={list}
+                            editList={editList}
+                            deleteList={deleteList}
                           />
                         </Card.Body>
                       </Card>

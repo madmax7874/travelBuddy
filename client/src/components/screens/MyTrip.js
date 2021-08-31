@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import Head from "./Head";
+import { useAlert } from "react-alert";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
 
@@ -24,6 +25,7 @@ function MyTripDetails() {
 }
 
 function FormMyTrip({ addMytrip }) {
+  const alert = useAlert();
   const { id, index } = useParams();
   const [value, setValue] = React.useState({
     morningPlace: "",
@@ -51,11 +53,7 @@ function FormMyTrip({ addMytrip }) {
     try {
       const { data } = await axios.post(url, value, config);
       if (data) {
-        Swal.fire(
-          "Details for the day added",
-          "Record saved successfully",
-          "success"
-        );
+        alert.show("Details for the day added", { type: "success" });
       }
     } catch (error) {
       console.log(error.response.data.error);
@@ -163,6 +161,7 @@ function FormMyTrip({ addMytrip }) {
   );
 }
 function MyTrip() {
+  const alert = useAlert();
   const { id, index } = useParams();
   const _id = id;
   const [trip, setTrip] = useState({});
@@ -192,8 +191,8 @@ function MyTrip() {
   }, [_id]);
 
   const addMytrip = (details) => {
-    const newTopacks = [...myTripDetails, details];
-    setMyTripDetails(newTopacks);
+    const newTrip = [...myTripDetails, details];
+    setMyTripDetails(newTrip);
   };
 
   const removeData = async (value) => {
@@ -205,24 +204,33 @@ function MyTrip() {
     };
     const url = `/api/private/deleteperdaydetails/${_id}/${index}`;
     try {
-      const { data } = await axios.post(url, value, config);
-      if (data) {
-        Swal.fire(
-          "Details for the day deleted",
-          "Record updated successfully",
-          "success"
-        );
-      }
+      const response = await axios.post(url, value, config);
+      return response;
     } catch (error) {
-      console.log("err");
+      console.log(error);
     }
   };
 
   const deleteMytrip = (index) => {
-    const newTopacks = [...myTripDetails];
-    newTopacks.splice(index, 1);
-    setMyTripDetails(newTopacks);
-    removeData(newTopacks);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const newTrip = [...myTripDetails];
+        newTrip.splice(index, 1);
+        setMyTripDetails(newTrip);
+        const response = await removeData(newTrip);
+        if (response.data) {
+          alert.show("Details for the day deleted", { type: "success" });
+        }
+      }
+    });
   };
 
   const PerDayDetails = () => {
@@ -281,7 +289,7 @@ function MyTrip() {
               textAlign: "center",
               borderRadius: "0.8rem",
               fontSize: "20px",
-              backgroundColor:"#b2ff7a"
+              backgroundColor: "#b2ff7a",
             }}
           >
             <Card.Title style={{ fontSize: "25px" }}>
@@ -295,7 +303,7 @@ function MyTrip() {
         </div>
         <div
           style={{
-            backgroundColor:"#4ecf6a",
+            backgroundColor: "#4ecf6a",
             paddingBottom: "1rem",
             paddingTop: "1rem",
           }}
@@ -307,15 +315,23 @@ function MyTrip() {
             <Container>
               <Row className="justify-content-evenly">
                 {myTripDetails.map((topack, index) => (
-                  <Col key={index} sm="6" lg="4" style={{marginBottom:"1rem"}}>
+                  <Col
+                    key={index}
+                    sm="6"
+                    lg="4"
+                    style={{ marginBottom: "1rem" }}
+                  >
                     <Card
                       style={{
                         paddingTop: "0.5rem 0 0 0.5rem",
-                        color:"#000",
-                        background: "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)"
+                        color: "#000",
+                        background:
+                          "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)",
                       }}
                     >
-                      <Card.Title style={{textAlign:"center"}}>Day {index + 1}</Card.Title>
+                      <Card.Title style={{ textAlign: "center" }}>
+                        Day {index + 1}
+                      </Card.Title>
                       <Card.Body>
                         Morning Place: {topack.morningPlace}
                         <br />
@@ -325,19 +341,16 @@ function MyTrip() {
                         <br />
                         Night Food: {topack.nightFood}
                         <br />
-                        <div style={{textAlign:"center"}}>
-                        <Link
-                          style={{ color: "#47126b", fontWeight: "600"}}
-                          to="#"
-                          onClick={() => {
-                            const confirmBox = window.confirm("Are you sure you want to delete this?")
-                            if(confirmBox===true){
-                              deleteMytrip(index)
-                            }
-                          }}
-                        >
+                        <div style={{ textAlign: "center" }}>
+                          <Link
+                            style={{ color: "#47126b", fontWeight: "600" }}
+                            to="#"
+                            onClick={() => {
+                              deleteMytrip(index);
+                            }}
+                          >
                           Delete
-                        </Link>
+                          </Link>
                         </div>
                         <MyTripDetails
                           key={index}
