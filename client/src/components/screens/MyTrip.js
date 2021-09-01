@@ -151,27 +151,27 @@ function MyTrip() {
           className="app"
           style={{
             padding: "1rem",
-            backgroundColor: "#ffcb96",
+            backgroundImage: `url("https://images.unsplash.com/photo-1517094857443-80776ddd155c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80)`,
+            position:"absolute",
+            width:"100%"
           }}
         >
           <div style={{ textAlign: "center" }}>
             <span
               className="text-center mb-4"
               style={{
-                color: "#4ecf6a",
+                color: "#0081a7",
                 fontWeight: "700",
                 fontSize: "2rem",
               }}
             >
               Your trip
             </span>
-            <br />
-            <br />
           </div>
           <div
             style={{
               position: "relative",
-              height: "40vh",
+              padding:"1rem",
               width: "100%",
               display: "flex",
               flex: 1,
@@ -188,7 +188,8 @@ function MyTrip() {
                 textAlign: "center",
                 borderRadius: "0.8rem",
                 fontSize: "20px",
-                backgroundColor: "#b2ff7a",
+                boxShadow: "0 1rem 2rem rgba(0, 0, 0, 0.5)",
+                backgroundColor: "rgba(255,255,255,0.2)",
               }}
             >
               <Card.Title style={{ fontSize: "25px" }}>
@@ -203,7 +204,6 @@ function MyTrip() {
           <div
             style={{
               borderRadius: "5px",
-              backgroundColor: "#4ecf6a",
               paddingBottom: "1rem",
               paddingTop: "1rem",
             }}
@@ -211,9 +211,9 @@ function MyTrip() {
             <h4
               style={{
                 textAlign: "center",
-                color: "#ffcb96",
-                fontWeight: "700",
-                fontSize: "2rem",
+                color: "#0081a7",
+                fontWeight: "500",
+                fontSize: "1.7rem",
               }}
             >
               Per Day Details
