@@ -130,7 +130,7 @@ function DontForgetMe() {
           className="app"
           style={{
             padding: "1rem",
-            paddingBottom: "20rem",
+            paddingBottom: "25rem",
             backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
           }}
         >
@@ -139,11 +139,9 @@ function DontForgetMe() {
               <span
                 className="text-center mb-4"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.6)",
-                  fontWeight: "500",
+                  color:"#52b788",
+                  fontWeight: "700",
                   fontSize: "2rem",
-                  padding: "0.5rem",
-                  borderRadius: "1rem",
                 }}
               >
                 Dont Forget Me!
@@ -152,12 +150,11 @@ function DontForgetMe() {
             <div>
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Label style={{ marginBottom: "1rem" }}>
+                  <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "1rem" }}>
                     <br />
                     <br />
                     <span
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.7)",
                         fontSize: "1rem",
                         padding: "0.5rem",
                         borderRadius: "0.7rem",
@@ -174,9 +171,19 @@ function DontForgetMe() {
                     placeholder="Add new item"
                   />
                 </Form.Group>
-                <Button variant="primary mb-3" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      margin: "2rem",
+                      marginLeft:"0",
+                      backgroundColor: "#f3722c",
+                      fontSize: "18px",
+                      fontWeight: "600",
+                    }}
+                  >
                   Add
-                </Button>
+                  </Button>
               </Form>
               <Container>
                 <Row>

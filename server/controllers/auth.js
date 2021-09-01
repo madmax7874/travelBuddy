@@ -29,11 +29,11 @@ exports.login = async (req, res, next) => {
 
 // Register user
 exports.register = async (req, res, next) => {
-  const { firstname,lastname, email, password } = req.body;
+  const { fullname, email, password } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password,10);
-    const user = await User.create({firstname,lastname,email,password:passwordHash,});
+    const user = await User.create({fullname,email,password:passwordHash,});
     const token = generateToken(user._id)
     return res.status(200).json({ sucess: true, token });
 

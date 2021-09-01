@@ -158,11 +158,9 @@ function MyTrip() {
             <span
               className="text-center mb-4"
               style={{
-                backgroundColor: "rgba(255,255,255,0.6)",
-                fontWeight: "500",
+                color: "#4ecf6a",
+                fontWeight: "700",
                 fontSize: "2rem",
-                padding: "0.5rem",
-                borderRadius: "1rem",
               }}
             >
               Your trip
@@ -204,72 +202,22 @@ function MyTrip() {
           </div>
           <div
             style={{
-              borderRadius:"5px",
+              borderRadius: "5px",
               backgroundColor: "#4ecf6a",
               paddingBottom: "1rem",
               paddingTop: "1rem",
             }}
           >
-            <h4 style={{ textAlign: "center" }}>Per Day Details</h4>
-            <br />
-            <PerDayDetails />
-            <div>
-              <Container>
-                <Row className="justify-content-evenly">
-                  {myTripDetails.map((topack, index) => (
-                    <Col
-                      key={index}
-                      sm="6"
-                      lg="4"
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      <Card
-                        style={{
-                          paddingTop: "0.5rem 0 0 0.5rem",
-                          color: "#000",
-                          background:
-                            "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)",
-                        }}
-                      >
-                        <Card.Title style={{ textAlign: "center" }}>
-                          Day {index + 1}
-                        </Card.Title>
-                        <Card.Body>
-                          Morning Place: {topack.morningPlace}
-                          <br />
-                          Morning Food: {topack.morningFood}
-                          <br />
-                          Night Place: {topack.nightPlace}
-                          <br />
-                          Night Food: {topack.nightFood}
-                          <br />
-                          <div style={{ textAlign: "center" }}>
-                            <Link
-                              style={{ color: "#47126b", fontWeight: "600" }}
-                              to="#"
-                              onClick={() => {
-                                deleteMytrip(index);
-                              }}
-                            >
-                              Delete
-                            </Link>
-                          </div>
-                          <div
-                            className="topack"
-                            style={{
-                              alignItems: "center",
-                              display: "flex",
-                              fontSize: "18px",
-                              justifyContent: "space-between",
-                            }}
-                          ></div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              </Container>
-            </div>
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#ffcb96",
+                fontWeight: "700",
+                fontSize: "2rem",
+              }}
+            >
+              Per Day Details
+            </h4>
             <Form className="input-form" onSubmit={handleSubmit}>
               <div
                 className="row"
@@ -364,6 +312,64 @@ function MyTrip() {
                 </Button>
               </div>
             </Form>
+            <PerDayDetails />
+            <div>
+              <Container>
+                <Row className="justify-content-evenly">
+                  {myTripDetails.map((topack, index) => (
+                    <Col
+                      key={index}
+                      sm="6"
+                      lg="4"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <Card
+                        style={{
+                          paddingTop: "0.5rem 0 0 0.5rem",
+                          color: "#000",
+                          background:
+                            "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)",
+                        }}
+                      >
+                        <Card.Title style={{ textAlign: "center" }}>
+                          Day {index + 1}
+                        </Card.Title>
+                        <Card.Body>
+                          Morning Place: {topack.morningPlace}
+                          <br />
+                          Morning Food: {topack.morningFood}
+                          <br />
+                          Night Place: {topack.nightPlace}
+                          <br />
+                          Night Food: {topack.nightFood}
+                          <br />
+                          <div style={{ textAlign: "center" }}>
+                            <Link
+                              style={{ color: "#47126b", fontWeight: "600" }}
+                              to="#"
+                              onClick={() => {
+                                deleteMytrip(index);
+                              }}
+                            >
+                              Delete
+                            </Link>
+                          </div>
+                          <div
+                            className="topack"
+                            style={{
+                              alignItems: "center",
+                              display: "flex",
+                              fontSize: "18px",
+                              justifyContent: "space-between",
+                            }}
+                          ></div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            </div>
           </div>
         </div>
       ) : (

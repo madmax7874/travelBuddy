@@ -85,41 +85,38 @@ function Trips(props) {
     );
   });
 
+  const TripDetails = () => {
+    if (trips.length === 0) {
+      return (
+        <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
+          No trip added
+        </h6>
+      );
+    } else {
+      return (
+        <div style={{ textAlign: "center", margin: "1rem", padding: "0.5rem" }}>
+          <br />
+          <Table>
+            <thead>
+              <tr>
+                <th>Place</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>{TripComponents}</tbody>
+          </Table>
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <Head />
       {loading ? (
         <div className="app" style={{ backgroundColor: "#ffe8d6" }}>
-          <div style={{ backgroundColor: "#ffe8d6" }}>
-            <br />
-            <div style={{ textAlign: "center" }}>
-              <span
-                className="text-center mb-4"
-                style={{
-                  color: "#cb997e",
-                  fontWeight: "700",
-                  fontSize: "2rem",
-                }}
-              >
-                Your Past trips
-              </span>
-            </div>
-            <div style={{ textAlign: "center",margin:"1rem",padding:"0.5rem"  }}>
-              <br />
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Place</th>
-                    <th>Departure</th>
-                    <th>Arrival</th>
-                    <th>Operation</th>
-                  </tr>
-                </thead>
-                <tbody>{TripComponents}</tbody>
-              </Table>
-            </div>
-          </div>
-          <br />
           <div style={{ backgroundColor: "#ddbea9", paddingBottom: "0.1rem" }}>
             <br />
             <div style={{ textAlign: "center" }}>
@@ -156,7 +153,7 @@ function Trips(props) {
                     />
                     {errors.start_date && (
                       <p className="" style={{ color: "#e85d04" }}>
-                        *Start Date is required
+                        Start Date is required
                       </p>
                     )}
                   </Form.Group>
@@ -181,7 +178,7 @@ function Trips(props) {
                     />
                     {errors.end_date && (
                       <p className="" style={{ color: "#e85d04" }}>
-                        *End Date is required
+                        End Date is required
                       </p>
                     )}
                   </Form.Group>
@@ -206,7 +203,7 @@ function Trips(props) {
                     />
                     {errors.destination && (
                       <p className="" style={{ color: "#e85d04" }}>
-                        *Destination is required
+                        Destination is required
                       </p>
                     )}
                   </Form.Group>
@@ -218,7 +215,7 @@ function Trips(props) {
                   type="submit"
                   style={{
                     marginTop: "2rem",
-                    border: "1px solid #973aa8",
+                    border: "1px solid #ffe8d6",
                     borderRadius: "2rem",
                     width: "200px",
                     backgroundColor: "#a47148",
@@ -231,6 +228,22 @@ function Trips(props) {
                 </Button>
               </div>
             </Form>
+          </div>
+          <div style={{ backgroundColor: "#ffe8d6" }}>
+            <br />
+            <div style={{ textAlign: "center" }}>
+              <span
+                className="text-center mb-4"
+                style={{
+                  color: "#cb997e",
+                  fontWeight: "700",
+                  fontSize: "2rem",
+                }}
+              >
+                Your Past trips
+              </span>
+            </div>
+            <TripDetails />
           </div>
         </div>
       ) : (

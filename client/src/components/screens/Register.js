@@ -1,16 +1,24 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Form, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "./Head";
+import { useAlert } from "react-alert";
+import Swal from "sweetalert2";
 import "./Register.css";
+import signup from '../../assets/signup.jpg'
 
 const Register = ({ history }) => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const alert = useAlert();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
@@ -18,119 +26,117 @@ const Register = ({ history }) => {
     }
   }, [history]);
 
-  const registerHandler = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     const config = {
       header: {
         "Content-Type": "application/json",
       },
     };
 
-    if (password !== confirmpassword) {
-      setPassword("");
-      setConfirmPassword("");
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-      return setError("Passwords do not match");
+    if (data.password !== data.confirmpassword) {
+      setValue("password");
+      setValue("confirmpassword");
+      return alert.show("Passwords do not match", { type: "error" });
     }
 
     try {
-      const { data } = await axios.post(
-        "/api/auth/register",
-        {
-          firstname,
-          lastname,
-          email,
-          password,
-        },
-        config
-      );
-
-      localStorage.setItem("authToken", data.token);
-
-      history.push("/");
+      const response = await axios.post("/api/auth/register", data, config);
+      if (response.data) {
+        localStorage.setItem("authToken", response.data.token);
+        history.push("/");
+      }
     } catch (error) {
-      setError(error.response.data.error);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      Swal.fire(`${error.response.data.error}`, "", "error");
     }
   };
 
   return (
     <div>
       <Head />
-      <div className="register-screen">
-        <form onSubmit={registerHandler} className="register-screen__form">
-          <h3 className="register-screen__title">Register</h3>
-          {error && <span className="error-message">{error}</span>}
-          <div className="form-group">
-            <label htmlFor="name">First Name:</label>
-            <input
-              type="text"
-              required
-              id="fname"
-              placeholder="First Name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="name">Last Name:</label>
-            <input
-              type="text"
-              required
-              id="lname"
-              placeholder="Last Name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              required
-              id="email"
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              required
-              id="password"
-              autoComplete="true"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmpassword">Confirm Password:</label>
-            <input
-              type="password"
-              required
-              id="confirmpassword"
-              autoComplete="true"
-              placeholder="Confirm password"
-              value={confirmpassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Register
-          </button>
-
-          <span className="register-screen__subtext">
+      <div className="register-screen" style={{backgroundImage:`url(${signup})`}}>
+        <Form
+          className="register-screen__form"
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            maxHeight: "100vH",
+            verticalAlign: "middle",
+          }}
+        >
+        <h3 className="register-screen__title">Register</h3>
+              <Form.Group controlId="fullname">
+                <Form.Label style={{ fontSize: "1rem" }}>Full Name{" "}<span style={{ color: "#d00000", fontSize: "1rem" }}>*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  name="fullname"
+                  placeholder="Enter name"
+                  autoComplete="off"
+                  {...register("fullname", { required: true })}
+                  className={`${errors.fullname ? "input-error" : ""}`}
+                />
+                <p style={{ color: "red" }}>
+                  {errors.fullname?.type === "required" && "Name is required"}
+                </p>
+              </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label style={{ fontSize: "1rem" }}>
+                  Email Address{" "}<span style={{ color: "#d00000", fontSize: "1rem" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  {...register("email", { required: true })}
+                  className={`${errors.email ? "input-error" : ""}`}
+                />
+                <p style={{ color: "red" }}>
+                  {errors.email?.type === "required" && "Email is required"}
+                </p>
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label style={{ fontSize: "1rem" }}>Password{" "}<span style={{ color: "#d00000", fontSize: "1rem" }}>*</span></Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  autoComplete="off"
+                  {...register("password", { required: true })}
+                  className={`${errors.password ? "input-error" : ""}`}
+                />
+                <p style={{ color: "red" }}>
+                  {errors.password?.type === "required" && "Password is required"}
+                </p>
+              </Form.Group>
+            <Form.Group controlId="confirmpassword">
+              <Form.Label style={{ fontSize: "1rem" }}>
+                Confirm Password{" "}<span style={{ color: "#d00000", fontSize: "1rem" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="confirmpassword"
+                placeholder="Re-enter password"
+                autoComplete="off"
+                {...register("confirmpassword", { required: true })}
+                className={`${errors.confirmpassword ? "input-error" : ""}`}
+              />
+              <p style={{ color: "red" }}>
+                {errors.confirmpassword?.type === "required" &&
+                  "Password is required again"}
+              </p>
+            </Form.Group>
+          <p>
+            {" "}
             Already have an account? <Link to="/login">Login</Link>
-          </span>
-        </form>
+          </p>
+          <div style={{ textAlign: "center" }}>
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ marginTop: "1rem" }}
+            >
+              Register
+            </Button>
+          </div>
+        </Form>
       </div>
     </div>
   );

@@ -72,10 +72,7 @@ function ExpenseTracker() {
       const response = await axios.post(url, value, config);
       if (response.data) {
         setExpenseHistory([...expenseHistory, value]);
-        alert.show(
-          "Expense added!",
-          { type: "success" }
-        );
+        alert.show("Expense added!", { type: "success" });
         setValue({
           text: "",
           amount: "",
@@ -95,7 +92,6 @@ function ExpenseTracker() {
       },
     };
     const url = `/api/private/deleteexpense`;
-    const response = await axios.post(url, newExpense, config);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -108,8 +104,9 @@ function ExpenseTracker() {
       if (result.isConfirmed) {
         newExpense.splice(index, 1);
         setExpenseHistory(newExpense);
+        const response = await axios.post(url, newExpense, config);
         if (response.data) {
-          alert.show("Item Deleted",{ type: "success" });
+          alert.show("Expense Deleted", { type: "success" });
         }
       }
     });
@@ -128,12 +125,39 @@ function ExpenseTracker() {
               deleteExpense(index);
             }}
           >
-          Delete
+            Delete
           </Link>
         </td>
       </tr>
     );
   });
+
+  const ExpenseHistory = () => {
+    if (expenseHistory.length === 0) {
+      return (
+        <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
+          No expenses added
+        </h6>
+      );
+    } else {
+      return (
+        <div style={{ paddingBottom: "0.2rem" }}>
+          <Table style={{ textAlign: "center" }}>
+            <thead>
+              <tr style={{ fontSize: "1.2rem" }}>
+                <th>Text</th>
+                <th>Amount</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody style={{ fontSize: "1.1rem" }}>
+              {expenseHistoryComponent}
+            </tbody>
+          </Table>
+        </div>
+      );
+    }
+  };
 
   useEffect(() => {}, [value]);
   return (
@@ -151,11 +175,9 @@ function ExpenseTracker() {
               <span
                 className="text-center"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.6)",
-                  fontWeight: "500",
+                  color: "#9c89b8",
+                  fontWeight: "700",
                   fontSize: "2rem",
-                  padding: "0.5rem",
-                  borderRadius: "1rem",
                 }}
               >
                 Expense Tracker
@@ -185,22 +207,16 @@ function ExpenseTracker() {
                 </div>
               </div>
             </div>
-            <div style={{ backgroundColor: "#c9f2c7",margin:"1rem",borderRadius:"0.5rem",padding:"0.5rem" }}>
+            <div
+              style={{
+                backgroundColor: "#c9f2c7",
+                margin: "1rem",
+                borderRadius: "0.5rem",
+                padding: "0.5rem",
+              }}
+            >
               <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>
-              <div style={{ paddingBottom: "0.2rem" }}>
-                <Table style={{ textAlign: "center" }}>
-                  <thead>
-                    <tr style={{ fontSize: "1.2rem" }}>
-                      <th>Text</th>
-                      <th>Amount</th>
-                      <th>Operation</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ fontSize: "1.1rem" }}>
-                    {expenseHistoryComponent}
-                  </tbody>
-                </Table>
-              </div>
+              <ExpenseHistory />
             </div>
             <Form
               style={{ marginBottom: "0" }}
