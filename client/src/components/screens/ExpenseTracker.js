@@ -141,7 +141,7 @@ function ExpenseTracker() {
       );
     } else {
       return (
-        <div style={{ paddingBottom: "0.2rem" }}>
+        <div>
           <Table style={{ textAlign: "center" }}>
             <thead>
               <tr style={{ fontSize: "1.2rem" }}>
@@ -209,10 +209,13 @@ function ExpenseTracker() {
             </div>
             <div
               style={{
-                backgroundColor: "#c9f2c7",
+                boxShadow: "0 1rem 2rem rgba(0, 0, 0, 0.5)",
+                backgroundColor: "rgba(255,255,255,0.2)",
                 margin: "1rem",
                 borderRadius: "0.5rem",
                 padding: "0.5rem",
+                marginLeft:"2rem",
+                marginRight:"2rem"
               }}
             >
               <h3 style={{ padding: "1rem", textAlign: "center" }}>History</h3>

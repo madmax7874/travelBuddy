@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useAlert } from "react-alert";
 import "./Login.css";
 import Head from "./Head";
-import signup from "../../assets/signup.jpg";
+import welcome from "../../assets/welcome.jpg";
 
 const Login = ({ history }) => {
   const alert = useAlert();
@@ -43,7 +43,7 @@ const Login = ({ history }) => {
       <Head />
       <div
         className="login-screen"
-        style={{ backgroundImage: `url(${signup})` }}
+        style={{ backgroundImage: `url(${welcome})` }}
       >
         <Form
           className="login-screen__form"

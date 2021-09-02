@@ -152,8 +152,8 @@ function MyTrip() {
           style={{
             padding: "1rem",
             backgroundImage: `url("https://images.unsplash.com/photo-1517094857443-80776ddd155c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80)`,
-            position:"absolute",
-            width:"100%"
+            position: "absolute",
+            width: "100%",
           }}
         >
           <div style={{ textAlign: "center" }}>
@@ -171,7 +171,7 @@ function MyTrip() {
           <div
             style={{
               position: "relative",
-              padding:"1rem",
+              padding: "1rem",
               width: "100%",
               display: "flex",
               flex: 1,
@@ -208,110 +208,116 @@ function MyTrip() {
               paddingTop: "1rem",
             }}
           >
-            <h4
+            <div
+              className="container"
               style={{
-                textAlign: "center",
-                color: "#0081a7",
-                fontWeight: "500",
-                fontSize: "1.7rem",
+                boxShadow: "0 1rem 2rem rgba(0, 0, 0, 0.5)",
+                backgroundColor: "rgba(255,255,255,0.2)",
+                paddingTop: "0.2rem",
               }}
             >
-              Per Day Details
-            </h4>
-            <Form className="input-form" onSubmit={handleSubmit}>
-              <div
-                className="row"
-                style={{ borderRadius: "0.3rem", margin: "0.5rem" }}
+              <h4
+                style={{
+                  textAlign: "center",
+                  color: "#0081a7",
+                  fontWeight: "500",
+                  fontSize: "1.7rem",
+                }}
               >
-                <div className="col-lg-6">
-                  <Form.Group>
-                    <Form.Label
-                      style={{ fontWeight: "600", fontSize: "0.9rem" }}
-                    >
-                      Morning Place to visit
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="morningPlace"
-                      className="input"
-                      onChange={(e) => handleChange(e)}
-                      value={value.morningPlace}
-                      placeholder="Morning Place to visit"
-                    />
-                  </Form.Group>
-                </div>
+                Per Day Details
+              </h4>
+              <Form className="input-form" onSubmit={handleSubmit} style={{paddingBottom:"1rem"}}>
+                <div className="row" style={{ borderRadius: "0.3rem" }}>
+                  <div className="col-lg-6">
+                    <Form.Group>
+                      <Form.Label
+                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                      >
+                        Morning Place to visit
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="morningPlace"
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={value.morningPlace}
+                        placeholder="Morning Place to visit"
+                      />
+                    </Form.Group>
+                  </div>
 
-                <div className="col-lg-6">
-                  <Form.Group>
-                    <Form.Label
-                      style={{ fontWeight: "600", fontSize: "0.9rem" }}
-                    >
-                      Morning Dine at
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="morningFood"
-                      className="input"
-                      onChange={(e) => handleChange(e)}
-                      value={value.morningFood}
-                      placeholder="Morning Dine at"
-                    />
-                  </Form.Group>
+                  <div className="col-lg-6">
+                    <Form.Group>
+                      <Form.Label
+                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                      >
+                        Morning Dine at
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="morningFood"
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={value.morningFood}
+                        placeholder="Morning Dine at"
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-lg-6">
+                    <Form.Group>
+                      <Form.Label
+                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                      >
+                        Night place to visit
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="nightPlace"
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={value.nightPlace}
+                        placeholder="Night place to visit"
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-lg-6">
+                    <Form.Group>
+                      <Form.Label
+                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                      >
+                        Night dine at
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="nightFood"
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={value.nightFood}
+                        placeholder="Night dine at"
+                      />
+                    </Form.Group>
+                  </div>
                 </div>
-                <div className="col-lg-6">
-                  <Form.Group>
-                    <Form.Label
-                      style={{ fontWeight: "600", fontSize: "0.9rem" }}
-                    >
-                      Night place to visit
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="nightPlace"
-                      className="input"
-                      onChange={(e) => handleChange(e)}
-                      value={value.nightPlace}
-                      placeholder="Night place to visit"
-                    />
-                  </Form.Group>
+                <br />
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      border: "1px solid #9a8f97",
+                      backgroundColor: "#9c89b8",
+                      color: "#000",
+                      borderRadius: "2rem",
+                      fontSize: "18px",
+                      fontWeight: "600",
+                      width: "150px",
+                    }}
+                  >
+                    Add
+                  </Button>
                 </div>
-                <div className="col-lg-6">
-                  <Form.Group>
-                    <Form.Label
-                      style={{ fontWeight: "600", fontSize: "0.9rem" }}
-                    >
-                      Night dine at
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="nightFood"
-                      className="input"
-                      onChange={(e) => handleChange(e)}
-                      value={value.nightFood}
-                      placeholder="Night dine at"
-                    />
-                  </Form.Group>
-                </div>
-              </div>
-              <br />
-              <div style={{ textAlign: "center" }}>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{
-                    border: "1px solid #9a8f97",
-                    backgroundColor: "#9c89b8",
-                    color: "#000",
-                    borderRadius: "2rem",
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    width: "150px",
-                  }}
-                >
-                  Add
-                </Button>
-              </div>
-            </Form>
+              </Form>
+            </div>
             <PerDayDetails />
             <div>
               <Container>

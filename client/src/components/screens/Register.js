@@ -8,7 +8,7 @@ import Head from "./Head";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 import "./Register.css";
-import signup from '../../assets/signup.jpg'
+import welcome from '../../assets/welcome.jpg'
 
 const Register = ({ history }) => {
   const alert = useAlert();
@@ -53,7 +53,7 @@ const Register = ({ history }) => {
   return (
     <div>
       <Head />
-      <div className="register-screen" style={{backgroundImage:`url(${signup})`}}>
+      <div className="register-screen" style={{backgroundImage:`url(${welcome})`}}>
         <Form
           className="register-screen__form"
           onSubmit={handleSubmit(onSubmit)}
