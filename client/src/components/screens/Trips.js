@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
+import { useParams } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "./Head";
 import { SyncLoader } from "react-spinners";
+const Swal = require("sweetalert2");
 
-import "bootstrap/dist/css/bootstrap.min.css";
 const axios = require("axios");
 
 function Trips(props) {
   const alert = useAlert();
+  const { id} = useParams();
   const {
     register,
     handleSubmit,
@@ -62,6 +65,48 @@ function Trips(props) {
     }
   };
 
+  const removeData = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    const url = `/api/private/deletetrip/${id}`;
+    try {
+      const response = await axios.delete(url, config);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteMytrip = (index) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const newTrip = [...myTripDetails];
+        newTrip.splice(index, 1);
+        setMyTripDetails(newTrip);
+        const response = await removeData(newTrip);
+        if (response.data) {
+          alert.show("Details for the day deleted", { type: "success" });
+        }
+      }
+    });
+  };
+
+  const deleteFunc = (_id) =>{
+    console.log(_id)
+  }
+
   const TripComponents = trips.map((trip, index) => {
     trip.startDate = trip.startDate.split("T")[0];
     trip.endDate = trip.endDate.split("T")[0];
@@ -79,6 +124,16 @@ function Trips(props) {
             to={`/mytrip/${trip._id}/${index}`}
           >
             View
+          </Link>{" "}
+          <Link
+            style={{
+              color: "#f3722c",
+              fontWeight: "600",
+            }}
+            to="#"
+            onClick={deleteFunc(trip._id)}
+          >
+            Delete
           </Link>
         </td>
       </tr>

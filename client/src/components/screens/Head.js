@@ -9,7 +9,7 @@ const navbar = {
   padding: "0.5rem 3rem",
   fontSize: "1.2rem",
 };
-const navLink = { color: "rgba(255,255,255,0.8)" };
+const navLink = { color: "rgba(255,255,255,0.7)" };
 
 function Head(props) {
   function logoutHandler() {
@@ -31,19 +31,18 @@ function Head(props) {
             ></Image>
           </NavLink>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
+        <Navbar.Toggle />
+        <Navbar.Collapse>
           <Nav
             className="mr-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
-            navbarScroll
           >
             <NavLink
               style={navLink}
               activeStyle={{
                 color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"
@@ -55,8 +54,8 @@ function Head(props) {
               style={navLink}
               activeStyle={{
                 color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"
@@ -68,8 +67,8 @@ function Head(props) {
               style={navLink}
               activeStyle={{
                 color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"
@@ -78,19 +77,18 @@ function Head(props) {
               ExpenseTracker
             </NavLink>
           </Nav>
-
+          <br/>
           <Nav
             className="my-2 my-lg-0 pt-2"
             style={{ maxHeight: "100px", marginLeft: "auto" }}
-            navbarScroll
           >
             <NavLink
               style={navLink}
               onClick={() => logoutHandler()}
               activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                color: "rgba(255,255,255,1)", 
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"
@@ -99,7 +97,7 @@ function Head(props) {
               Logout
             </NavLink>
           </Nav>
-        </Navbar.Collapse>
+          </Navbar.Collapse>
       </Navbar>
     </div>
   ) : (
@@ -113,24 +111,22 @@ function Head(props) {
             ></Image>
           </NavLink>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
+        <Navbar.Toggle />
+        <Navbar.Collapse >
           <Nav
             className="mr-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
-            navbarScroll
           ></Nav>
           <Nav
             className="my-2 my-lg-0 pt-2"
             style={{ maxHeight: "100px", marginLeft: "auto" }}
-            navbarScroll
           >
             <NavLink
               style={navLink}
               activeStyle={{
                 color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"
@@ -142,8 +138,8 @@ function Head(props) {
               style={navLink}
               activeStyle={{
                 color: "rgba(255,255,255,1)",
-                fontWeight: "600",
-                borderBottom: "3px solid #FFFFFF",
+                fontFamily:"sans-serif",
+                fontWeight: "700",
               }}
               className="nav-link"
               aria-current="page"

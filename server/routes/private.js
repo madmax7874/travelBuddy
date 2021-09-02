@@ -102,6 +102,19 @@ router.route("/mytrip/:id")
     }
   });
 
+  router.route("/deleteperdaydetails/:id/:index")
+  //delete per day details
+  .post(protect, async (req, res, next) => {
+    try{ ;
+      const {id,index} = req.params
+
+      const user = await User.findOneAndUpdate({'details._id': id}, { [`details.${index}.perDayDetails`] : req.body })
+      res.status(200).send(true);
+    }catch(err){
+      next(err)
+    }
+  });
+
 router.route("/perdaydetails/:id/:index")
   //add per day details to db
   .post(protect, async (req, res, next) => {
