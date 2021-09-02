@@ -1,35 +1,38 @@
-import React, {useEffect} from "react";
-import Head from "./Head"
-import Intro from "./Intro"
-import Features from "./Features"
+import React, { useEffect } from "react";
+import Head from "./Head";
+import Intro from "./Intro";
+import Features from "./Features";
 
 const axios = require("axios");
 
 const Home = (props) => {
 
-  useEffect(()=>{
-    const checkAuthToken = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      console.log("vidholi")
+      const checkAuthToken = async () => {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        try {
+          await axios.get("/api/private", config);
+        } catch (error) {
+          localStorage.removeItem("authToken");
+          props.history.push("/login");
+        }
       };
-      try {
-        await axios.get("/api/private", config);
-      } catch (error) {
-        localStorage.removeItem("authToken");
-        props.history.push("/login")
-      }
-    };
-    checkAuthToken()
-  }, [props.history])
+      checkAuthToken();
+    }
+  }, [props.history]);
 
-  return  (
+  return (
     <div>
-        <Head />
-        <Intro />
-        <Features />
+      <Head />
+      <Intro />
+      <Features />
     </div>
   );
 };

@@ -74,7 +74,19 @@ router.route("/traveldetails")
     }catch(err){
       next(err)
     }
-  }); 
+  });
+
+  router.route("/dtraveldetails").post(protect, async (req, res, next) => {
+    try{
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const query = { _id: decoded.id };
+      const user = await User.findOneAndUpdate(query, { details : req.body })
+      res.status(200).send(true)
+    }catch(err){
+      next(err)
+    }
+  });
 
 router.route("/trips")
   //get all trips 
@@ -97,19 +109,6 @@ router.route("/mytrip/:id")
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.find({'_id': decoded.id}, {details: {$elemMatch: {_id: req.params.id}}});
       res.status(200).send(user[0].details[0])
-    }catch(err){
-      next(err)
-    }
-  });
-
-  router.route("/deleteperdaydetails/:id/:index")
-  //delete per day details
-  .post(protect, async (req, res, next) => {
-    try{ ;
-      const {id,index} = req.params
-
-      const user = await User.findOneAndUpdate({'details._id': id}, { [`details.${index}.perDayDetails`] : req.body })
-      res.status(200).send(true);
     }catch(err){
       next(err)
     }

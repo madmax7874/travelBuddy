@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "./Head";
 import { SyncLoader } from "react-spinners";
@@ -13,7 +13,7 @@ const axios = require("axios");
 
 function Trips(props) {
   const alert = useAlert();
-  const { id} = useParams();
+  // const {id} = useParams();
   const {
     register,
     handleSubmit,
@@ -65,23 +65,23 @@ function Trips(props) {
     }
   };
 
-  const removeData = async () => {
+  const deleteAPI = async (newTrips) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     };
-    const url = `/api/private/deletetrip/${id}`;
+    const url = `/api/private/dtraveldetails`;
     try {
-      const response = await axios.delete(url, config);
+      const response = await axios.post(url, newTrips, config);
       return response;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteMytrip = (index) => {
+  const deleteFunc = (index) =>{
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -92,20 +92,16 @@ function Trips(props) {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const newTrip = [...myTripDetails];
-        newTrip.splice(index, 1);
-        setMyTripDetails(newTrip);
-        const response = await removeData(newTrip);
+        const newTrips = [...trips];
+        newTrips.splice(index, 1);
+        setTrips(newTrips);
+        const response = await deleteAPI(newTrips);
         if (response.data) {
-          alert.show("Details for the day deleted", { type: "success" });
+          alert.show("Trip deleted", { type: "success" });
         }
       }
     });
   };
-
-  const deleteFunc = (_id) =>{
-    console.log(_id)
-  }
 
   const TripComponents = trips.map((trip, index) => {
     trip.startDate = trip.startDate.split("T")[0];
@@ -131,7 +127,7 @@ function Trips(props) {
               fontWeight: "600",
             }}
             to="#"
-            onClick={deleteFunc(trip._id)}
+            onClick={() => {deleteFunc(trip._id,index)}}
           >
             Delete
           </Link>
