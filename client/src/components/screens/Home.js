@@ -9,7 +9,6 @@ const Home = (props) => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      console.log("vidholi")
       const checkAuthToken = async () => {
         const config = {
           headers: {
@@ -36,5 +35,4 @@ const Home = (props) => {
     </div>
   );
 };
-
 export default Home;

@@ -2,17 +2,30 @@ import React from "react";
 import ReactCardCarousel from "react-card-carousel";
 import { Link } from "react-router-dom";
 
-class Features extends React.Component {
-  constructor(props) {
-    super(props);
-    // typo: use `=` instead of `:`
-    let width = window.innerWidth;
-    // dont use setState in constructor, initialize state instead
-    this.state = {};
+function Features() {
+  const CONTAINER_STYLE = {
+    position: "relative",
+    height: "48vh",
+    width: "100%",
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "middle",
+  };
+
+  const CARD_STYLE = {
+    height: "250px",
+    width: "600px",
+    paddingTop: "50px",
+    textAlign: "center",
+    borderRadius: "0.8rem",
+    background: "#98c1d9",
+    fontSize: "20px",
+  };
+  const width = window.innerWidth;
+  const FeaturesComponent = () => {
     if (width < 768) {
-      // set renderComponent property according to window size
-      // components are declared using JSX, not string (do not use ``)
-      this.state.renderComponent = (
+      return (
         <div className="row">
           <div className="col-lg-4 my-1">
             <div
@@ -33,7 +46,7 @@ class Features extends React.Component {
                   to="/list"
                   className="btn btn-primary"
                   style={{
-                    fontSize:"1.3rem",
+                    fontSize: "1.3rem",
                     textDecoration: "none",
                     color: "#333",
                     background: "#b7e4c7",
@@ -70,7 +83,7 @@ class Features extends React.Component {
                   to="/trips"
                   className="btn btn-primary"
                   style={{
-                    fontSize:"1.3rem",
+                    fontSize: "1.3rem",
                     textDecoration: "none",
                     color: "#333",
                     background: "#b7e4c7",
@@ -107,7 +120,7 @@ class Features extends React.Component {
                   to="/expensetracker"
                   className="btn btn-primary"
                   style={{
-                    fontSize:"1.3rem",
+                    fontSize: "1.3rem",
                     textDecoration: "none",
                     color: "#333",
                     background: "#b7e4c7",
@@ -127,15 +140,15 @@ class Features extends React.Component {
         </div>
       );
     } else {
-      this.state.renderComponent = (
-        <div style={Features.CONTAINER_STYLE}>
+      return (
+        <div style={CONTAINER_STYLE}>
           <ReactCardCarousel autoplay={true} autoplay_speed={2500}>
-            <div style={Features.CARD_STYLE}>
+            <div style={CARD_STYLE}>
               <Link
                 to="/list"
                 className="btn btn-primary"
                 style={{
-                  fontSize:"1.3rem",
+                  fontSize: "1.3rem",
                   textDecoration: "none",
                   color: "#333",
                   background: "#b7e4c7",
@@ -150,12 +163,12 @@ class Features extends React.Component {
                 Note down your essentials!
               </p>
             </div>
-            <div style={Features.CARD_STYLE}>
+            <div style={CARD_STYLE}>
               <Link
                 to="/trips"
                 className="btn btn-primary"
                 style={{
-                  fontSize:"1.3rem",
+                  fontSize: "1.3rem",
                   textDecoration: "none",
                   color: "#333",
                   background: "#b7e4c7",
@@ -170,12 +183,12 @@ class Features extends React.Component {
                 travelling!
               </p>
             </div>
-            <div style={Features.CARD_STYLE}>
+            <div style={CARD_STYLE}>
               <Link
                 to="/expensetracker"
                 className="btn btn-primary"
                 style={{
-                  fontSize:"1.3rem",
+                  fontSize: "1.3rem",
                   textDecoration: "none",
                   color: "#333",
                   background: "#b7e4c7",
@@ -193,49 +206,23 @@ class Features extends React.Component {
         </div>
       );
     }
-  }
+  };
 
-  static get CONTAINER_STYLE() {
-    return {
-      position: "relative",
-      height: "48vh",
-      width: "100%",
-      display: "flex",
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "middle",
-    };
-  }
-
-  static get CARD_STYLE() {
-    return {
-      height: "250px",
-      width: "600px",
-      paddingTop: "50px",
-      textAlign: "center",
-      borderRadius: "0.8rem",
-      background: "#98c1d9",
-      fontSize: "20px",
-    };
-  }
-
-  render() {
-    return (
-      <div style={{ backgroundColor: "#293241", paddingBottom: "3rem" }}>
-        <div
-          className=""
-          style={{
-            textAlign: "center",
-            padding: " 0rem 1.5rem",
-            margin: "0rem 1rem",
-          }}
-        >
-          <h1 style={{ padding: "1rem", color: "#FFFFFF" }}>Features</h1>
-          {this.state.renderComponent}
-        </div>
+  return (
+    <div style={{ backgroundColor: "#293241", paddingBottom: "3rem" }}>
+      <div
+        className=""
+        style={{
+          textAlign: "center",
+          padding: " 0rem 1.5rem",
+          margin: "0rem 1rem",
+        }}
+      >
+        <h1 style={{ padding: "1rem", color: "#FFFFFF" }}>Features</h1>
+        <FeaturesComponent />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Features;
