@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ReactTextTransition from "react-text-transition";
+import bg from "../../assets/bg.png";
 
-const texts = ["memorable", "great", "joyful", "pleasant", "delightful"];
+const texts = ["MEMORABLE", "GREAT", "JOYFUL", "PLEASANT", "DELIGHTFUL"];
 
 const intro = {
-  backgroundImage: `url("https://images.unsplash.com/photo-1433838552652-f9a46b332c40?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80")`,
+  backgroundImage: `url(${bg})`,
   height: "30rem",
   backgroundPosition: "center center",
   backgroundRepeat: "no-repeat",
@@ -27,14 +28,14 @@ function Intro() {
 
     return (
       <div style={intro}>
-        <h3 style={{ paddingBottom: "7rem", color: "rgba(0,0,0,0.7)" }}>
-          Make your trip{" "}
+        <h3 style={{ fontSize:"1.7rem", paddingTop: "3rem", color: "rgba(255,255,255,0.7)" }}>
+          MAKE YOUR TRIP{" "}
           <ReactTextTransition
             text={texts[textIndex % texts.length]}
             style={{ margin: "0px 4px" }}
             inline
           />{" "}
-          with us!
+          WITH US!
         </h3>
       </div>
     );
