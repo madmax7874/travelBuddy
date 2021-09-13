@@ -146,7 +146,7 @@ router.route("/mytrip/:id")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.updateOne({'details.perDayDetails._id': req.params.id}, { "$pull": {"details.$[].perDaydetails": {_id : req.params.id}}})
+      const user = await User.updateOne({'details.0.perDayDetails._id': req.params.id}, { "$pull": {"details.0.perDayDetails": {_id : req.params.id}}})
 
       res.status(200).send({success:true});
     }catch(err){
