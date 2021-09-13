@@ -13,7 +13,6 @@ const axios = require("axios");
 
 function Trips(props) {
   const alert = useAlert();
-  // const {id} = useParams();
   const {
     register,
     handleSubmit,
@@ -58,7 +57,7 @@ function Trips(props) {
       );
       if (response.data) {
         alert.show("Trip added!", { type: "success" });
-        props.history.push(`/mytrip/${response.data}/${trips.length}`);
+        props.history.push(`/mytrip/${response.data}`);
       }
     } catch (error) {
       console.log(error);

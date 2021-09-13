@@ -14,7 +14,7 @@ const Swal = require("sweetalert2");
 
 function MyTrip() {
   const alert = useAlert();
-  const { id, index } = useParams();
+  const { id } = useParams();
 
   const [trip, setTrip] = useState({});
   const [myTripDetails, setMyTripDetails] = useState([]);
@@ -68,11 +68,13 @@ function MyTrip() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/perdaydetails/${id}/${index}`;
+      const url = `/api/private/mytrip/${id}`;
       try {
         const { data } = await axios.post(url, value, config);
-        if (data) {
+        if (data.success) {
           alert.show("Details for the day added", { type: "success" });
+          const newTrip = [...myTripDetails, data.perDayDetails];
+          setMyTripDetails(newTrip);
         }
       } catch (error) {
         console.log(error.response.data.error);
@@ -80,7 +82,6 @@ function MyTrip() {
     } catch (err) {
       console.log(err);
     }
-    addMytrip(value);
     setValue({
       morningPlace: "",
       morningFood: "",
@@ -88,30 +89,8 @@ function MyTrip() {
       nightFood: "",
     });
   };
-  useEffect(() => {}, [value]);
 
-  const addMytrip = (details) => {
-    const newTrip = [...myTripDetails, details];
-    setMyTripDetails(newTrip);
-  };
-
-  const removeData = async (value) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    const url = `/api/private/deleteperdaydetails/${id}/${index}`;
-    try {
-      const response = await axios.post(url, value, config);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteMytrip = (index) => {
+  const deleteMytrip = (perDayDetail,index) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -122,16 +101,30 @@ function MyTrip() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const newTrip = [...myTripDetails];
-        newTrip.splice(index, 1);
-        setMyTripDetails(newTrip);
-        const response = await removeData(newTrip);
-        if (response.data) {
-          alert.show("Details for the day deleted", { type: "success" });
+        
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/mytrip/${perDayDetail._id}`;
+        try {
+          const { data } = await axios.delete(url, config);
+          if (data.success) {
+            alert.show("Details for the day deleted", { type: "success" });
+            const newTrip = [...myTripDetails];
+            newTrip.splice(index, 1);
+            setMyTripDetails(newTrip);
+          }
+        } catch (error) {
+          console.log(error.response.data.error);
         }
       }
     });
   };
+
+  useEffect(() => {}, [value]);
 
   const PerDayDetails = () => {
     if (myTripDetails.length === 0)
@@ -322,7 +315,7 @@ function MyTrip() {
             <div>
               <Container>
                 <Row className="justify-content-evenly">
-                  {myTripDetails.map((topack, index) => (
+                  {myTripDetails.map((perDayDetail, index) => (
                     <Col
                       key={index}
                       sm="6"
@@ -341,27 +334,27 @@ function MyTrip() {
                           Day {index + 1}
                         </Card.Title>
                         <Card.Body>
-                          Morning Place: {topack.morningPlace}
+                          Morning Place: {perDayDetail.morningPlace}
                           <br />
-                          Morning Food: {topack.morningFood}
+                          Morning Food: {perDayDetail.morningFood}
                           <br />
-                          Night Place: {topack.nightPlace}
+                          Night Place: {perDayDetail.nightPlace}
                           <br />
-                          Night Food: {topack.nightFood}
+                          Night Food: {perDayDetail.nightFood}
                           <br />
                           <div style={{ textAlign: "center" }}>
                             <Link
                               style={{ color: "#47126b", fontWeight: "600" }}
                               to="#"
                               onClick={() => {
-                                deleteMytrip(index);
+                                deleteMytrip(perDayDetail,index);
                               }}
                             >
                               Delete
                             </Link>
                           </div>
                           <div
-                            className="topack"
+                            className="perDayDetail"
                             style={{
                               alignItems: "center",
                               display: "flex",
