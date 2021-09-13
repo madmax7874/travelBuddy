@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Features() {
   const CONTAINER_STYLE = {
     position: "relative",
-    height: "48vh",
+    height: "38vh",
     width: "100%",
     display: "flex",
     flex: 1,
@@ -209,7 +209,7 @@ function Features() {
   };
 
   return (
-    <div style={{ backgroundColor: "#293241", paddingBottom: "3rem" }}>
+    <div style={{ backgroundColor: "#293241", paddingBottom: "2rem" }}>
       <div
         className=""
         style={{
@@ -218,7 +218,7 @@ function Features() {
           margin: "0rem 1rem",
         }}
       >
-        <h1 style={{ padding: "1rem", color: "#FFFFFF" }}>Features</h1>
+        <h1 style={{ padding: "1rem", color: "#FFFFFF",marginBottom:"none" }}>Features</h1>
         <FeaturesComponent />
       </div>
     </div>

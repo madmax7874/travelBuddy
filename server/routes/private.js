@@ -9,8 +9,8 @@ router.route("/").get(protect , async(req,res) => {
   res.status(200).send(true);
 });
 
-router.route("/list")
-  // get all list from db 
+router.route("/list/:_id")
+  // get list
   .get(protect, async (req, res, next) => { 
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -21,7 +21,7 @@ router.route("/list")
       next(err)
     }
   })
-  // add list to db
+  // add list
   .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
@@ -31,25 +31,43 @@ router.route("/list")
         isDone: false  
       }
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { $push : { list : newData } })
-      res.status(200).send(true);
+      const user = await User.findOneAndUpdate(query, { $push : { list : newData }}, {new:true})
+      res.status(200).send({success:true,item : user.list[user.list.length-1]});
     }catch(err){
       next(err)
     }
-  });
-
-router.route("/modifylist")
-  // edit and delete list
-  .post(protect, async (req, res, next) => {
-    try{ 
+  })
+  // edit list
+  .put(protect, async (req, res, next) => { 
+    try{
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { list : req.body.value })
-      res.status(200).send(true);
+      const user = await User.updateOne(
+        query,
+        { "$set": { 
+          "list.$[outer].isDone": req.body.isDone
+        } },
+        { "arrayFilters": [
+          { "outer._id": req.body._id },
+        ] }
+      )
+      res.status(200).send({success:true});
     }catch(err){
       next(err)
     }
+  })
+  //delete list
+  .delete(protect, async (req, res, next) => {
+      try{ 
+        token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const query = { _id: decoded.id };
+        const user = await User.updateOne(query, { "$pull": { "list": {_id : req.params._id}}})
+        res.status(200).send({success:true});
+      }catch(err){
+        next(err)
+      }
   });
 
 router.route("/traveldetails")

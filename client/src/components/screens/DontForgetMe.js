@@ -24,7 +24,7 @@ function DontForgetMe() {
         },
       };
       try {
-        const { data } = await axios.get("/api/private/list", config);
+        const { data } = await axios.get("/api/private/list/1", config);
         setLists(data);
         setLoading(true);
       } catch (error) {
@@ -34,41 +34,9 @@ function DontForgetMe() {
     fetchPrivateData();
   }, [loading]);
 
-  const addList = (text) => {
-    const newList = [...lists, { text }];
-    setLists(newList);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!value) return;
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
-      try {
-        const { data } = await axios.post(
-          "/api/private/list",
-          { value },
-          config
-        );
-        if (data) {
-          alert.show("Item added", { type: "success" });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    addList(value);
-    setValue("");
-  };
-
-  const removeData = async (value) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -76,31 +44,46 @@ function DontForgetMe() {
       },
     };
     try {
-      const response = await axios.post(
-        "/api/private/modifylist",
-        { value },
-        config
-      );
-      return response;
+      const { data } = await axios.post("/api/private/list/1", { value }, config);
+      if (data.success) {
+        alert.show("Item added", { type: "success" });
+        const newList = [...lists,data.item];
+        setLists(newList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setValue("");
+  };
+
+  const editList = async (list, index) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    const payload = {
+      _id: list._id,
+      isDone : !list.isDone
+    }
+    const url = `/api/private/list/${list._id}`
+    try {
+      const {data} = await axios.put(url,payload,config);
+      if (data.success) {
+        const newList = [...lists];
+        if (newList[index].isDone === true) {
+          newList[index].isDone = false;
+        } else newList[index].isDone = true;
+        setLists(newList);        
+        alert.show("Item modified", { type: "success" });
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const editList = async (index) => {
-    const newList = [...lists];
-    if (newList[index].isDone === true) {
-      newList[index].isDone = false;
-    } else newList[index].isDone = true;
-    setLists(newList);
-    const response = await removeData(newList);
-    if (!response.data) {
-      alert.show("Error occured", { type: "error" });
-    }
-    alert.show("Item modified", { type: "success" });
-  };
-
-  const deleteList = (index) => {
+  const deleteList = (list, index) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -111,12 +94,23 @@ function DontForgetMe() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const newList = [...lists];
-        newList.splice(index, 1);
-        setLists(newList);
-        const response = await removeData(newList);
-        if (response.data) {
-          alert.show("Item Deleted", { type: "success" });
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/list/${list._id}`
+        try {
+          const {data} = await axios.delete(url,config);
+          if (data.success) {
+            const newList = [...lists];
+            newList.splice(index, 1);
+            setLists(newList);
+            alert.show("Item Deleted", { type: "success" });
+          }
+        } catch (error) {
+          console.log(error);
         }
       }
     });
@@ -139,7 +133,7 @@ function DontForgetMe() {
               <span
                 className="text-center mb-4"
                 style={{
-                  color:"#52b788",
+                  color: "#52b788",
                   fontWeight: "700",
                   fontSize: "2rem",
                 }}
@@ -150,7 +144,13 @@ function DontForgetMe() {
             <div>
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Label style={{ marginBottom: "1rem", fontWeight: "600", fontSize: "1rem" }}>
+                  <Form.Label
+                    style={{
+                      marginBottom: "1rem",
+                      fontWeight: "600",
+                      fontSize: "1rem",
+                    }}
+                  >
                     <br />
                     <br />
                     <span
@@ -171,19 +171,19 @@ function DontForgetMe() {
                     placeholder="Add new item"
                   />
                 </Form.Group>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    style={{
-                      margin: "2rem",
-                      marginLeft:"0",
-                      backgroundColor: "#f3722c",
-                      fontSize: "18px",
-                      fontWeight: "600",
-                    }}
-                  >
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{
+                    margin: "2rem",
+                    marginLeft: "0",
+                    backgroundColor: "#f3722c",
+                    fontSize: "18px",
+                    fontWeight: "600",
+                  }}
+                >
                   Add
-                  </Button>
+                </Button>
               </Form>
               <Container>
                 <Row>
@@ -211,7 +211,7 @@ function DontForgetMe() {
                             <div>
                               <Button
                                 variant="btn"
-                                onClick={() => editList(index)}
+                                onClick={() => editList(list, index)}
                                 style={{
                                   backgroundColor: list.isDone
                                     ? "green"
@@ -223,7 +223,7 @@ function DontForgetMe() {
                               </Button>{" "}
                               <Button
                                 variant="btn btn-danger"
-                                onClick={() => deleteList(index)}
+                                onClick={() => deleteList(list,index)}
                               >
                                 ✕
                               </Button>

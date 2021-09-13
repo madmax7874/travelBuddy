@@ -17,7 +17,7 @@ import MyTrip from "./components/screens/MyTrip";
 const App = () => {
   const options = {
     position: "bottom center",
-    timeout: 3000,
+    timeout: 2000,
     offset: "30px",
     transition: transitions.SCALE,
   };
