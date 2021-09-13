@@ -33,7 +33,7 @@ function Trips(props) {
       };
 
       try {
-        const { data } = await axios.get("/api/private/trips", config);
+        const { data } = await axios.get("/api/private/trips/1", config);
         setTrips(data);
         setLoading(true);
       } catch (error) {
@@ -52,7 +52,7 @@ function Trips(props) {
     };
     try {
       const response = await axios.post(
-        "/api/private/traveldetails",
+        "/api/private/trips/1",
         data,
         config
       );
@@ -65,23 +65,7 @@ function Trips(props) {
     }
   };
 
-  const deleteAPI = async (newTrips) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    const url = `/api/private/dtraveldetails`;
-    try {
-      const response = await axios.post(url, newTrips, config);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteFunc = (index) =>{
+  const deleteTrip = (trip,index) =>{
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -92,12 +76,23 @@ function Trips(props) {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const newTrips = [...trips];
-        newTrips.splice(index, 1);
-        setTrips(newTrips);
-        const response = await deleteAPI(newTrips);
-        if (response.data) {
-          alert.show("Trip deleted", { type: "success" });
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/trips/${trip._id}`
+        try {
+          const {data} = await axios.delete(url, config);
+          if (data.success) {
+            const newTrips = [...trips];
+            newTrips.splice(index, 1);
+            setTrips(newTrips);
+            alert.show("Trip Deleted!", { type: "success" });
+          }
+        } catch (error) {
+          console.log(error);
         }
       }
     });
@@ -127,7 +122,7 @@ function Trips(props) {
               fontWeight: "600",
             }}
             to="#"
-            onClick={() => {deleteFunc(trip._id,index)}}
+            onClick={() => {deleteTrip(trip,index)}}
           >
             Delete
           </Link>

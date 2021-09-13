@@ -10,7 +10,7 @@ router.route("/").get(protect , async(req,res) => {
 });
 
 router.route("/list/:_id")
-  // get list
+  // get items
   .get(protect, async (req, res, next) => { 
     token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -21,7 +21,7 @@ router.route("/list/:_id")
       next(err)
     }
   })
-  // add list
+  // add item
   .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
@@ -37,7 +37,7 @@ router.route("/list/:_id")
       next(err)
     }
   })
-  // edit list
+  // edit item
   .put(protect, async (req, res, next) => { 
     try{
       token = req.headers.authorization.split(" ")[1];
@@ -57,7 +57,7 @@ router.route("/list/:_id")
       next(err)
     }
   })
-  //delete list
+  //delete item
   .delete(protect, async (req, res, next) => {
       try{ 
         token = req.headers.authorization.split(" ")[1];
@@ -70,8 +70,20 @@ router.route("/list/:_id")
       }
   });
 
-router.route("/traveldetails")
-  //create a trip
+
+router.route("/trips/:id")
+  //get trips 
+  .get(protect, async (req, res, next) => {
+    try{ 
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id);
+      res.status(200).send(user.details)
+    }catch(err){
+      next(err)
+    }
+  })
+  //add trip
   .post(protect, async (req, res, next) => {
     try{ 
       token = req.headers.authorization.split(" ")[1];
@@ -83,41 +95,25 @@ router.route("/traveldetails")
         perDayDetails : []
       }]      
       const query = { _id: decoded.id };
-
-      const user = await User.findOneAndUpdate(query, { $push : {details : Details }})
-
-      const findUser = await User.findById(decoded.id);
-
-      res.status(200).send(findUser.details[findUser.details.length-1]._id);
+      const user = await User.findOneAndUpdate(query, { $push : {details : Details }}, {new:true})
+      res.status(200).send(user.details[user.details.length-1]._id);
     }catch(err){
       next(err)
     }
-  });
-
-  router.route("/dtraveldetails").post(protect, async (req, res, next) => {
+  })
+  //delete trip
+  .delete(protect, async (req, res, next) => {
     try{
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.findOneAndUpdate(query, { details : req.body })
-      res.status(200).send(true)
+      const user = await User.updateOne(query, { "$pull": { "details": {_id : req.params.id}}})
+      res.status(200).send({success:true});
     }catch(err){
       next(err)
     }
   });
 
-router.route("/trips")
-  //get all trips 
-  .get(protect, async (req, res, next) => {
-    try{ 
-      token = req.headers.authorization.split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.id);
-      res.status(200).send(user.details)
-    }catch(err){
-      next(err)
-    }
-  });
 
 router.route("/mytrip/:id")
   //get my trip details
