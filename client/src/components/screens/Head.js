@@ -6,7 +6,7 @@ import logo from "../../assets/logo.png";
 
 const navbar = {
   backgroundColor: "rgba(60, 53, 119,1)",
-  padding: "0.5rem 3rem",
+  padding: "0.5rem 1rem",
   fontSize: "1.2rem",
 };
 const navLink = { color: "rgba(255,255,255,0.7)" };
