@@ -276,7 +276,7 @@ function ExpenseTracker() {
                       variant="primary"
                       type="submit"
                       style={{
-                        margin: "1rem",
+                        marginTop: "2rem",
                         border: "1px solid #7400b8",
                         backgroundColor: "#9c89b8",
                         color: "#000",
