@@ -144,7 +144,7 @@ function MyTrip() {
           className="app"
           style={{
             padding: "1rem",
-            backgroundImage: `url("https://images.unsplash.com/photo-1517094857443-80776ddd155c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1502&q=80)`,
+            background: "transparent linear-gradient(180deg,#F8CDDA 0%,#1D2B64 100%)",
             position: "absolute",
             width: "100%",
           }}
@@ -202,10 +202,7 @@ function MyTrip() {
             }}
           >
             <div
-              className="container"
               style={{
-                boxShadow: "0 1rem 2rem rgba(0, 0, 0, 0.5)",
-                backgroundColor: "rgba(255,255,255,0.2)",
                 paddingTop: "0.2rem",
               }}
             >
@@ -297,8 +294,8 @@ function MyTrip() {
                     variant="primary"
                     type="submit"
                     style={{
-                      border: "1px solid #9a8f97",
-                      backgroundColor: "#9c89b8",
+                      border: "1px solid #3d5a80",
+                      backgroundColor: "#98c1d9",
                       color: "#000",
                       borderRadius: "2rem",
                       fontSize: "18px",
@@ -326,8 +323,7 @@ function MyTrip() {
                         style={{
                           paddingTop: "0.5rem 0 0 0.5rem",
                           color: "#000",
-                          background:
-                            "transparent linear-gradient(180deg,#ddbdfc 0%,#bbadff 26%,#bbd0ff 53%,#bbadff 80%, #ddbdfc 100%)",
+                          backgroundColor:"#F8CDDA",
                         }}
                       >
                         <Card.Title style={{ textAlign: "center" }}>
