@@ -129,7 +129,7 @@ function MyTrip() {
   const PerDayDetails = () => {
     if (myTripDetails.length === 0)
       return (
-        <h6 style={{ textAlign: "center", padding: "0.5rem" }}>
+        <h6 style={{ textAlign: "center", padding: "0.5rem",color:"#FFF"}}>
           No details added
         </h6>
       );
@@ -158,7 +158,7 @@ function MyTrip() {
                 fontSize: "2rem",
               }}
             >
-              Your trip
+              My trip
             </span>
           </div>
           <div
@@ -206,22 +206,23 @@ function MyTrip() {
                 paddingTop: "0.2rem",
               }}
             >
-              <h4
+              <div style={{textAlign:"center"}}>
+              <span
                 style={{
-                  textAlign: "center",
-                  color: "#0081a7",
+                  color: "#023e8a",
                   fontWeight: "500",
                   fontSize: "1.7rem",
                 }}
               >
                 Per Day Details
-              </h4>
-              <Form className="input-form" onSubmit={handleSubmit} style={{paddingBottom:"1rem"}}>
+              </span>
+              </div>
+              <Form className="input-form" onSubmit={handleSubmit} style={{marginTop:"0rem"}}>
                 <div className="row" style={{ borderRadius: "0.3rem" }}>
                   <div className="col-lg-6">
                     <Form.Group>
                       <Form.Label
-                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                        style={{ fontWeight: "600",marginTop:"1rem"}}
                       >
                         Morning Place to visit
                       </Form.Label>
@@ -239,9 +240,9 @@ function MyTrip() {
                   <div className="col-lg-6">
                     <Form.Group>
                       <Form.Label
-                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                        style={{ fontWeight: "600",marginTop:"1rem"}}
                       >
-                        Morning Dine at
+                        Lunch at
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -249,14 +250,14 @@ function MyTrip() {
                         className="input"
                         onChange={(e) => handleChange(e)}
                         value={value.morningFood}
-                        placeholder="Morning Dine at"
+                        placeholder="Lunch at"
                       />
                     </Form.Group>
                   </div>
                   <div className="col-lg-6">
                     <Form.Group>
                       <Form.Label
-                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                        style={{ fontWeight: "600",marginTop:"1rem"}}
                       >
                         Night place to visit
                       </Form.Label>
@@ -273,9 +274,9 @@ function MyTrip() {
                   <div className="col-lg-6">
                     <Form.Group>
                       <Form.Label
-                        style={{ fontWeight: "600", fontSize: "0.9rem" }}
+                        style={{ fontWeight: "600",marginTop:"1rem"}}
                       >
-                        Night dine at
+                        Dinner at
                       </Form.Label>
                       <Form.Control
                         type="text"
@@ -283,7 +284,7 @@ function MyTrip() {
                         className="input"
                         onChange={(e) => handleChange(e)}
                         value={value.nightFood}
-                        placeholder="Night dine at"
+                        placeholder="Dinner at"
                       />
                     </Form.Group>
                   </div>
