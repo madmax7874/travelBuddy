@@ -111,7 +111,7 @@ function Trips(props) {
               color: "#f3722c",
               fontWeight: "600",
             }}
-            to={`/mytrip/${trip._id}/${index}`}
+            to={`/mytrip/${trip._id}`}
           >
             View
           </Link>{" "}

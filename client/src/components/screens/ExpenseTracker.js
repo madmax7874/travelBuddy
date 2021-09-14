@@ -27,7 +27,7 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/expensetracker`;
+      const url = `/api/private/expensetracker/1`;
       try {
         const { data } = await axios.get(url, config);
         setExpenseHistory(data);
@@ -68,10 +68,10 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/expensetracker`;
-      const response = await axios.post(url, value, config);
-      if (response.data) {
-        setExpenseHistory([...expenseHistory, value]);
+      const url = `/api/private/expensetracker/1`;
+      const {data} = await axios.post(url, value, config);
+      if (data.success) {
+        setExpenseHistory([...expenseHistory, data.expense]);
         alert.show("Expense added!", { type: "success" });
         setValue({
           text: "",
@@ -83,15 +83,8 @@ function ExpenseTracker() {
     }
   };
 
-  const deleteExpense = async (index) => {
-    const newExpense = [...expenseHistory];
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-    const url = `/api/private/deleteexpense`;
+  const deleteExpense = async (expense, index) => {
+    console.log(expense)
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -102,10 +95,18 @@ function ExpenseTracker() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        newExpense.splice(index, 1);
-        setExpenseHistory(newExpense);
-        const response = await axios.post(url, newExpense, config);
-        if (response.data) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/expensetracker/${expense._id}`;
+        const {data} = await axios.delete(url, config);
+        if (data.success) {
+          const newExpense = [...expenseHistory];
+          newExpense.splice(index, 1);
+          setExpenseHistory(newExpense);
           alert.show("Expense Deleted", { type: "success" });
         }
       }
@@ -122,7 +123,7 @@ function ExpenseTracker() {
             style={{ color: "#9c89b8", fontWeight: "600" }}
             to="#"
             onClick={() => {
-              deleteExpense(index);
+              deleteExpense(expense, index);
             }}
           >
             Delete
