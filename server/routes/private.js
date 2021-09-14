@@ -175,7 +175,6 @@ router.route("/expensetracker/:id")
       }
       const query = { _id: decoded.id };
       const user = await User.findOneAndUpdate(query, { $push : { expense : newData }},{new:true})
-      console.log(user.expense[user.expense.length-1])
       res.status(200).send({success:true,expense : user.expense[user.expense.length-1]});
     }catch(err){
       next(err)
