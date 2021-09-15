@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "./Head";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form} from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
@@ -14,6 +14,8 @@ function DontForgetMe() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = React.useState("");
+  const [filteredList, setFilteredList] = useState([]);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -26,6 +28,7 @@ function DontForgetMe() {
       try {
         const { data } = await axios.get("/api/private/list/1", config);
         setLists(data);
+        setFilteredList(data);
         setLoading(true);
       } catch (error) {
         console.log(error);
@@ -44,10 +47,14 @@ function DontForgetMe() {
       },
     };
     try {
-      const { data } = await axios.post("/api/private/list/1", { value }, config);
+      const { data } = await axios.post(
+        "/api/private/list/1",
+        { value },
+        config
+      );
       if (data.success) {
         alert.show("Item added", { type: "success" });
-        const newList = [...lists,data.item];
+        const newList = [...lists, data.item];
         setLists(newList);
       }
     } catch (error) {
@@ -65,17 +72,17 @@ function DontForgetMe() {
     };
     const payload = {
       _id: list._id,
-      isDone : !list.isDone
-    }
-    const url = `/api/private/list/${list._id}`
+      isDone: !list.isDone,
+    };
+    const url = `/api/private/list/${list._id}`;
     try {
-      const {data} = await axios.put(url,payload,config);
+      const { data } = await axios.put(url, payload, config);
       if (data.success) {
         const newList = [...lists];
         if (newList[index].isDone === true) {
           newList[index].isDone = false;
         } else newList[index].isDone = true;
-        setLists(newList);        
+        setLists(newList);
         alert.show("Item modified", { type: "success" });
       }
     } catch (error) {
@@ -100,9 +107,9 @@ function DontForgetMe() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/list/${list._id}`
+        const url = `/api/private/list/${list._id}`;
         try {
-          const {data} = await axios.delete(url,config);
+          const { data } = await axios.delete(url, config);
           if (data.success) {
             const newList = [...lists];
             newList.splice(index, 1);
@@ -114,6 +121,15 @@ function DontForgetMe() {
         }
       }
     });
+  };
+
+  const handleChange = async (e) => {
+    setFilter(e.target.value);
+    if(e.target.value === "all"){
+      setLists(filteredList)
+      return
+    }
+    setLists(filteredList.filter(list => list.isDone === JSON.parse(e.target.value)));
   };
 
   return (
@@ -185,6 +201,21 @@ function DontForgetMe() {
                   Add
                 </Button>
               </Form>
+              <div>
+                <Form.Group style={{textAlign:"center",padding:"0rem 1rem 1rem 1rem"}}>
+                  <select
+                    style={{display: "inline",width:"auto"}}
+                    className="form-select"
+                    value={filter}
+                    name="filter"
+                    onChange={(e) => handleChange(e)}
+                  >
+                    <option value="all">All</option>
+                    <option value="true">Packed</option>
+                    <option value="false">Unpacked</option>
+                  </select>
+                </Form.Group>
+              </div>
               <Container>
                 <Row>
                   {lists.map((list, index) => (
@@ -223,7 +254,7 @@ function DontForgetMe() {
                               </Button>{" "}
                               <Button
                                 variant="btn btn-danger"
-                                onClick={() => deleteList(list,index)}
+                                onClick={() => deleteList(list, index)}
                               >
                                 ✕
                               </Button>
