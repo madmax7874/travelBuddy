@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "./Head";
-import { Button, Card, Form} from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
@@ -125,11 +125,13 @@ function DontForgetMe() {
 
   const handleChange = async (e) => {
     setFilter(e.target.value);
-    if(e.target.value === "all"){
-      setLists(filteredList)
-      return
+    if (e.target.value === "all") {
+      setLists(filteredList);
+      return;
     }
-    setLists(filteredList.filter(list => list.isDone === JSON.parse(e.target.value)));
+    setLists(
+      filteredList.filter((list) => list.isDone === JSON.parse(e.target.value))
+    );
   };
 
   return (
@@ -202,15 +204,43 @@ function DontForgetMe() {
                 </Button>
               </Form>
               <div>
-                <Form.Group style={{textAlign:"center",padding:"0rem 1rem 1rem 1rem"}}>
+                <Form.Group
+                  style={{
+                    textAlign:"center",
+                    padding: "0rem 1rem 1rem 1rem",
+                  }}
+                >
                   <select
-                    style={{display: "inline",width:"auto"}}
+                    style={
+                      filter === "false"
+                        ? {                    
+                            display: "inline",
+                            width: "auto",
+                            fontWeight:"500",
+                            backgroundColor: "#ffbf69",
+                          }
+                        : filter === "true"
+                        ? {
+                            display: "inline",
+                            width: "auto",
+                            fontWeight:"500",
+                            backgroundColor: "#52b788",
+                          }
+                        : {
+                            display: "inline",
+                            width: "auto",
+                            fontWeight:"500",
+                            backgroundColor: "#90e0ef",
+                          }
+                    }
                     className="form-select"
                     value={filter}
                     name="filter"
                     onChange={(e) => handleChange(e)}
                   >
-                    <option value="all">All</option>
+                    <option style={{ backgroundColor: "none" }} value="all">
+                      All
+                    </option>
                     <option value="true">Packed</option>
                     <option value="false">Unpacked</option>
                   </select>
@@ -246,7 +276,7 @@ function DontForgetMe() {
                                 style={{
                                   backgroundColor: list.isDone
                                     ? "green"
-                                    : "orange",
+                                    : "#f48c06",
                                   color: "white",
                                 }}
                               >
