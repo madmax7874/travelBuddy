@@ -9,9 +9,8 @@ const navbar = {
   padding: "0.5rem 1rem",
   fontSize: "1.2rem",
 };
-const navLink = { color: "rgba(255,255,255,0.7)" };
 
-function Head(props) {
+function Head() {
   function logoutHandler() {
     try {
       localStorage.removeItem("authToken");
@@ -38,12 +37,11 @@ function Head(props) {
             style={{ maxHeight: "100px" }}
           >
             <NavLink
-              style={navLink}
-              activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/list"
@@ -51,12 +49,11 @@ function Head(props) {
               List
             </NavLink>
             <NavLink
-              style={navLink}
-              activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/trips"
@@ -64,12 +61,11 @@ function Head(props) {
               MyTrips
             </NavLink>
             <NavLink
-              style={navLink}
-              activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/expenseTracker"
@@ -83,13 +79,12 @@ function Head(props) {
             style={{ maxHeight: "100px", marginLeft: "auto" }}
           >
             <NavLink
-              style={navLink}
               onClick={() => logoutHandler()}
-              activeStyle={{
-                color: "rgba(255,255,255,1)", 
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/login"
@@ -122,12 +117,11 @@ function Head(props) {
             style={{ maxHeight: "100px", marginLeft: "auto" }}
           >
             <NavLink
-              style={navLink}
-              activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/login"
@@ -135,12 +129,11 @@ function Head(props) {
               Login
             </NavLink>
             <NavLink
-              style={navLink}
-              activeStyle={{
-                color: "rgba(255,255,255,1)",
-                fontFamily:"sans-serif",
-                fontWeight: "700",
-              }}
+              style={({isActive}) => ({
+                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
+                fontFamily: isActive ? "sans-serif" :"",
+                fontWeight: isActive ?"700" : ""
+              })}
               className="nav-link"
               aria-current="page"
               to="/register"

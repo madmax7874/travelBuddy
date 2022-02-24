@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,6 +11,7 @@ import "./Register.css";
 import welcome from '../../assets/welcome.jpg'
 
 const Register = ({ history }) => {
+  const navigate = useNavigate();
   const alert = useAlert();
 
   const {
@@ -22,9 +23,9 @@ const Register = ({ history }) => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      history.push("/");
+      navigate("/");
     }
-  }, [history]);
+  });
 
   const onSubmit = async (data) => {
     const config = {
@@ -43,7 +44,7 @@ const Register = ({ history }) => {
       const response = await axios.post("/api/auth/register", data, config);
       if (response.data) {
         localStorage.setItem("authToken", response.data.token);
-        history.push("/");
+        navigate("/");
       }
     } catch (error) {
       Swal.fire(`${error.response.data.error}`, "", "error");

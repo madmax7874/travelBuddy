@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,7 +9,8 @@ import "./Login.css";
 import Head from "./Head";
 import welcome from "../../assets/welcome.jpg";
 
-const Login = ({ history }) => {
+const Login = () => {
+  const navigate = useNavigate();
   const alert = useAlert();
   const {
     register,
@@ -19,9 +20,9 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      history.push("/");
+      navigate("/");
     }
-  }, [history]);
+  });
 
   const onSubmit = async (data) => {
     const config = {
@@ -32,7 +33,7 @@ const Login = ({ history }) => {
     try {
       const response = await axios.post("/api/auth/login", data, config);
       localStorage.setItem("authToken", response.data.token);
-      history.push("/");
+      navigate("/");
     } catch (error) {
       alert.show(`${error.response.data.error}`, { type: "error" });
     }
