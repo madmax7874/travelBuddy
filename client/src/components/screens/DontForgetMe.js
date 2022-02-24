@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Head from "./Head";
-import { Button, Card, Form } from "react-bootstrap";
-import { Container, Row, Col } from "react-bootstrap";
+import { Button, Card, Form, InputGroup, Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "./Head";
 
 function DontForgetMe() {
   const alert = useAlert();
@@ -96,8 +94,8 @@ function DontForgetMe() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -160,48 +158,27 @@ function DontForgetMe() {
               </span>
             </div>
             <div>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                  <Form.Label
-                    style={{
-                      marginBottom: "1rem",
-                      fontWeight: "600",
-                      fontSize: "1rem",
-                    }}
-                  >
-                    <br />
-                    <br />
-                    <span
-                      style={{
-                        fontSize: "1rem",
-                        padding: "0.5rem",
-                        borderRadius: "0.7rem",
-                      }}
-                    >
-                      Add Items
-                    </span>
-                  </Form.Label>
+              <Form onSubmit={handleSubmit} style={{margin:"1rem"}}>
+                <InputGroup>
                   <Form.Control
                     type="text"
+                    style={{textTransform:"capitalize"}}
                     className="input"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Add new item"
                   />
-                </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{
-                    margin: "2rem",
-                    marginLeft: "0",
-                    backgroundColor: "#f3722c",
-                    fontSize: "18px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Add
-                </Button>
+                  <Button
+                    variant="success"
+                    type="submit"
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Add
+                  </Button>
+                </InputGroup>
               </Form>
               <div>
                 <Form.Group
@@ -250,7 +227,7 @@ function DontForgetMe() {
                 <Row>
                   {lists.map((list, index) => (
                     <Col key={index} md="4">
-                      <Card style={{ margin: "0.5rem" }}>
+                      <Card style={{ margin: "0.5rem",textTransform:"capitalize"}}>
                         <Card.Body style={{ padding: "0.7rem" }}>
                           <div
                             style={{
@@ -280,13 +257,19 @@ function DontForgetMe() {
                                   color: "white",
                                 }}
                               >
-                                ✓
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                </svg>
                               </Button>{" "}
                               <Button
-                                variant="btn btn-danger"
+                                style={{fontWeight:"bold"}}
+                                variant="danger"
                                 onClick={() => deleteList(list, index)}
                               >
-                                ✕
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                  <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                </svg>
                               </Button>
                             </div>
                           </div>

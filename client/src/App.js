@@ -14,6 +14,7 @@ import Home from "./components/screens/Home";
 import Trips from "./components/screens/Trips";
 import MyTrip from "./components/screens/MyTrip";
 
+import "./components/screens/styles.scss"
 const App = () => {
   const options = {
     position: "bottom center",
@@ -27,11 +28,7 @@ const App = () => {
         <Switch>
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/list" component={DontForgetMe} />
-          <PrivateRoute
-            exact
-            path="/expensetracker"
-            component={ExpenseTracker}
-          />
+          <PrivateRoute exact path="/expensetracker" component={ExpenseTracker}/>
           <PrivateRoute exact path="/trips" component={Trips} />
           <PrivateRoute exact path="/mytrip/:id" component={MyTrip} />
           <Route exact path="/" component={Home} />
