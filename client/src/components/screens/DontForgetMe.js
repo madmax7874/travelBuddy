@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card, Form, InputGroup, Container, Row, Col, FloatingLabel } from "react-bootstrap";
+import { Button, Card, Form, InputGroup, Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";

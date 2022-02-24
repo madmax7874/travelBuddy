@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { transitions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
@@ -27,7 +27,7 @@ const App = () => {
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <Router>
-        <Switch>
+        <Routes>
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute exact path="/list" component={DontForgetMe} />
           <PrivateRoute exact path="/expensetracker" component={ExpenseTracker}/>
@@ -36,7 +36,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-        </Switch>
+        </Routes>
       </Router>
     </AlertProvider>
   );
