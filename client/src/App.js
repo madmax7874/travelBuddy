@@ -13,6 +13,7 @@ import ExpenseTracker from "./components/screens/ExpenseTracker";
 import Home from "./components/screens/Home";
 import Trips from "./components/screens/Trips";
 import MyTrip from "./components/screens/MyTrip";
+import NotFound from "./components/screens/NotFound";
 
 // css files
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,6 +39,8 @@ const App = () => {
           <Route path="/expensetracker" element={<PrivateRoute><ExpenseTracker/></PrivateRoute>}/>
           <Route path="/trips" element= {<PrivateRoute><Trips/></PrivateRoute>} />
           <Route path="/mytrip/:id" element={<PrivateRoute><MyTrip/></PrivateRoute>} />
+
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </BrowserRouter>
     </AlertProvider>
