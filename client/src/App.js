@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { transitions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
@@ -26,18 +26,19 @@ const App = () => {
   };
   return (
     <AlertProvider template={AlertTemplate} {...options}>
-      <Router>
+      <BrowserRouter>
         <Routes>
-          <PrivateRoute exact path="/home" component={Home} />
-          <PrivateRoute exact path="/list" component={DontForgetMe} />
-          <PrivateRoute exact path="/expensetracker" component={ExpenseTracker}/>
-          <PrivateRoute exact path="/trips" component={Trips} />
-          <PrivateRoute exact path="/mytrip/:id" component={MyTrip} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} />
+          <Route path="/list" element={ <PrivateRoute><DontForgetMe /> </PrivateRoute> }/>
+          <Route path="/list" element={<PrivateRoute><DontForgetMe/></PrivateRoute>} />
+          <Route path="/expensetracker" element={<PrivateRoute><ExpenseTracker/></PrivateRoute>}/>
+          <Route path="/trips" element= {<PrivateRoute><Trips/></PrivateRoute>} />
+          <Route path="/mytrip/:id" element={<PrivateRoute><MyTrip/></PrivateRoute>} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </AlertProvider>
   );
 };

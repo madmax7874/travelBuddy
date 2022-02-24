@@ -178,7 +178,7 @@ function DontForgetMe() {
                     placeholder="Add new item"
                   />
                   <button
-                    class="slide"
+                    className="slide"
                     type="submit" 
                   >
                     Add
