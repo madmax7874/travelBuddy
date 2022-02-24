@@ -1,16 +1,18 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Head from "./Head";
 import { useAlert } from "react-alert";
-import Swal from "sweetalert2";
-import "./Register.css";
+
+import Head from "./Head";
 import welcome from '../../assets/welcome.jpg'
 
-const Register = ({ history }) => {
+import "./Register.css";
+
+const axios = require("axios");
+const Swal = require("sweetalert2");
+
+const Register = () => {
   const navigate = useNavigate();
   const alert = useAlert();
 

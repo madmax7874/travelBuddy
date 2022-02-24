@@ -1,6 +1,6 @@
 import React from "react";
-import ReactCardCarousel from "react-card-carousel";
 import { Link } from "react-router-dom";
+import ReactCardCarousel from "react-card-carousel";
 
 function Features() {
   const CONTAINER_STYLE = {

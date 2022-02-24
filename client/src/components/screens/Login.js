@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useAlert } from "react-alert";
-import "./Login.css";
+import axios from "axios";
+
 import Head from "./Head";
 import welcome from "../../assets/welcome.jpg";
+
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();

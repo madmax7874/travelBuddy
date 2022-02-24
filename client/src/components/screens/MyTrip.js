@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
-import Head from "./Head";
 import { useAlert } from "react-alert";
 import { SyncLoader } from "react-spinners";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "./Head";
+
 import "./styles.scss";
 
 const axios = require("axios");

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Button, Card, Form, InputGroup, Container, Row, Col } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
-import Swal from "sweetalert2";
 
 import Head from "./Head";
-import "./buttonsilder.scss"
+
+import "./buttonslider.scss"
+
+const axios = require("axios");
+const Swal = require("sweetalert2");
 
 function DontForgetMe() {
   const alert = useAlert();

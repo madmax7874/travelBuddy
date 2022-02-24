@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import Head from "./Head";
 import Intro from "./Intro";
 import Features from "./Features";

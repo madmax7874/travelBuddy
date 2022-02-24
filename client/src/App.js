@@ -14,8 +14,10 @@ import Home from "./components/screens/Home";
 import Trips from "./components/screens/Trips";
 import MyTrip from "./components/screens/MyTrip";
 
+// css files
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/screens/styles.scss"
-import "./components/screens/buttonsilder.scss"
+import "./components/screens/buttonslider.scss"
 
 const App = () => {
   const options = {

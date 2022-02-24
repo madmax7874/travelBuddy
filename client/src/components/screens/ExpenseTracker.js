@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Table } from "react-bootstrap";
-import Head from "./Head";
 import { FadeLoader } from "react-spinners";
 import { useAlert } from "react-alert";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+import Head from "./Head";
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
