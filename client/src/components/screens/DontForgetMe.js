@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card, Form, InputGroup, Container, Row, Col } from "react-bootstrap";
+import { Button, Card, Form, InputGroup, Container, Row, Col, FloatingLabel } from "react-bootstrap";
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
 import Swal from "sweetalert2";
 
 import Head from "./Head";
+import "./buttonsilder.scss"
 
 function DontForgetMe() {
   const alert = useAlert();
@@ -141,7 +142,6 @@ function DontForgetMe() {
           style={{
             padding: "1rem",
             paddingBottom: "25rem",
-            backgroundImage: `url("https://images.unsplash.com/photo-1604937455095-ef2fe3d46fcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80")`,
           }}
         >
           <div className="container">
@@ -149,7 +149,6 @@ function DontForgetMe() {
               <span
                 className="text-center mb-4"
                 style={{
-                  color: "#52b788",
                   fontWeight: "700",
                   fontSize: "2rem",
                 }}
@@ -160,6 +159,16 @@ function DontForgetMe() {
             <div>
               <Form onSubmit={handleSubmit} style={{margin:"1rem"}}>
                 <InputGroup>
+                  {/* <FloatingLabel label="Add an item">
+                    <Form.Control
+                      type="text"
+                      style={{textTransform:"capitalize"}}
+                      className="input"
+                      value={value}
+                      onChange={(e) => setValue(e.target.value)}
+                      placeholder="Add new item"
+                    />
+                  </FloatingLabel> */}
                   <Form.Control
                     type="text"
                     style={{textTransform:"capitalize"}}
@@ -168,16 +177,12 @@ function DontForgetMe() {
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Add new item"
                   />
-                  <Button
-                    variant="success"
-                    type="submit"
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: "600",
-                    }}
+                  <button
+                    class="slide"
+                    type="submit" 
                   >
                     Add
-                  </Button>
+                  </button>
                 </InputGroup>
               </Form>
               <div>
@@ -248,16 +253,18 @@ function DontForgetMe() {
                             </span>
                             <div>
                               <Button
-                                variant="btn"
                                 onClick={() => editList(list, index)}
                                 style={{
                                   backgroundColor: list.isDone
                                     ? "green"
                                     : "#f48c06",
+                                    borderColor:list.isDone
+                                    ? "green"
+                                    : "#f48c06",
                                   color: "white",
                                 }}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-check-lg" viewBox="0 0 16 16">
                                   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
                                 </svg>
                               </Button>{" "}
@@ -266,9 +273,9 @@ function DontForgetMe() {
                                 variant="danger"
                                 onClick={() => deleteList(list, index)}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
-                                  <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+                                  <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                  <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
                                 </svg>
                               </Button>
                             </div>

@@ -15,6 +15,8 @@ import Trips from "./components/screens/Trips";
 import MyTrip from "./components/screens/MyTrip";
 
 import "./components/screens/styles.scss"
+import "./components/screens/buttonsilder.scss"
+
 const App = () => {
   const options = {
     position: "bottom center",
