@@ -30,15 +30,14 @@ const App = () => {
     <AlertProvider template={AlertTemplate} {...options}>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>} />
-          <Route path="/list" element={ <PrivateRoute><DontForgetMe /> </PrivateRoute> }/>
+          <Route path="/home" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+
           <Route path="/list" element={<PrivateRoute><DontForgetMe/></PrivateRoute>} />
           <Route path="/expensetracker" element={<PrivateRoute><ExpenseTracker/></PrivateRoute>}/>
           <Route path="/trips" element= {<PrivateRoute><Trips/></PrivateRoute>} />
           <Route path="/mytrip/:id" element={<PrivateRoute><MyTrip/></PrivateRoute>} />
-          <Route path="/" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
         </Routes>
       </BrowserRouter>
     </AlertProvider>

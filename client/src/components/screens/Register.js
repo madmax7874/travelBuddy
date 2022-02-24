@@ -25,7 +25,7 @@ const Register = () => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      navigate("/");
+      navigate("/home");
     }
   });
 

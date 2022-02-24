@@ -99,7 +99,7 @@ function Head() {
     <div>
       <Navbar style={navbar} expand="lg" variant="dark">
         <Navbar.Brand>
-          <NavLink to="/">
+          <NavLink to="/home">
             <Image
               src={logo}
               style={{ maxHeight: "5rem", maxWidth: "5rem" }}

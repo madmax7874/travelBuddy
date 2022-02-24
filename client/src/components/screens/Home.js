@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import Head from "./Head";
 import Intro from "./Intro";
 import Features from "./Features";
 
 const axios = require("axios");
 
-const Home = (props) => {
-
+const Home = () => {
+  const navigate = useNavigate()
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
       const checkAuthToken = async () => {
@@ -21,12 +21,12 @@ const Home = (props) => {
           await axios.get("/api/private", config);
         } catch (error) {
           localStorage.removeItem("authToken");
-          props.history.push("/login");
+          navigate("/login");
         }
       };
       checkAuthToken();
     }
-  }, [props.history]);
+  });
 
   return (
     <div>
