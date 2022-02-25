@@ -151,7 +151,7 @@ function DontForgetMe() {
               <span
                 className="text-center mb-4"
                 style={{
-                  fontWeight: "700",
+                  fontWeight: "600",
                   fontSize: "2rem",
                   color: "#5FA054"
                 }}
@@ -160,7 +160,7 @@ function DontForgetMe() {
               </span>
             </div>
             <div>
-              <Form onSubmit={handleSubmit} style={{margin:"1rem"}}>
+              <Form onSubmit={handleSubmit} style={{margin:"2rem"}}>
                 <InputGroup>
                   <Form.Control
                     type="text"
