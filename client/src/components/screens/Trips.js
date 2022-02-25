@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
@@ -11,7 +11,8 @@ const Swal = require("sweetalert2");
 
 const axios = require("axios");
 
-function Trips(props) {
+function Trips() {
+  const navigate = useNavigate();
   const alert = useAlert();
   let newDate = new Date()
   let date = newDate.getDate();
@@ -65,7 +66,7 @@ function Trips(props) {
       );
       if (response.data) {
         alert.show("Trip added!", { type: "success" });
-        props.history.push(`/mytrip/${response.data}`);
+        navigate(`/mytrip/${response.data}`);
       }
     } catch (error) {
       console.log(error);

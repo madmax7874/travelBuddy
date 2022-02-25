@@ -153,6 +153,7 @@ function DontForgetMe() {
                 style={{
                   fontWeight: "700",
                   fontSize: "2rem",
+                  color: "#5FA054"
                 }}
               >
                 Dont Forget Me!
@@ -161,16 +162,6 @@ function DontForgetMe() {
             <div>
               <Form onSubmit={handleSubmit} style={{margin:"1rem"}}>
                 <InputGroup>
-                  {/* <FloatingLabel label="Add an item">
-                    <Form.Control
-                      type="text"
-                      style={{textTransform:"capitalize"}}
-                      className="input"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      placeholder="Add new item"
-                    />
-                  </FloatingLabel> */}
                   <Form.Control
                     type="text"
                     style={{textTransform:"capitalize"}}
@@ -181,7 +172,8 @@ function DontForgetMe() {
                   />
                   <button
                     className="slide"
-                    type="submit" 
+                    type="submit"
+                    style={{fontSize:"500"}}
                   >
                     Add
                   </button>
@@ -201,20 +193,20 @@ function DontForgetMe() {
                             display: "inline",
                             width: "auto",
                             fontWeight:"500",
-                            backgroundColor: "#ffbf69",
+                            color: "#FFA107",
                           }
                         : filter === "true"
                         ? {
                             display: "inline",
                             width: "auto",
                             fontWeight:"500",
-                            backgroundColor: "#52b788",
+                            color: "#5FA054",
                           }
                         : {
                             display: "inline",
                             width: "auto",
                             fontWeight:"500",
-                            backgroundColor: "#90e0ef",
+                            color: "#303179",
                           }
                     }
                     className="form-select"
@@ -222,11 +214,9 @@ function DontForgetMe() {
                     name="filter"
                     onChange={(e) => handleChange(e)}
                   >
-                    <option style={{ backgroundColor: "none" }} value="all">
-                      All
-                    </option>
-                    <option value="true">Packed</option>
-                    <option value="false">Unpacked</option>
+                    <option style={{color:"#303179", fontWeight:"500"}} value="all">All</option>
+                    <option style={{color:"#5FA054", fontWeight:"500"}} value="true">Packed</option>
+                    <option style={{color:"#FFA107", fontWeight:"500"}} value="false">Unpacked</option>
                   </select>
                 </Form.Group>
               </div>
@@ -258,12 +248,12 @@ function DontForgetMe() {
                                 onClick={() => editList(list, index)}
                                 style={{
                                   backgroundColor: list.isDone
-                                    ? "green"
-                                    : "#f48c06",
-                                    borderColor:list.isDone
-                                    ? "green"
-                                    : "#f48c06",
-                                  color: "white",
+                                    ? "#5FA054"
+                                    : "#FFC971",
+                                  borderColor: list.isDone
+                                    ? "#5FA054"
+                                    : "#FFC971",
+                                  color: "#000",
                                 }}
                               >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-check-lg" viewBox="0 0 16 16">
@@ -271,8 +261,8 @@ function DontForgetMe() {
                                 </svg>
                               </Button>{" "}
                               <Button
-                                style={{fontWeight:"bold"}}
-                                variant="danger"
+                                style={{fontWeight:"bold", backgroundColor:"#A15447 "}}
+                                // variant="danger"
                                 onClick={() => deleteList(list, index)}
                               >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">

@@ -5,9 +5,9 @@ import { Navbar, Nav, Image } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 
 const navbar = {
-  backgroundColor: "rgba(60, 53, 119,1)",
   padding: "0.5rem 1rem",
   fontSize: "1.2rem",
+  borderBottom: "1px solid"
 };
 
 function Head() {
@@ -38,9 +38,8 @@ function Head() {
           >
             <NavLink
               style={({isActive}) => ({
-                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
-                fontFamily: isActive ? "sans-serif" :"",
-                fontWeight: isActive ?"700" : ""
+                color: isActive ? "#52C040" : "#141850",
+                fontWeight: isActive ?"700" : "500"
               })}
               className="nav-link"
               aria-current="page"
@@ -50,9 +49,8 @@ function Head() {
             </NavLink>
             <NavLink
               style={({isActive}) => ({
-                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
-                fontFamily: isActive ? "sans-serif" :"",
-                fontWeight: isActive ?"700" : ""
+                color: isActive ? "#52C040" : "#141850",
+                fontWeight: isActive ?"700" : "500"
               })}
               className="nav-link"
               aria-current="page"
@@ -62,9 +60,8 @@ function Head() {
             </NavLink>
             <NavLink
               style={({isActive}) => ({
-                color: isActive ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)",
-                fontFamily: isActive ? "sans-serif" :"",
-                fontWeight: isActive ?"700" : ""
+                color: isActive ? "#52C040" : "#141850",
+                fontWeight: isActive ?"700" : "500"
               })}
               className="nav-link"
               aria-current="page"

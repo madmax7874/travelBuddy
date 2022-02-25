@@ -25,7 +25,7 @@ const App = () => {
     position: "bottom center",
     timeout: 2000,
     offset: "30px",
-    transition: transitions.SCALE,
+    transition: transitions.FADE,
   };
   return (
     <AlertProvider template={AlertTemplate} {...options}>
