@@ -139,19 +139,13 @@ function DontForgetMe() {
     <div>
       <Head />
       {loading ? (
-        <div
-          className="app"
-          style={{
-            padding: "1rem",
-            paddingBottom: "25rem",
-          }}
-        >
+        <div style={{margin:"1rem"}}>
           <div className="container">
             <div style={{ textAlign: "center" }}>
               <span
                 className="text-center mb-4"
                 style={{
-                  fontWeight: "700",
+                  fontWeight: "600",
                   fontSize: "2rem",
                   color: "#5FA054"
                 }}
@@ -160,7 +154,7 @@ function DontForgetMe() {
               </span>
             </div>
             <div>
-              <Form onSubmit={handleSubmit} style={{margin:"1rem"}}>
+              <Form onSubmit={handleSubmit} style={{margin:"1rem 0.2rem"}}>
                 <InputGroup>
                   <Form.Control
                     type="text"
@@ -183,7 +177,7 @@ function DontForgetMe() {
                 <Form.Group
                   style={{
                     textAlign:"center",
-                    padding: "0rem 1rem 1rem 1rem",
+                    padding: "0.5rem 1rem 1rem 1rem",
                   }}
                 >
                   <select
@@ -226,24 +220,11 @@ function DontForgetMe() {
                     <Col key={index} md="4">
                       <Card style={{ margin: "0.5rem",textTransform:"capitalize"}}>
                         <Card.Body style={{ padding: "0.7rem" }}>
-                          <div
-                            style={{
-                              alignItems: "center",
-                              display: "flex",
-                              fontSize: "18px",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <span
-                              style={{
-                                textDecoration: list.isDone
-                                  ? "line-through"
-                                  : "",
-                              }}
-                            >
+                          <div style={{alignItems: "center",display: "flex",fontSize: "18px",justifyContent: "space-between",}}>
+                            <div style={{ textDecoration: list.isDone ? "line-through" : "", wordBreak: "break-all"}}>
                               {list.text}
-                            </span>
-                            <div>
+                            </div>
+                            <div class="list-btns">
                               <Button
                                 onClick={() => editList(list, index)}
                                 style={{
@@ -254,6 +235,8 @@ function DontForgetMe() {
                                     ? "#5FA054"
                                     : "#FFC971",
                                   color: "#000",
+                                  padding: "0.375rem 0.5rem"
+
                                 }}
                               >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-check-lg" viewBox="0 0 16 16">
@@ -261,8 +244,7 @@ function DontForgetMe() {
                                 </svg>
                               </Button>{" "}
                               <Button
-                                style={{fontWeight:"bold", backgroundColor:"#A15447 "}}
-                                // variant="danger"
+                                style={{fontWeight:"bold", backgroundColor:"#A15447 ",padding: "0.375rem 0.5rem"}}
                                 onClick={() => deleteList(list, index)}
                               >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
