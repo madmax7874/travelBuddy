@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Image } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 
-import logo from "../../assets/logo.png";
+// import logo from "../../assets/logo.png";
 
 const navbar = {
   padding: "0.4rem 1rem",
