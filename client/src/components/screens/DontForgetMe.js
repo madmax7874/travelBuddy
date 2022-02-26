@@ -139,7 +139,7 @@ function DontForgetMe() {
       <Head />
       {loading ? (
         <div style={{margin:"1rem"}}>
-          <div className="container">
+          <Container>
             <div style={{ textAlign: "center" }}>
               <span
                 className="text-center mb-4"
@@ -257,7 +257,7 @@ function DontForgetMe() {
                 </Row>
               </Container>
             </div>
-          </div>
+          </Container>
         </div>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>
