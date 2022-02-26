@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-// import { useParams } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "./Head";
 import { SyncLoader } from "react-spinners";
 const Swal = require("sweetalert2");

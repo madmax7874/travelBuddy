@@ -32,7 +32,8 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#52C040" : "#141850",
-                  fontWeight: isActive ?"700" : "500"
+                  fontWeight: isActive ?"700" : "500",
+                  borderBottom:  isActive ? "2px solid #52C040" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -43,7 +44,8 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#52C040" : "#141850",
-                  fontWeight: isActive ?"700" : "500"
+                  fontWeight: isActive ?"700" : "500",
+                  borderBottom:  isActive ? "2px solid #52C040" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -54,7 +56,8 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#52C040" : "#141850",
-                  fontWeight: isActive ?"700" : "500"
+                  fontWeight: isActive ?"700" : "500",
+                  borderBottom:  isActive ? "2px solid #52C040" : ""
                 })}
                 className="nav-link"
                 aria-current="page"

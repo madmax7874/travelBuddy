@@ -7,8 +7,6 @@ import { SyncLoader } from "react-spinners";
 
 import Head from "./Head";
 
-import "./styles.scss";
-
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
