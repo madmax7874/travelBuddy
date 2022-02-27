@@ -5,15 +5,12 @@ import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { useAlert } from "react-alert";
 import { SyncLoader } from "react-spinners";
 
-import Head from "./Head";
-
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
 function MyTrip() {
   const alert = useAlert();
   const { id } = useParams();
-
   const [trip, setTrip] = useState({});
   const [myTripDetails, setMyTripDetails] = useState([]);
   const [value, setValue] = React.useState({
@@ -136,7 +133,6 @@ function MyTrip() {
 
   return (
     <Fragment>
-      <Head />
       {loading ? (
         <div
           className="app"

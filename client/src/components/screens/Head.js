@@ -31,9 +31,21 @@ function Head() {
             >
               <NavLink
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500",
-                  borderBottom:  isActive ? "2px solid #52C040" : ""
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
+                })}
+                className="nav-link"
+                aria-current="page"
+                to="/"
+              >
+                Home
+              </NavLink>
+              <NavLink
+                style={({isActive}) => ({
+                  color: isActive ? "#5FA054" : "#141850",
+                  fontWeight: isActive ?"700" : "500",
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -43,9 +55,9 @@ function Head() {
               </NavLink>
               <NavLink
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500",
-                  borderBottom:  isActive ? "2px solid #52C040" : ""
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -55,9 +67,9 @@ function Head() {
               </NavLink>
               <NavLink
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500",
-                  borderBottom:  isActive ? "2px solid #52C040" : ""
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -74,7 +86,7 @@ function Head() {
               <NavLink
                 onClick={() => logoutHandler()}
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500"
                 })}
                 className="nav-link"
@@ -104,7 +116,7 @@ function Head() {
             >
               <NavLink
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500"
                 })}
                 className="nav-link"
@@ -115,7 +127,7 @@ function Head() {
               </NavLink>
               <NavLink
                 style={({isActive}) => ({
-                  color: isActive ? "#52C040" : "#141850",
+                  color: isActive ? "#5FA054" : "#141850",
                   fontWeight: isActive ?"700" : "500"
                 })}
                 className="nav-link"

@@ -175,7 +175,6 @@ function ExpenseTracker() {
   useEffect(() => {}, [value]);
   return (
     <Fragment>
-      <Head />
       {loading ? (
         <div style={{paddingTop: "1rem"}}>
           <Container>
@@ -227,7 +226,6 @@ function ExpenseTracker() {
             </div>
             <br />
           </Container>
-          <Footer />
         </div>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>

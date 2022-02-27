@@ -14,6 +14,7 @@ const intro = {
   justifyContent: "center",
   alignItems: "center",
   textAlign: "center",
+  minHeight: "400px"
 };
 
 function Intro() {

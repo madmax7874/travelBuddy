@@ -3,9 +3,6 @@ import { Button, Card, Form, InputGroup, Container, Row, Col } from "react-boots
 import { ClipLoader } from "react-spinners";
 import { useAlert } from "react-alert";
 
-import Head from "./Head";
-import Footer from "./Footer"
-
 const axios = require("axios");
 const Swal = require("sweetalert2");
 
@@ -134,7 +131,6 @@ function DontForgetMe() {
 
   return (
     <Fragment>
-      <Head />
       {loading ? (
         <div style={{margin:"1rem"}}>
           <Container>
@@ -262,7 +258,6 @@ function DontForgetMe() {
           <ClipLoader color="rgba(60, 53, 119,1)" size={70} />
         </div>
       )}
-      <Footer />
     </Fragment>
   );
 }

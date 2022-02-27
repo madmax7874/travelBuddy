@@ -32,10 +32,8 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Head />
       <Intro />
       <Features />
-      <Footer />
     </Fragment>
   );
 };

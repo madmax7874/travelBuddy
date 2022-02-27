@@ -3,13 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-import Head from "./Head";
 import { SyncLoader } from "react-spinners";
 const Swal = require("sweetalert2");
 
 const axios = require("axios");
 
-function Trips() {
+function AllTrips() {
   const navigate = useNavigate();
   const alert = useAlert();
   let newDate = new Date()
@@ -166,7 +165,6 @@ function Trips() {
 
   return (
     <Fragment>
-      <Head />
       {loading ? (
         <div className="app" style={{ backgroundColor: "#ffe8d6" }}>
           <div style={{ backgroundColor: "#ddbea9", paddingBottom: "0.1rem" }}>
@@ -307,4 +305,4 @@ function Trips() {
   );
 }
 
-export default Trips;
+export default AllTrips;

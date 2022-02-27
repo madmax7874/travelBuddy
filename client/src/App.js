@@ -8,11 +8,11 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 // Screens
 import Login from "./components/screens/Login";
 import Register from "./components/screens/Register";
-import DontForgetMe from "./components/screens/DontForgetMe";
-import ExpenseTracker from "./components/screens/ExpenseTracker";
-import Home from "./components/screens/Home";
-import Trips from "./components/screens/Trips";
-import MyTrip from "./components/screens/MyTrip";
+import DontForgetMe from "./components/pages/DontForgetMePage";
+import ExpenseTracker from "./components/pages/ExpenseTrackerPage";
+import Home from "./components/pages/HomePage";
+import AllTrips from "./components/pages/AllTripsPage";
+import Trip from "./components/pages/TripPage";
 import NotFound from "./components/screens/NotFound";
 
 // css files
@@ -31,14 +31,14 @@ const App = () => {
     <AlertProvider template={AlertTemplate} {...options}>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home/>} />
+          <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
 
           <Route path="/list" element={<PrivateRoute><DontForgetMe/></PrivateRoute>} />
           <Route path="/expensetracker" element={<PrivateRoute><ExpenseTracker/></PrivateRoute>}/>
-          <Route path="/trips" element= {<PrivateRoute><Trips/></PrivateRoute>} />
-          <Route path="/mytrip/:id" element={<PrivateRoute><MyTrip/></PrivateRoute>} />
+          <Route path="/trips" element= {<PrivateRoute><AllTrips/></PrivateRoute>} />
+          <Route path="/mytrip/:id" element={<PrivateRoute><Trip/></PrivateRoute>} />
 
           <Route path="*" element={<NotFound/>} />
         </Routes>
