@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
@@ -135,7 +135,7 @@ function MyTrip() {
   };
 
   return (
-    <div>
+    <Fragment>
       <Head />
       {loading ? (
         <div
@@ -371,7 +371,7 @@ function MyTrip() {
           <SyncLoader color="#4ecf6a" size={20} margin={20} />
         </div>
       )}
-    </div>
+    </Fragment>
   );
 }
 

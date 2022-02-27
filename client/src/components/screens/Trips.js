@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
@@ -165,7 +165,7 @@ function Trips() {
   };
 
   return (
-    <div>
+    <Fragment>
       <Head />
       {loading ? (
         <div className="app" style={{ backgroundColor: "#ffe8d6" }}>
@@ -303,7 +303,7 @@ function Trips() {
           <SyncLoader color="#f3722c" size={20} margin={20} />
         </div>
       )}
-    </div>
+    </Fragment>
   );
 }
 

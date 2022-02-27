@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
@@ -54,7 +54,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <Fragment>
       <Head />
       <div className="register-screen" style={{backgroundImage:`url(${welcome})`}}>
         <Form
@@ -141,7 +141,7 @@ const Register = () => {
           </div>
         </Form>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

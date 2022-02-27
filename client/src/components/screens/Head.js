@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
 // import logo from "../../assets/logo.png";
 
@@ -20,9 +20,9 @@ function Head() {
   }
 
   return localStorage.getItem("authToken") ? (
-    <div>
+    <Fragment>
       <Navbar style={navbar} expand="lg" variant="light">
-        <div class="container">
+        <Container>
           <Navbar.Toggle />
           <Navbar.Collapse>
             <Nav
@@ -85,48 +85,50 @@ function Head() {
               </NavLink>
             </Nav>
           </Navbar.Collapse>
-        </div>
+        </Container>
       </Navbar>
-    </div>
+    </Fragment>
   ) : (
-    <div>
+    <Fragment>
       <Navbar style={navbar} expand="lg" variant="light">
-        <Navbar.Toggle />
-        <Navbar.Collapse >
-          <Nav
-            className="mr-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-          ></Nav>
-          <Nav
-            className="my-2 my-lg-0 pt-2"
-            style={{ maxHeight: "100px", marginLeft: "auto" }}
-          >
-            <NavLink
-              style={({isActive}) => ({
-                color: isActive ? "#52C040" : "#141850",
-                fontWeight: isActive ?"700" : "500"
-              })}
-              className="nav-link"
-              aria-current="page"
-              to="/login"
+        <Container>
+          <Navbar.Toggle />
+          <Navbar.Collapse >
+            <Nav
+              className="mr-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+            ></Nav>
+            <Nav
+              className="my-2 my-lg-0 pt-2"
+              style={{ maxHeight: "100px", marginLeft: "auto" }}
             >
-              Login
-            </NavLink>
-            <NavLink
-              style={({isActive}) => ({
-                color: isActive ? "#52C040" : "#141850",
-                fontWeight: isActive ?"700" : "500"
-              })}
-              className="nav-link"
-              aria-current="page"
-              to="/register"
-            >
-              SignUp
-            </NavLink>
-          </Nav>
-        </Navbar.Collapse>
+              <NavLink
+                style={({isActive}) => ({
+                  color: isActive ? "#52C040" : "#141850",
+                  fontWeight: isActive ?"700" : "500"
+                })}
+                className="nav-link"
+                aria-current="page"
+                to="/login"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                style={({isActive}) => ({
+                  color: isActive ? "#52C040" : "#141850",
+                  fontWeight: isActive ?"700" : "500"
+                })}
+                className="nav-link"
+                aria-current="page"
+                to="/register"
+              >
+                SignUp
+              </NavLink>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
       </Navbar>
-    </div>
+    </Fragment>
   );
 }
 

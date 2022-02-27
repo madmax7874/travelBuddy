@@ -29,7 +29,7 @@ function Intro() {
 
     return (
       <div style={intro}>
-        <h3 style={{ fontSize:"1.7rem", paddingTop: "3rem", color: "rgba(255,255,255,0.7)" }}>
+        <h3 style={{ fontSize:"1.7rem", paddingTop: "3rem", color: "rgba(255,255,255,1)" }}>
           MAKE YOUR TRIP{" "}
           <ReactTextTransition
             text={texts[textIndex % texts.length]}

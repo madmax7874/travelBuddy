@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
@@ -41,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Fragment>
       <Head />
       <div
         className="login-screen"
@@ -104,7 +104,7 @@ const Login = () => {
           </div>
         </Form>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
