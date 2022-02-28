@@ -1,9 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Head from "./Head";
 import Intro from "./Intro";
 import Features from "./Features";
-import Footer from "./Footer";
 
 const axios = require("axios");
 

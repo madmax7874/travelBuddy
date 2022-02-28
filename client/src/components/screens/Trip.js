@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { useAlert } from "react-alert";
-import { SyncLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
@@ -91,8 +91,8 @@ function MyTrip() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -364,7 +364,7 @@ function MyTrip() {
         </div>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>
-          <SyncLoader color="#4ecf6a" size={20} margin={20} />
+          <ClipLoader color="#141850" size={70} />
         </div>
       )}
     </Fragment>

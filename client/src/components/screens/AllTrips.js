@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
-import { SyncLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 const Swal = require("sweetalert2");
 
 const axios = require("axios");
@@ -76,8 +76,8 @@ function AllTrips() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -298,7 +298,7 @@ function AllTrips() {
         </div>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>
-          <SyncLoader color="#f3722c" size={20} margin={20} />
+          <ClipLoader color="#141850" size={70} />
         </div>
       )}
     </Fragment>

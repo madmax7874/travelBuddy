@@ -183,3 +183,8 @@ h1 {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+.table-borderless td,
+.table-borderless th {
+    border: 0;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactTextTransition from "react-text-transition";
 
-import bg from "../../assets/bg.png";
+import bg from "../../assets/newbg.jpeg";
 
 const texts = ["MEMORABLE", "GREAT", "JOYFUL", "PLEASANT", "DELIGHTFUL"];
 

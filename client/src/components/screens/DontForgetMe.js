@@ -255,7 +255,7 @@ function DontForgetMe() {
         </div>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>
-          <ClipLoader color="rgba(60, 53, 119,1)" size={70} />
+          <ClipLoader color="#141850" size={70} />
         </div>
       )}
     </Fragment>
