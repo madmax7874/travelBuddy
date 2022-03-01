@@ -6,8 +6,8 @@ import AlertTemplate from "react-alert-template-basic";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 // Screens
-import Login from "./components/screens/Login";
-import Register from "./components/screens/Register";
+import Login from "./components/pages/LoginPage";
+import Register from "./components/pages/RegisterPage";
 import DontForgetMe from "./components/pages/DontForgetMePage";
 import ExpenseTracker from "./components/pages/ExpenseTrackerPage";
 import Home from "./components/pages/HomePage";

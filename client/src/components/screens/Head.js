@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container,Image } from "react-bootstrap";
 
-// import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 const navbar = {
   padding: "0.4rem 1rem",
@@ -104,6 +104,19 @@ function Head() {
     <Fragment>
       <Navbar style={navbar} expand="lg" variant="light">
         <Container>
+          <Navbar.Brand>
+            <NavLink 
+              to="/"
+              style={({isActive}) => ({
+                color: isActive ? "#5FA054" : "#141850",
+                fontWeight: isActive ?"700" : "500"
+              })}
+              className="nav-link"
+              aria-current="page"
+            >
+              Home
+            </NavLink>
+          </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse >
             <Nav
