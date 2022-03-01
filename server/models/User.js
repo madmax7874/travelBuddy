@@ -61,6 +61,10 @@ const UserSchema = new mongoose.Schema({
     }]
   }],
   expense:[{
+    category:{
+      type : String,
+      required: true,
+    },
     text: {
       type : String,
       required: true,

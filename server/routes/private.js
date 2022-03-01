@@ -170,6 +170,7 @@ router.route("/expensetracker/:id")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const newData = {
+        category: req.body.category,
         text: req.body.text,
         amount: req.body.amount,
       }
