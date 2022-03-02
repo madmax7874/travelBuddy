@@ -130,6 +130,34 @@ function ExpenseTracker() {
     });
   };
 
+  const clearAllExpenses = async (expenseHistory) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/expensetracker/clearingAll`;
+        const { data } = await axios.delete(url, config);
+        if (data.success) {
+          const newExpense = [];
+          setExpenseHistory(newExpense);
+          alert.show("ALl Expenses Cleared", { type: "success" });
+        }
+      }
+    });
+  };
+
   const expenseHistoryComponent = expenseHistory.map((expense, index) => {
     return (
       <tr key={index} index={index} >
@@ -152,23 +180,40 @@ function ExpenseTracker() {
 
   const ExpenseHistory = () => {
     if (expenseHistory.length === 0) {
-      return <h6 style={{ textAlign: "center", padding: "0.5rem" }}>No expenses added</h6>
+      return <h6 style={{ textAlign: "center", padding: "0.5rem" }}>No expenses found! Please add some so that we can track it for you</h6>
     } else {
       return (
         <Fragment>
-          <Table className="table table-hover" style={{ textTransform:"capitalize"}} >
-            <thead style={{fontSize:"1.2rem"}}>
-              <tr>
-                <th>Category</th>
-                <th>Text</th>
-                <th>Amount</th>
-                <th>Operation</th>
-              </tr>
-            </thead>
-            <tbody style={{ fontFamily: 'Sans-serif'}}>
-              {expenseHistoryComponent}
-            </tbody>
-          </Table>
+          <div style={{textAlign: "center", padding: "0.5rem"}} >
+            <h5 style={{marginBottom: "0rem"}}>
+              Total expenses are ₹{total}
+            </h5>
+            <MyPieChart data={vData}/>
+            <h5 style={{marginBottom: "0rem"}}>
+              History
+            </h5>
+            <Table className="table table-hover" style={{ textTransform:"capitalize"}} >
+              <thead style={{fontSize:"1.2rem"}}>
+                <tr>
+                  <th>Category</th>
+                  <th>Text</th>
+                  <th>Amount</th>
+                  <th>Operation</th>
+                </tr>
+              </thead>
+              <tbody style={{ fontFamily: 'Sans-serif'}}>
+                {expenseHistoryComponent}
+              </tbody>
+            </Table>
+            <Button
+              variant="danger"
+              type="submit"
+              style={{ margin: "1rem",float:"right" }}
+              onClick={() => {clearAllExpenses(expenseHistory)}}
+              >
+              Clear All Transactions
+            </Button>
+          </div>
         </Fragment>
       );
     }
@@ -240,17 +285,9 @@ function ExpenseTracker() {
                 </button>
               </InputGroup>
             </Form>
-            <div style={{textAlign: "center", padding: "0.5rem"}} >
-              <h3 style={{marginBottom: "0rem"}}>
-                ₹{total}
-              </h3>
-              <MyPieChart data={vData}/>
-            </div>
-            <br />
-            <div style={{textAlign: "center", padding: "1rem", color: "#5FA054"}} >
-              <h3 style={{marginBottom:"1.5rem"}}>
-                Transaction History
-              </h3>
+            
+            <div style={{textAlign: "center", padding: "1rem 0rem"}} >
+              <h3 style={{marginBottom:"1.5rem", color: "#5FA054"}}>Overview</h3>
               <ExpenseHistory />
             </div>
           </Container>

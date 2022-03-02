@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 
-// import logo from "../../assets/logo.png";
+import logo from "../../assets/logo_1_.svg";
 
 const navbar = {
   padding: "0.4rem 1rem",
@@ -23,24 +23,20 @@ function Head() {
     <Fragment>
       <Navbar style={navbar} expand="lg" variant="light">
         <Container>
+          <Navbar.Brand>
+            <NavLink to="/">
+              <Image
+                src={logo}
+                style={{ maxHeight: "5rem", maxWidth: "5rem" }}
+              ></Image>
+            </NavLink>
+          </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse>
             <Nav
               className="mr-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
             >
-              <NavLink
-                style={({isActive}) => ({
-                  color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"600" : "500",
-                  borderBottom:  isActive ? "2px solid #5FA054" : ""
-                })}
-                className="nav-link"
-                aria-current="page"
-                to="/"
-              >
-                Home
-              </NavLink>
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
@@ -105,17 +101,11 @@ function Head() {
       <Navbar style={navbar} expand="lg" variant="light">
         <Container>
           <Navbar.Brand>
-            <NavLink 
-              to="/"
-              style={({isActive}) => ({
-                color: isActive ? "#5FA054" : "#141850",
-                fontWeight: isActive ?"600" : "500",
-                borderBottom:  isActive ? "2px solid #5FA054" : ""
-              })}
-              className="nav-link"
-              aria-current="page"
-            >
-              Home
+            <NavLink to="/">
+              <Image
+                src={logo}
+                style={{ maxHeight: "5rem", maxWidth: "5rem" }}
+              ></Image>
             </NavLink>
           </Navbar.Brand>
           <Navbar.Toggle />

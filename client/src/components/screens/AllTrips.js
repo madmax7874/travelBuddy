@@ -262,7 +262,7 @@ function AllTrips() {
               </div>
               <div style={{ textAlign: "center" }}>
                 <button
-                  class="slide"
+                  className="slide"
                   type="submit"
                   style={{
                     marginTop: "2rem",

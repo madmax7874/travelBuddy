@@ -187,7 +187,11 @@ router.route("/expensetracker/:id")
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const query = { _id: decoded.id };
-      const user = await User.updateOne(query, { "$pull": { "expense": {_id : req.params.id}}})
+      if (req.params.id == "clearingAll"){
+        const user = await User.updateOne(query, { $set : {'expense': [] }})
+      }else{
+        const user = await User.updateOne(query, { "$pull": { "expense": {_id : req.params.id}}})
+      }
       res.status(200).send({success:true});
     }catch(err){
       next(err)
