@@ -135,22 +135,16 @@ function ExpenseTracker() {
       <tr key={index} index={index} >
         <td>{expense.category}</td>
         <td>{expense.text}</td>
+        <td>₹{expense.amount}</td>
         <td>
-        <div className="row">
-            <div className="col">
-            ₹{expense.amount}
-            </div>
-            <div className="col">
-              <Button
-                style={{fontWeight:"bold", color:"#A15447 ",padding: "0.375rem 0.5rem",backgroundColor: "inherit"}}
-                onClick={() => {deleteExpense(expense, index)}}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
-                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-              </svg>
-              </Button>
-            </div>
-          </div>
+        <Button
+            style={{fontWeight:"bold", color:"#A15447 ",padding: "0.375rem 0.5rem",backgroundColor: "inherit"}}
+            onClick={() => {deleteExpense(expense, index)}}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
+            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+          </svg>
+          </Button>
         </td>
       </tr>
     );
@@ -162,8 +156,16 @@ function ExpenseTracker() {
     } else {
       return (
         <Fragment>
-          <Table className="table table-borderless table-condensed table-hover" style={{ textTransform:"capitalize"}} >
-            <tbody style={{ fontSize: "1.1rem" }}>
+          <Table className="table table-hover" style={{ textTransform:"capitalize"}} >
+            <thead style={{fontSize:"1.2rem"}}>
+              <tr>
+                <th>Category</th>
+                <th>Text</th>
+                <th>Amount</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody style={{ fontFamily: 'Sans-serif'}}>
               {expenseHistoryComponent}
             </tbody>
           </Table>
@@ -245,8 +247,8 @@ function ExpenseTracker() {
               <MyPieChart data={vData}/>
             </div>
             <br />
-            <div style={{textAlign: "center", padding: "1rem"}} >
-              <h3 >
+            <div style={{textAlign: "center", padding: "1rem", color: "#5FA054"}} >
+              <h3 style={{marginBottom:"1.5rem"}}>
                 Transaction History
               </h3>
               <ExpenseHistory />

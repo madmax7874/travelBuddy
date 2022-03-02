@@ -114,7 +114,7 @@ function AllTrips() {
         <td>
           <Link
             style={{
-              color: "#f3722c",
+              color: "#5FA054",
               fontWeight: "600",
             }}
             to={`/mytrip/${trip._id}`}
@@ -123,7 +123,7 @@ function AllTrips() {
           </Link>{" "}
           <Link
             style={{
-              color: "#f3722c",
+              color: "#A15447",
               fontWeight: "600",
             }}
             to="#"
@@ -166,22 +166,23 @@ function AllTrips() {
   return (
     <Fragment>
       {loading ? (
-        <div className="app" style={{ backgroundColor: "#ffe8d6" }}>
-          <div style={{ backgroundColor: "#ddbea9", paddingBottom: "0.1rem" }}>
+        <div className="app">
+          <div style={{ paddingBottom: "0.1rem" }}>
             <br />
             <div style={{ textAlign: "center" }}>
               <span
                 className="text-center mb-4"
                 style={{
                   color: "#a47148",
-                  fontWeight: "700",
+                  fontWeight: "600",
                   fontSize: "2rem",
+                  color: "#5FA054"
                 }}
               >
                 Going on a new trip?
               </span>
             </div>
-            <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
+            <Form className="input-form" onSubmit={handleSubmit(onSubmit)} style={{marginTop:"1rem"}}>
               <div className="row">
                 <div className="col-lg-6">
                   <Form.Group
@@ -260,33 +261,27 @@ function AllTrips() {
                 </div>
               </div>
               <div style={{ textAlign: "center" }}>
-                <Button
-                  variant="primary"
+                <button
+                  class="slide"
                   type="submit"
                   style={{
                     marginTop: "2rem",
-                    border: "1px solid #ffe8d6",
                     borderRadius: "2rem",
-                    width: "200px",
-                    backgroundColor: "#a47148",
-                    fontWeight: "600",
-                    fontSize: "20px",
-                    color: "#ffe8d6",
                   }}
                 >
                   New trip
-                </Button>
+                </button>
               </div>
             </Form>
           </div>
-          <div style={{ backgroundColor: "#ffe8d6" }}>
+          <div>
             <br />
             <div style={{ textAlign: "center" }}>
               <span
                 className="text-center mb-4"
                 style={{
-                  color: "#cb997e",
-                  fontWeight: "700",
+                  color: "#141850",
+                  fontWeight: "600",
                   fontSize: "2rem",
                 }}
               >

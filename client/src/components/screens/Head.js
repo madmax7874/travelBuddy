@@ -63,7 +63,7 @@ function Head() {
                 aria-current="page"
                 to="/trips"
               >
-                MyTrips
+                Trips
               </NavLink>
               <NavLink
                 style={({isActive}) => ({
