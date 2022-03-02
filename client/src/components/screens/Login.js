@@ -7,7 +7,7 @@ import { useAlert } from "react-alert";
 import axios from "axios";
 
 import image from "../../assets/image.png";
-import "./Login.css";
+import "./LoginRegister.css";
 
 const Login = () => {
   const navigate = useNavigate();

@@ -8,8 +8,10 @@ function TripPage() {
   return (
     <div style={{display:"flex",flexDirection:"column", minHeight:"100vh", margin:"0"}}>
       <Head />
-      <Register />
-      <div style={{  marginTop:"auto" }}>
+      <div style={{height:"100%", backgroundColor:"#E5E5E5",flex:"1"}}>
+        <Register />
+      </div>
+      <div style={{ marginTop:"auto"}}>
         <Footer />
       </div>
     </div>

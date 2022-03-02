@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container,Image } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
-import logo from "../../assets/logo.png";
+// import logo from "../../assets/logo.png";
 
 const navbar = {
   padding: "0.4rem 1rem",
@@ -32,7 +32,7 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500",
+                  fontWeight: isActive ?"600" : "500",
                   borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
@@ -44,7 +44,7 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500",
+                  fontWeight: isActive ?"600" : "500",
                   borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
@@ -56,7 +56,7 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500",
+                  fontWeight: isActive ?"600" : "500",
                   borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
@@ -68,7 +68,7 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500",
+                  fontWeight: isActive ?"600" : "500",
                   borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
@@ -109,7 +109,8 @@ function Head() {
               to="/"
               style={({isActive}) => ({
                 color: isActive ? "#5FA054" : "#141850",
-                fontWeight: isActive ?"700" : "500"
+                fontWeight: isActive ?"600" : "500",
+                borderBottom:  isActive ? "2px solid #5FA054" : ""
               })}
               className="nav-link"
               aria-current="page"
@@ -130,7 +131,8 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500"
+                  fontWeight: isActive ?"600" : "500",
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
                 aria-current="page"
@@ -141,7 +143,8 @@ function Head() {
               <NavLink
                 style={({isActive}) => ({
                   color: isActive ? "#5FA054" : "#141850",
-                  fontWeight: isActive ?"700" : "500"
+                  fontWeight: isActive ?"600" : "500",
+                  borderBottom:  isActive ? "2px solid #5FA054" : ""
                 })}
                 className="nav-link"
                 aria-current="page"

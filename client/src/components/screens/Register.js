@@ -5,7 +5,7 @@ import { Form, Button,Image, Container, Row } from "react-bootstrap";
 import { useAlert } from "react-alert";
 import image from "../../assets/image.png";
 
-import "./Login.css";
+import "./LoginRegister.css";
 
 const axios = require("axios");
 const Swal = require("sweetalert2");
