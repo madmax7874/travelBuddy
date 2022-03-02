@@ -130,7 +130,7 @@ function ExpenseTracker() {
     });
   };
 
-  const clearAllExpenses = async (expenseHistory) => {
+  const clearAll = async () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -209,7 +209,7 @@ function ExpenseTracker() {
               variant="danger"
               type="submit"
               style={{ margin: "1rem",float:"right" }}
-              onClick={() => {clearAllExpenses(expenseHistory)}}
+              onClick={() => {clearAll()}}
               >
               Clear All Transactions
             </Button>

@@ -64,7 +64,11 @@ router.route("/list/:_id")
         token = req.headers.authorization.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const query = { _id: decoded.id };
-        const user = await User.updateOne(query, { "$pull": { "list": {_id : req.params._id}}})
+        if (req.params._id == "clearingAll"){
+          const user = await User.updateOne(query, { $set : {'list': [] }})
+        }else{
+          const user = await User.updateOne(query, { "$pull": { "list": {_id : req.params._id}}})
+        }
         res.status(200).send({success:true});
       }catch(err){
         next(err)

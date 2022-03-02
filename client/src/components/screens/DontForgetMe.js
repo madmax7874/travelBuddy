@@ -118,6 +118,34 @@ function DontForgetMe() {
     });
   };
 
+  const clearAll = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+        const url = `/api/private/list/clearingAll`;
+        const { data } = await axios.delete(url, config);
+        if (data.success) {
+          const newLists = [];
+          setLists(newLists);
+          alert.show("ALl Expenses Cleared", { type: "success" });
+        }
+      }
+    });
+  };
+
   const handleChange = async (e) => {
     setFilter(e.target.value);
     if (e.target.value === "all") {
@@ -166,47 +194,59 @@ function DontForgetMe() {
                   </button>
                 </InputGroup>
               </Form>
-              <div>
-                <Form.Group
-                  style={{
-                    textAlign:"center",
-                    padding: "0.5rem 1rem 1rem 1rem",
-                  }}
-                >
-                  <select
-                    style={
-                      filter === "false"
-                        ? {                    
-                            display: "inline",
-                            width: "auto",
-                            fontWeight:"500",
-                            color: "#FFA107",
-                          }
-                        : filter === "true"
-                        ? {
-                            display: "inline",
-                            width: "auto",
-                            fontWeight:"500",
-                            color: "#5FA054",
-                          }
-                        : {
-                            display: "inline",
-                            width: "auto",
-                            fontWeight:"500",
-                            color: "#303179",
-                          }
-                    }
-                    className="form-select"
-                    value={filter}
-                    name="filter"
-                    onChange={(e) => handleChange(e)}
+              <Row style={{textAlign:"center"}}>
+                <Col sm={6}>
+                  <Form.Group
+                    style={{
+                      textAlign:"center",
+                      padding: "0.5rem 1rem 1rem 1rem",
+                    }}
                   >
-                    <option style={{color:"#303179", fontWeight:"500"}} value="all">All</option>
-                    <option style={{color:"#5FA054", fontWeight:"500"}} value="true">Packed</option>
-                    <option style={{color:"#FFA107", fontWeight:"500"}} value="false">Unpacked</option>
-                  </select>
-                </Form.Group>
-              </div>
+                    <select
+                      style={
+                        filter === "false"
+                          ? {                    
+                              display: "inline",
+                              width: "auto",
+                              fontWeight:"500",
+                              color: "#FFA107",
+                            }
+                          : filter === "true"
+                          ? {
+                              display: "inline",
+                              width: "auto",
+                              fontWeight:"500",
+                              color: "#5FA054",
+                            }
+                          : {
+                              display: "inline",
+                              width: "auto",
+                              fontWeight:"500",
+                              color: "#303179",
+                            }
+                      }
+                      className="form-select"
+                      value={filter}
+                      name="filter"
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option style={{color:"#303179", fontWeight:"500"}} value="all">All</option>
+                      <option style={{color:"#5FA054", fontWeight:"500"}} value="true">Packed</option>
+                      <option style={{color:"#FFA107", fontWeight:"500"}} value="false">Unpacked</option>
+                    </select>
+                  </Form.Group>
+                </Col>
+                <Col sm={6}>
+                  <Button
+                    variant="danger"
+                    type="submit"
+                    style={{margin:"0.75rem"}}
+                    onClick={() => {clearAll()}}
+                    >
+                    Clear All Transactions
+                  </Button>
+                </Col>
+              </Row>
               <Container>
                 <Row>
                   {lists.map((list, index) => (
