@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container, Image } from "react-bootstrap";
 
-import logo from "../../assets/logo_1_.svg";
+import logo from "../../assets/newlogo.svg";
 
 const navbar = {
   padding: "0.4rem 1rem",

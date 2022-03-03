@@ -243,7 +243,7 @@ function DontForgetMe() {
                     style={{margin:"0.75rem"}}
                     onClick={() => {clearAll()}}
                     >
-                    Clear All Transactions
+                    Clear All Items
                   </Button>
                 </Col>
               </Row>
