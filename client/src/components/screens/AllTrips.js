@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button, Form, Table } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import { useAlert } from "react-alert";
 import { ClipLoader } from "react-spinners";
 const Swal = require("sweetalert2");
@@ -15,7 +15,7 @@ function AllTrips() {
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
-  let currentDate = `${year}-${month<10?`0${month}`:`${month}`}-${date}`
+  let currentDate = `${year}-${month<10?`0${month}`:`${month}`}-${date<10?`0${date}`:`${date}`}`
   const {
     register,
     handleSubmit,
@@ -173,7 +173,6 @@ function AllTrips() {
               <span
                 className="text-center mb-4"
                 style={{
-                  color: "#a47148",
                   fontWeight: "600",
                   fontSize: "2rem",
                   color: "#5FA054"

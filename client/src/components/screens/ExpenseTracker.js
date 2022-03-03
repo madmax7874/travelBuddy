@@ -39,31 +39,31 @@ function ExpenseTracker() {
     if (!loading){fetchData()}
   }, [loading]);
 
-  const pieData = () => {
-    let newArr=[
-      { name: "Stay", value: 0 },
-      { name: "Food", value: 0 },
-      { name: "Travelling", value: 0 },
-      { name: "Shopping", value: 0 },
-      { name: "Sight Seeing", value: 0 },
-      { name: "Miscellaneous", value: 0 }
-
-    ]
-    let myTotal=0
-    expenseHistory.forEach((expense) => {
-      myTotal+=expense.amount
-      if (expense.category === "Stay"){newArr[0].value+=expense.amount}
-      else if (expense.category === "Food"){newArr[1].value+=expense.amount}
-      else if (expense.category === "Travelling"){newArr[2].value+=expense.amount}
-      else if (expense.category === "Shopping"){newArr[3].value+=expense.amount}
-      else if (expense.category === "Sight Seeing"){newArr[4].value+=expense.amount}
-      else if (expense.category === "Miscellaneous"){newArr[5].value+=expense.amount}
-    })
-    setTotal(myTotal)
-    setVData(newArr)
-  };
-
+  
   useEffect(() => {
+    const pieData = () => {
+      let newArr=[
+        { name: "Stay", value: 0 },
+        { name: "Food", value: 0 },
+        { name: "Travelling", value: 0 },
+        { name: "Shopping", value: 0 },
+        { name: "Sight Seeing", value: 0 },
+        { name: "Miscellaneous", value: 0 }
+  
+      ]
+      let myTotal=0
+      expenseHistory.forEach((expense) => {
+        myTotal+=expense.amount
+        if (expense.category === "Stay"){newArr[0].value+=expense.amount}
+        else if (expense.category === "Food"){newArr[1].value+=expense.amount}
+        else if (expense.category === "Travelling"){newArr[2].value+=expense.amount}
+        else if (expense.category === "Shopping"){newArr[3].value+=expense.amount}
+        else if (expense.category === "Sight Seeing"){newArr[4].value+=expense.amount}
+        else if (expense.category === "Miscellaneous"){newArr[5].value+=expense.amount}
+      })
+      setTotal(myTotal)
+      setVData(newArr)
+    };
     pieData();
   }, [expenseHistory]);
 
