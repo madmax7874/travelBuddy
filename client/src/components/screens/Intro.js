@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import ReactTextTransition from "react-text-transition";
 import Particles from "react-tsparticles";
 
-import bg from "../../assets/cb.png";
-
-const texts = ["MEMORABLE", "GREAT", "JOYFUL", "PLEASANT", "DELIGHTFUL"];
+const texts = ["Memorable", "GREAT", "JOYFUL", "PLEASANT", "DELIGHTFUL"];
 
 const intro = {
-  backgroundImage: `url(${bg})`,
-  height: "30rem",
-  backgroundPosition: "center center",
-  backgroundRepeat: "no-repeat",
+  background:" rgb(20,24,80)",
+  background: "linear-gradient(180deg, rgba(20,24,80,1) 25%, rgba(95,160,84,1) 100%)",
   display: "flex",
-  justifyContent: "center",
+  flexDirection:"column",
+  justifyContent: "space-evenly",
   alignItems: "center",
   textAlign: "center",
   minHeight: "500px"
@@ -126,15 +123,19 @@ function Intro() {
             detectRetina: true,
           }}
         />
+        <h1 style={{color: "rgba(255,255,255,1)" }}>
+          TRAVEL BUDDY
+        </h1>
+        <br/>
 
-        <h3 style={{ fontSize:"1.7rem", paddingTop: "3rem", color: "rgba(0,0,0,1)" }}>
-          MAKE YOUR TRIP{" "}
+        <h3 style={{ padding: "2rem", color: "rgba(255,255,255,1)" }}>
+          Make your trip{" "}
           <ReactTextTransition
             text={texts[textIndex % texts.length]}
             style={{ margin: "0px 4px" }}
             inline
           />{" "}
-          WITH US!
+         with us!
         </h3>
       </div>
     );
