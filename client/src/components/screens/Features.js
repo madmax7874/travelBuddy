@@ -218,7 +218,7 @@ function Features() {
           margin: "0rem 1rem",
         }}
       >
-        <h1 style={{ padding: "1rem", color: "#141850",marginBottom:"none" }}>Features</h1>
+        <h1 style={{ padding: "1rem", color: "#141850", marginBottom:"0rem"}}>Features</h1>
         <FeaturesComponent />
       </div>
     </div>

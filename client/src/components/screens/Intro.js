@@ -40,7 +40,7 @@ function Intro() {
           id="tsparticles"
           init={particlesInit}
           loaded={particlesLoaded}
-          style={{position:"fixed",top:80,left:0}}
+          style={{position:"absolute",top:80,left:0}}
           // width={"auto"}
           height={500}
           options={{
@@ -48,6 +48,7 @@ function Intro() {
               enable: false,
               zIndex: 0
             },
+            
             // background: {
             //   color: {
             //     value: "#0d47a1",
@@ -101,13 +102,13 @@ function Intro() {
                 enable: true,
                 outMode: "bounce",
                 random: false,
-                speed: 4,
+                speed: 3,
                 straight: false,
               },
               number: {
                 density: {
                   enable: true,
-                  area: 800,
+                  area: 600,
                 },
                 value: 80,
               },
