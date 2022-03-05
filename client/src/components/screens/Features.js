@@ -1,27 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ReactCardCarousel from "react-card-carousel";
+// import ReactCardCarousel from "react-card-carousel";
+import { Container, Image, Row } from "react-bootstrap";
+import { ReactComponent as MyList } from "../../assets/list.svg";
+// import list from "../../assets/list.svg";
+import trips from "../../assets/trips.svg";
+import et from "../../assets/et.svg";
 
 function Features() {
-  const CONTAINER_STYLE = {
-    position: "relative",
-    height: "38vh",
-    width: "100%",
-    display: "flex",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "middle",
-  };
+  // const CONTAINER_STYLE = {
+  //   position: "relative",
+  //   height: "38vh",
+  //   width: "100%",
+  //   display: "flex",
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "middle",
+  // };
 
-  const CARD_STYLE = {
-    height: "250px",
-    width: "600px",
-    paddingTop: "50px",
-    textAlign: "center",
-    borderRadius: "0.8rem",
-    background: "#98c1d9",
-    fontSize: "20px",
-  };
+  // const CARD_STYLE = {
+  //   height: "250px",
+  //   width: "600px",
+  //   paddingTop: "50px",
+  //   textAlign: "center",
+  //   borderRadius: "0.8rem",
+  //   background: "#98c1d9",
+  //   fontSize: "20px",
+  // };
   const width = window.innerWidth;
   const FeaturesComponent = () => {
     if (width < 768) {
@@ -141,29 +146,42 @@ function Features() {
       );
     } else {
       return (
-        <div style={CONTAINER_STYLE}>
-          <ReactCardCarousel autoplay={true} autoplay_speed={2500}>
-            <div style={CARD_STYLE}>
-              <Link
-                to="/list"
-                className="btn btn-primary"
-                style={{
-                  fontSize: "1.3rem",
-                  textDecoration: "none",
-                  color: "#333",
-                  background: "#b7e4c7",
-                  borderRadius: "2rem",
-                }}
-              >
-                Dont forget me!
-              </Link>
-              <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
-                Ok, so it sounds a little boring, but making lists are the
-                gateway to a a stress-free holiday. So what are you waiting for?
-                Note down your essentials!
-              </p>
-            </div>
-            <div style={CARD_STYLE}>
+        <div>
+          <Container>
+            <Row>
+              <div class="col-md-6 order-2">
+                <Link
+                  to="/list"
+                  className="btn btn-primary"
+                  style={{
+                    fontSize: "1.3rem",
+                    textDecoration: "none",
+                    color: "#333",
+                    background: "#b7e4c7",
+                    borderRadius: "2rem",
+                  }}
+                >
+                  Dont forget me!
+                </Link>
+                <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+                  Ok, so it sounds a little boring, but making lists are the
+                  gateway to a a stress-free holiday. Imagine going on a trip
+                  and forgetting your tickets. Uff, I bet everyone has
+                  experienced something of this sort in their life. But now you
+                  won't. Simply add the items to the Don't Forget Me List and
+                  ta-daa you will never miss out your essentials during travel.
+                  Once packed, you can also modify the items as "packed" so at
+                  the end of the day you know what is left to be packed and what
+                  is already packed. So what are you waiting for? Note down your
+                  essentials!
+                </p>
+              </div>
+              <div class="col-md-6 order-1">
+                <MyList />
+                {/* <Image src={list}></Image> */}
+              </div>
+            </Row>
+            <Row>
               <Link
                 to="/trips"
                 className="btn btn-primary"
@@ -177,13 +195,18 @@ function Features() {
               >
                 Add your travel details systematically!
               </Link>
-              <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
-                Track all your past trips and add/update your present ones. Save
-                all your travel experiences, share it with others and keep
-                travelling!
-              </p>
-            </div>
-            <div style={CARD_STYLE}>
+              <div class="col-md-6">
+                <Image src={trips}></Image>
+              </div>
+              <div class="col-md-6">
+                <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+                  Track all your past trips and add/update your present ones.
+                  Save all your travel experiences, share it with others and
+                  keep travelling!
+                </p>
+              </div>
+            </Row>
+            <Row>
               <Link
                 to="/expensetracker"
                 className="btn btn-primary"
@@ -197,13 +220,94 @@ function Features() {
               >
                 Track your expenses!
               </Link>
-              <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
-                Going on a trip for leisure? Keep a track of where and how much
-                you spend! Track your expenses here!
-              </p>
-            </div>
-          </ReactCardCarousel>
+              <div class="col-md-6">
+                <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+                  Going on a trip for leisure? Oo yes then definitely you will
+                  be spending a lot of money on stay, travelling, shopping and
+                  much more.. Find it difficult to keep a track of where and how
+                  much you spend? No worries! We have got you covered. Track all
+                  your expenses small or big here! Simply add your expense type,
+                  amount or any extra text and it will show you the total
+                  expenses which would help you understand the amount you spend
+                  on a particular trip and hence adjust your future trips based
+                  on the current one.
+                </p>
+              </div>
+              <div class="col-md-6">
+                <Image src={et}></Image>
+              </div>
+            </Row>
+          </Container>
         </div>
+        // <div>
+        //     <div>
+        //       <Link
+        //         to="/list"
+        //         className="btn btn-primary"
+        //         style={{
+        //           fontSize: "1.3rem",
+        //           textDecoration: "none",
+        //           color: "#333",
+        //           background: "#b7e4c7",
+        //           borderRadius: "2rem",
+        //         }}
+        //       >
+        //         Dont forget me!
+        //       </Link>
+        //       <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+        //       Ok, so it sounds a little boring, but making lists are the
+        //         gateway to a a stress-free holiday. Imagine going on a trip and forgetting your tickets. 
+        //         Uff, I bet everyone has experienced something of this sort in their life. But now you won't. 
+        //         Simply add the items to the Don't Forget Me List and ta-daa you will never miss out your essentials during travel. 
+        //         Once packed, you can also modify the items as "packed" so at the end of the day you know what is left to be packed and what is already packed.  
+        //         So what are you waiting for?
+        //         Note down your essentials!
+        //       </p>
+        //     </div>
+        //     <div>
+        //       <Link
+        //         to="/trips"
+        //         className="btn btn-primary"
+        //         style={{
+        //           fontSize: "1.3rem",
+        //           textDecoration: "none",
+        //           color: "#333",
+        //           background: "#b7e4c7",
+        //           borderRadius: "2rem",
+        //         }}
+        //       >
+        //         Add your travel details systematically!
+        //       </Link>
+        //       <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+        //         Track all your past trips and add/update your present ones. Save
+        //         all your travel experiences, share it with others and keep
+        //         travelling!
+        //       </p>
+        //     </div>
+        //     <div>
+        //       <Link
+        //         to="/expensetracker"
+        //         className="btn btn-primary"
+        //         style={{
+        //           fontSize: "1.3rem",
+        //           textDecoration: "none",
+        //           color: "#333",
+        //           background: "#b7e4c7",
+        //           borderRadius: "2rem",
+        //         }}
+        //       >
+        //         Track your expenses!
+        //       </Link>
+        //       <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
+        //         Going on a trip for leisure? Oo yes then definitely you will be spending a lot of money
+        //         on stay, travelling, shopping and much more..
+        //         Find it difficult to keep a track of where and how much
+        //         you spend? No worries! We have got you covered. Track all your expenses small or big here! Simply add your expense type, amount or any extra text
+        //         and it will show you the total expenses which would help you understand the amount you spend on a particular trip and
+        //         hence adjust your future trips based on the current one. 
+        //       </p>
+        //     </div>
+        // </div> 
       );
     }
   };
@@ -218,7 +322,9 @@ function Features() {
           margin: "0rem 1rem",
         }}
       >
-        <h1 style={{ padding: "1rem", color: "#141850", marginBottom:"0rem"}}>Features</h1>
+        <h1 style={{ padding: "1rem", color: "#141850", marginBottom: "0rem" }}>
+          Features
+        </h1>
         <FeaturesComponent />
       </div>
     </div>
