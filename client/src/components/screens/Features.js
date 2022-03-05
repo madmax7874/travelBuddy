@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 // import ReactCardCarousel from "react-card-carousel";
 import { Container, Image, Row } from "react-bootstrap";
 import { ReactComponent as MyList } from "../../assets/list.svg";
-// import list from "../../assets/list.svg";
-import trips from "../../assets/trips.svg";
-import et from "../../assets/et.svg";
+import { ReactComponent as Trips } from "../../assets/trips.svg";
+import { ReactComponent as Expense } from "../../assets/et.svg";
 
 function Features() {
   // const CONTAINER_STYLE = {
@@ -178,10 +177,10 @@ function Features() {
               </div>
               <div class="col-md-6 order-1">
                 <MyList />
-                {/* <Image src={list}></Image> */}
               </div>
             </Row>
             <Row>
+              <div class="col-md-6 order-2">
               <Link
                 to="/trips"
                 className="btn btn-primary"
@@ -195,10 +194,9 @@ function Features() {
               >
                 Add your travel details systematically!
               </Link>
-              <div class="col-md-6">
-                <Image src={trips}></Image>
+                <Trips />
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 order-1">
                 <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
                   Track all your past trips and add/update your present ones.
                   Save all your travel experiences, share it with others and
@@ -207,6 +205,7 @@ function Features() {
               </div>
             </Row>
             <Row>
+              <div class="col-md-6 order-2">
               <Link
                 to="/expensetracker"
                 className="btn btn-primary"
@@ -220,7 +219,6 @@ function Features() {
               >
                 Track your expenses!
               </Link>
-              <div class="col-md-6">
                 <p style={{ padding: "1rem", fontSize: "1.1rem" }}>
                   Going on a trip for leisure? Oo yes then definitely you will
                   be spending a lot of money on stay, travelling, shopping and
@@ -233,8 +231,8 @@ function Features() {
                   on the current one.
                 </p>
               </div>
-              <div class="col-md-6">
-                <Image src={et}></Image>
+              <div class="col-md-6 order-1">
+                <Expense />
               </div>
             </Row>
           </Container>
