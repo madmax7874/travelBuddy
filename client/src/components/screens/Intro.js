@@ -134,8 +134,7 @@ function Intro() {
             text={texts[textIndex % texts.length]}
             style={{ margin: "0px 4px" }}
             inline
-          />{" "}
-         with us!
+          />{" "}with us!
         </h3>
       </div>
     );
