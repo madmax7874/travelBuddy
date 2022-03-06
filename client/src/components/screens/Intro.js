@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ReactTextTransition from "react-text-transition";
+import React from "react";
 import Particles from "react-tsparticles";
-
-const texts = ["Memorable", "GREAT", "JOYFUL", "PLEASANT", "DELIGHTFUL"];
+import IntroText from "./IntroText";
 
 const intro = {
   background:" rgb(20,24,80)",
@@ -16,20 +14,12 @@ const intro = {
 };
 
 function Intro() {
-  const [textIndex,setTextIndex] = useState(0);
   const particlesInit = (main) => {
-    console.log(main);
+    // console.log(main);
   };
   const particlesLoaded = (container) => {
-    console.log(container);
+    // console.log(container);
   };
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setTextIndex(textIndex + 1);
-  //   },3000);
-  //   return() => clearInterval(timer);
-  // });
 
     return (
       <div style={intro}>
@@ -128,14 +118,7 @@ function Intro() {
         </h1>
         <br/>
 
-        <h3 style={{ padding: "2rem", color: "rgba(255,255,255,1)" }}>
-          Make your trip{" "}
-          <ReactTextTransition
-            text={texts[textIndex % texts.length]}
-            style={{ margin: "0px 4px" }}
-            inline
-          />{" "}with us!
-        </h3>
+        <IntroText/>
       </div>
     );
   }

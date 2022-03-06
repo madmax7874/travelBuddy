@@ -143,7 +143,7 @@ function AllTrips() {
       );
     } else {
       return (
-        <div style={{ textAlign: "center", margin: "1rem", padding: "0.5rem", textTransform:'capitalize' }}>
+        <div style={{ textAlign: "center", padding: "0.5rem", textTransform:'capitalize' }}>
           <br />
           <Table>
             <thead>
@@ -219,7 +219,7 @@ function AllTrips() {
                 </Form.Group>
               </Col>
               <Col>
-                <div style={{ textAlign: "center", margin:"1rem" }}>
+                <div style={{ textAlign: "center", margin:"2rem" }}>
                   <button
                     className="slide"
                     type="submit"
@@ -233,16 +233,7 @@ function AllTrips() {
           </Form>
 
           <div style={{ textAlign: "center" }}>
-            <span
-              className="text-center mb-4"
-              style={{
-                color: "#141850",
-                fontWeight: "600",
-                fontSize: "2rem",
-              }}
-            >
-              Your Past trips
-            </span>
+            <h3 style={{margin:"1.5rem 1rem 0rem 1rem", color: "#5FA054"}}>Past Trips</h3>
           </div>
           <TripDetails />
         </Container>
