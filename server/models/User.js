@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     },
   }],
   details:[{
+    travelDates: {
+      type: Array,
+      required:true
+    },
     startDate: {
       type: Date,
       required: true,

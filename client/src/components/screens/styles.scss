@@ -188,3 +188,21 @@ h1 {
 .table-borderless th {
     border: 0;
 }
+
+.react-daterange-picker{
+  width:100%
+}
+
+.react-daterange-picker__wrapper{
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.react-daterange-picker__inputGroup{
+  padding: .375rem 0rem;
+  text-align: center;
+}
+
+.react-daterange-picker__button{
+  padding: .375rem 1rem;
+}

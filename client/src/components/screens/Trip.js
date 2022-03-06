@@ -33,8 +33,8 @@ function MyTrip() {
 
       try {
         const { data } = await axios.get(url, config);
-        data.startDate = data.startDate.split("T")[0];
-        data.endDate = data.endDate.split("T")[0];
+        data.travelDates[0] = data.travelDates[0].split("T")[0];
+        data.travelDates[1] = data.travelDates[1].split("T")[0];
         setMyTripDetails(data.perDayDetails);
         setTrip(data);
         setLoading(true);
@@ -139,7 +139,6 @@ function MyTrip() {
           style={{
             padding: "1rem",
             background: "transparent linear-gradient(180deg,#F8CDDA 0%,#1D2B64 100%)",
-            position: "absolute",
             width: "100%",
           }}
         >
@@ -183,8 +182,8 @@ function MyTrip() {
                 Destination : {trip.destination}
               </Card.Title>
               <Card.Body>
-                From : {trip.startDate}
-                <br /> To : {trip.endDate}
+                From : {trip.travelDates[0]}
+                <br /> To : {trip.travelDates[1]}
               </Card.Body>
             </Card>
           </div>

@@ -1,9 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { Form, Table } from "react-bootstrap";
+import { useForm, Controller  } from "react-hook-form";
+import { Container, Form, Table, InputGroup, Col } from "react-bootstrap";
 import { useAlert } from "react-alert";
 import { ClipLoader } from "react-spinners";
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+
 const Swal = require("sweetalert2");
 
 const axios = require("axios");
@@ -11,19 +13,16 @@ const axios = require("axios");
 function AllTrips() {
   const navigate = useNavigate();
   const alert = useAlert();
-  let newDate = new Date()
-  let date = newDate.getDate();
-  let month = newDate.getMonth() + 1;
-  let year = newDate.getFullYear();
-  let currentDate = `${year}-${month<10?`0${month}`:`${month}`}-${date<10?`0${date}`:`${date}`}`
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
-    defaultValues:{
-      start_date: currentDate
-  }});
+    defaultValues: {
+      travelDates: [new Date(), new Date()]
+    },
+  });
 
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -49,6 +48,7 @@ function AllTrips() {
   }, [loading]);
 
   const onSubmit = async (data) => {
+    console.log(data)
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -56,11 +56,7 @@ function AllTrips() {
       },
     };
     try {
-      const response = await axios.post(
-        "/api/private/trips/1",
-        data,
-        config
-      );
+      const response = await axios.post("/api/private/trips/1", data, config);
       if (response.data) {
         alert.show("Trip added!", { type: "success" });
         navigate(`/mytrip/${response.data}`);
@@ -70,7 +66,7 @@ function AllTrips() {
     }
   };
 
-  const deleteTrip = (trip,index) =>{
+  const deleteTrip = (trip, index) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -87,9 +83,9 @@ function AllTrips() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/trips/${trip._id}`
+        const url = `/api/private/trips/${trip._id}`;
         try {
-          const {data} = await axios.delete(url, config);
+          const { data } = await axios.delete(url, config);
           if (data.success) {
             const newTrips = [...trips];
             newTrips.splice(index, 1);
@@ -104,13 +100,13 @@ function AllTrips() {
   };
 
   const TripComponents = trips.map((trip, index) => {
-    trip.startDate = trip.startDate.split("T")[0];
-    trip.endDate = trip.endDate.split("T")[0];
+    trip.travelDates[0] = trip.travelDates[0].split("T")[0];
+    trip.travelDates[1] = trip.travelDates[1].split("T")[0];
     return (
       <tr key={trip._id} index={index} id={trip._id}>
         <td>{trip.destination}</td>
-        <td>{trip.startDate}</td>
-        <td>{trip.endDate}</td>
+        <td>{trip.travelDates[0]}</td>
+        <td>{trip.travelDates[1]}</td>
         <td>
           <Link
             style={{
@@ -127,7 +123,9 @@ function AllTrips() {
               fontWeight: "600",
             }}
             to="#"
-            onClick={() => {deleteTrip(trip,index)}}
+            onClick={() => {
+              deleteTrip(trip, index);
+            }}
           >
             Delete
           </Link>
@@ -145,7 +143,7 @@ function AllTrips() {
       );
     } else {
       return (
-        <div style={{ textAlign: "center", margin: "1rem", padding: "0.5rem" }}>
+        <div style={{ textAlign: "center", margin: "1rem", padding: "0.5rem", textTransform:'capitalize' }}>
           <br />
           <Table>
             <thead>
@@ -166,130 +164,88 @@ function AllTrips() {
   return (
     <Fragment>
       {loading ? (
-        <div className="app">
-          <div style={{ paddingBottom: "0.1rem" }}>
-            <br />
-            <div style={{ textAlign: "center" }}>
-              <span
-                className="text-center mb-4"
-                style={{
-                  fontWeight: "600",
-                  fontSize: "2rem",
-                  color: "#5FA054"
-                }}
-              >
-                Going on a new trip?
-              </span>
-            </div>
-            <Form className="input-form" onSubmit={handleSubmit(onSubmit)} style={{marginTop:"1rem"}}>
-              <div className="row">
-                <div className="col-lg-6">
-                  <Form.Group
-                    controlId="start_date"
-                    style={{ paddingTop: "1rem" }}
-                  >
-                    <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
-                      Start date
-                      <span style={{ color: "#d00000", fontSize: "1.1rem" }}>
-                        *
-                      </span>
-                    </Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="start_date"
-                      placeholder="Enter start date"
-                      autoComplete="off"
-                      {...register("start_date", { required: true })}
-                    />
-                    {errors.start_date && (
-                      <p className="" style={{ color: "#e85d04" }}>
-                        Start Date is required
-                      </p>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-lg-6">
-                  <Form.Group
-                    controlId="end_date"
-                    style={{ paddingTop: "1rem" }}
-                  >
-                    <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
-                      End Date
-                      <span style={{ color: "#d00000", fontSize: "1.1rem" }}>
-                        *
-                      </span>
-                    </Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="end_date"
-                      placeholder="Enter End Date"
-                      autoComplete="off"
-                      {...register("end_date", { required: true })}
-                    />
-                    {errors.end_date && (
-                      <p className="" style={{ color: "#e85d04" }}>
-                        End Date is required
-                      </p>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-lg-12">
-                  <Form.Group
-                    controlId="destination"
-                    style={{ paddingTop: "1rem" }}
-                  >
-                    <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
-                      Destination
-                      <span style={{ color: "#d00000", fontSize: "1.1rem" }}>
-                        *
-                      </span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="destination"
-                      placeholder="Enter Destination"
-                      autoComplete="off"
-                      {...register("destination", { required: true })}
-                    />
-                    {errors.destination && (
-                      <p className="" style={{ color: "#e85d04" }}>
-                        Destination is required
-                      </p>
-                    )}
-                  </Form.Group>
-                </div>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <button
-                  className="slide"
-                  type="submit"
-                  style={{
-                    marginTop: "2rem",
-                    borderRadius: "2rem",
-                  }}
-                >
-                  New trip
-                </button>
-              </div>
-            </Form>
+        <Container>
+          <br />
+          <div style={{ textAlign: "center" }}>
+            <span
+              className="text-center mb-4"
+              style={{
+                fontWeight: "600",
+                fontSize: "2rem",
+                color: "#5FA054",
+              }}
+            >
+              Going on a new trip?
+            </span>
           </div>
-          <div>
-            <br />
-            <div style={{ textAlign: "center" }}>
-              <span
-                className="text-center mb-4"
-                style={{
-                  color: "#141850",
-                  fontWeight: "600",
-                  fontSize: "2rem",
-                }}
-              >
-                Your Past trips
-              </span>
+          <Form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ marginTop: "1rem" }}
+          >
+            <div className="row">
+              <Col md={6} style={{padding:"0rem 1rem"}}>
+                <Form.Group style={{ paddingTop: "1rem" }}>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
+                    Departure - Arrival <span style={{ color: "#d00000", fontSize: "1.1rem" }}>*</span>
+                  </Form.Label>
+                  
+                  <Controller
+                    control={control}
+                    name="travelDates"
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <DateRangePicker onChange={onChange} value={value} style={{padding:"1rem"}} rangeDivider=" to "/>
+                    )}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6} style={{padding:"0rem 1rem"}}>
+                <Form.Group controlId="destination" style={{ paddingTop: "1rem" }}>
+                  <Form.Label style={{ fontWeight: "600", fontSize: "1rem" }}>
+                    Destination <span style={{ color: "#d00000", fontSize: "1.1rem" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    style={{minWidth:"150px", textTransform:'capitalize'}}
+                    type="text"
+                    name="destination"
+                    placeholder="Enter Destination"
+                    autoComplete="off"
+                    {...register("destination", { required: true })}
+                  />
+                  {errors.destination && (
+                    <p className="" style={{ color: "#e85d04" }}>
+                      Destination is required
+                    </p>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                <div style={{ textAlign: "center", margin:"1rem" }}>
+                  <button
+                    className="slide"
+                    type="submit"
+                    style={{ fontSize: "500" }}
+                  >
+                    Add
+                  </button>
+                </div>
+              </Col>
             </div>
-            <TripDetails />
+          </Form>
+
+          <div style={{ textAlign: "center" }}>
+            <span
+              className="text-center mb-4"
+              style={{
+                color: "#141850",
+                fontWeight: "600",
+                fontSize: "2rem",
+              }}
+            >
+              Your Past trips
+            </span>
           </div>
-        </div>
+          <TripDetails />
+        </Container>
       ) : (
         <div style={{ textAlign: "center", paddingTop: "200px" }}>
           <ClipLoader color="#141850" size={70} />

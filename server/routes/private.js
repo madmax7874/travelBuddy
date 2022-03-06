@@ -93,12 +93,11 @@ router.route("/trips/:id")
     try{ 
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const Details = [{
-        startDate: req.body.start_date,
-        endDate: req.body.end_date,
+      const Details = {
+        travelDates: req.body.travelDates,
         destination: req.body.destination,
         perDayDetails : []
-      }]      
+      }     
       const query = { _id: decoded.id };
       const user = await User.findOneAndUpdate(query, { $push : {details : Details }}, {new:true})
       res.status(200).send(user.details[user.details.length-1]._id);
