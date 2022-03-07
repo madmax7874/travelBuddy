@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller  } from "react-hook-form";
-import { Container, Form, Table, InputGroup, Col } from "react-bootstrap";
+import { Container, Form, Table, InputGroup, Col, Card, Button } from "react-bootstrap";
 import { useAlert } from "react-alert";
 import { ClipLoader } from "react-spinners";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import image from "../../assets/image.png"
 
 const Swal = require("sweetalert2");
 
@@ -103,34 +104,53 @@ function AllTrips() {
     trip.travelDates[0] = trip.travelDates[0].split("T")[0];
     trip.travelDates[1] = trip.travelDates[1].split("T")[0];
     return (
-      <tr key={trip._id} index={index} id={trip._id}>
-        <td>{trip.destination}</td>
-        <td>{trip.travelDates[0]}</td>
-        <td>{trip.travelDates[1]}</td>
-        <td>
+      <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={image} />
+        <Card.Body>
+          <Card.Title>{trip.destination}</Card.Title>
+          <Card.Text>{trip.travelDates[0]} to {trip.travelDates[1]}
+          </Card.Text>
+          <Link to={`/mytrips/${trip._id}`}>View</Link>
+          {" "}
           <Link
-            style={{
-              color: "#5FA054",
-              fontWeight: "600",
-            }}
-            to={`/mytrip/${trip._id}`}
-          >
-            View
-          </Link>{" "}
-          <Link
-            style={{
-              color: "#A15447",
-              fontWeight: "600",
-            }}
-            to="#"
+            to="#"     
             onClick={() => {
               deleteTrip(trip, index);
             }}
           >
             Delete
           </Link>
-        </td>
-      </tr>
+        </Card.Body>
+      </Card>
+      
+      // <tr key={trip._id} index={index} id={trip._id}>
+      //   <td>{trip.destination}</td>
+      //   <td>{trip.travelDates[0]}</td>
+      //   <td>{trip.travelDates[1]}</td>
+      //   <td>
+      //     <Link
+      //       style={{
+      //         color: "#5FA054",
+      //         fontWeight: "600",
+      //       }}
+      //       to={`/mytrip/${trip._id}`}
+      //     >
+      //       View
+      //     </Link>{" "}
+      //     <Link
+      //       style={{
+      //         color: "#A15447",
+      //         fontWeight: "600",
+      //       }}
+      //       to="#"     
+      //       onClick={() => {
+      //         deleteTrip(trip, index);
+      //       }}
+      //     >
+      //       Delete
+      //     </Link>
+      //   </td>
+      // </tr>
     );
   });
 
@@ -143,17 +163,17 @@ function AllTrips() {
       );
     } else {
       return (
-        <div style={{ textAlign: "center", padding: "0.5rem", textTransform:'capitalize' }}>
+        <div style={{  padding: "0.5rem", textTransform:'capitalize' }}>
           <br />
           <Table>
-            <thead>
+            {/* <thead>
               <tr>
                 <th>Place</th>
                 <th>Departure</th>
                 <th>Arrival</th>
                 <th>Operation</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>{TripComponents}</tbody>
           </Table>
         </div>
