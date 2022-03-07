@@ -194,12 +194,12 @@ h1 {
 }
 
 .react-daterange-picker__wrapper{
-  border: 1px solid #ced4da;
+  border: 1px solid #ced4da !important;
   border-radius: 0.25rem;
 }
 
 .react-daterange-picker__inputGroup{
-  padding: .375rem 0rem;
+  padding: .375rem 0rem !important;
   text-align: center;
 }
 
