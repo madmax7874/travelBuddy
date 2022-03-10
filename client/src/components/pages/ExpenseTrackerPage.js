@@ -8,7 +8,7 @@ function ExpenseTrackerPage() {
 
 
   return (
-    <div style={{display:"flex",flexDirection:"column", height:"100vh", margin:"0"}}>
+    <div style={{display:"flex",flexDirection:"column", minHeight:"100vh", margin:"0"}}>
       <Head />
       <ExpenseTracker />
       <div style={{  marginTop:"auto" }}>

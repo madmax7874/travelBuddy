@@ -7,6 +7,7 @@ import logo from "../../assets/newlogo.svg";
 const navbar = {
   padding: "0.4rem 1rem",
   fontSize: "1.2rem",
+  backgroundColor:"#fff",
   borderBottom: "1px solid rgba(0,0,0,0.2)"
 };
 
@@ -21,12 +22,13 @@ function Head() {
 
   return localStorage.getItem("authToken") ? (
     <Fragment>
-      <Navbar style={navbar} expand="lg" variant="light">
+      <Navbar style={navbar} expand="lg" variant="light" className="sticky-top">
         <Container>
           <Navbar.Brand>
             <NavLink to="/">
               <Image
                 src={logo}
+                alt="logo"
                 style={{ maxHeight: "5rem", maxWidth: "5rem" }}
               ></Image>
             </NavLink>

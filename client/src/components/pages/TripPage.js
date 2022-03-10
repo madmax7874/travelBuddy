@@ -6,7 +6,7 @@ import Trip from "../screens/Trip";
 
 function TripPage() {
   return (
-    <div style={{display:"flex",flexDirection:"column", height:"100vh", margin:"0"}}>
+    <div style={{display:"flex",flexDirection:"column", minHeight:"100vh", margin:"0"}}>
       <Head />
       <Trip />
       <div style={{  marginTop:"auto" }}>
