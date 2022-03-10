@@ -202,6 +202,7 @@ function DontForgetMe() {
                       padding: "0.5rem 1rem 1rem 1rem",
                     }}
                   >
+                     <Form.Label style={{padding:"0.5rem",fontSize:"1.1rem",fontWeight:"500"}}>Showing: </Form.Label>
                     <select
                       style={
                         filter === "false"
@@ -240,10 +241,11 @@ function DontForgetMe() {
                   <Button
                     variant="danger"
                     type="submit"
+                    disabled={lists.length>0 ? false : true}
                     style={{margin:"0.75rem"}}
                     onClick={() => {clearAll()}}
                     >
-                    Clear All Items
+                    Clear List
                   </Button>
                 </Col>
               </Row>
