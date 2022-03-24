@@ -61,7 +61,7 @@ const Login = () => {
                     <span style={{ color: "#d00000", fontSize: "1rem" }}>*</span>
                   </Form.Label>
                   <Form.Control
-                    type="tel"
+                    type="email"
                     name="email"
                     placeholder="Enter Email"
                     {...register("email", { required: true })}

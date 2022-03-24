@@ -3,7 +3,6 @@ import Particles from "react-tsparticles";
 import IntroText from "./IntroText";
 
 const intro = {
-  background:" rgb(20,24,80)",
   background: "linear-gradient(180deg, rgba(20,24,80,1) 25%, rgba(95,160,84,1) 100%)",
   display: "flex",
   flexDirection:"column",
