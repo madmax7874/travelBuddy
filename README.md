@@ -10,8 +10,3 @@
 * Add travel details
 * View/Delete past trips.
 * Track the expenses.
-### Preview
-![alt text](https://github.com/madmax7874/travelBuddy/blob/main/client/src/assets/screenshots/dontForgetMe.png?raw=true)
-![alt text](https://github.com/madmax7874/travelBuddy/blob/main/client/src/assets/screenshots/expenseTracker.png?raw=true)
-#### Responsiveness
-<img src="https://github.com/madmax7874/travelBuddy/blob/main/client/src/assets/screenshots/home.jpg?raw=true" width="412" height="892"> <img src="https://github.com/madmax7874/travelBuddy/blob/main/client/src/assets/screenshots/myTrip.jpg?raw=true" width="412" height="892">
