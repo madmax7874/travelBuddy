@@ -29,7 +29,7 @@ function MyTrip() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/mytrip/${id}`;
+      const url = `${process.env.REACT_APP_API_URI}api/private/mytrip/${id}`;
 
       try {
         const { data } = await axios.get(url, config);
@@ -63,7 +63,7 @@ function MyTrip() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/mytrip/${id}`;
+      const url = `${process.env.REACT_APP_API_URI}api/private/mytrip/${id}`;
       try {
         const { data } = await axios.post(url, value, config);
         if (data.success) {
@@ -102,7 +102,7 @@ function MyTrip() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/mytrip/${perDayDetail._id}`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/mytrip/${perDayDetail._id}`;
         try {
           const { data } = await axios.delete(url, config);
           if (data.success) {

@@ -38,7 +38,7 @@ function AllTrips() {
       };
 
       try {
-        const { data } = await axios.get("/api/private/trips/1", config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URI}api/private/trips/1`, config);
         setTrips(data);
         setLoading(true);
       } catch (error) {
@@ -57,7 +57,7 @@ function AllTrips() {
       },
     };
     try {
-      const response = await axios.post("/api/private/trips/1", data, config);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}api/private/trips/1`, data, config);
       if (response.data) {
         alert.show("Trip added!", { type: "success" });
         navigate(`/mytrip/${response.data}`);
@@ -84,7 +84,7 @@ function AllTrips() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/trips/${trip._id}`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/trips/${trip._id}`;
         try {
           const { data } = await axios.delete(url, config);
           if (data.success) {

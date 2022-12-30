@@ -31,7 +31,7 @@ const Login = () => {
       },
     };
     try {
-      const response = await axios.post("/api/auth/login", data, config);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}api/auth/login`, data, config);
       localStorage.setItem("authToken", response.data.token);
       navigate("/");
     } catch (error) {

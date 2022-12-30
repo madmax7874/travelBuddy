@@ -41,7 +41,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post("/api/auth/register", data, config);
+      const response = await axios.post(`${process.env.REACT_APP_API_URI}api/auth/register`, data, config);
       if (response.data) {
         localStorage.setItem("authToken", response.data.token);
         navigate("/");

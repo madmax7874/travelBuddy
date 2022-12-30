@@ -23,7 +23,7 @@ function DontForgetMe() {
         },
       };
       try {
-        const { data } = await axios.get("/api/private/list/1", config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URI}api/private/list/1`, config);
         setLists(data);
         setFilteredList(data);
         setLoading(true);
@@ -45,7 +45,7 @@ function DontForgetMe() {
     };
     try {
       const { data } = await axios.post(
-        "/api/private/list/1",
+        `${process.env.REACT_APP_API_URI}api/private/list/1`,
         { value },
         config
       );
@@ -71,7 +71,7 @@ function DontForgetMe() {
       _id: list._id,
       isDone: !list.isDone,
     };
-    const url = `/api/private/list/${list._id}`;
+    const url = `${process.env.REACT_APP_API_URI}api/private/list/${list._id}`;
     try {
       const { data } = await axios.put(url, payload, config);
       if (data.success) {
@@ -102,7 +102,7 @@ function DontForgetMe() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/list/${list._id}`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/list/${list._id}`;
         try {
           const { data } = await axios.delete(url, config);
           if (data.success) {
@@ -135,7 +135,7 @@ function DontForgetMe() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/list/clearingAll`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/list/clearingAll`;
         const { data } = await axios.delete(url, config);
         if (data.success) {
           const newLists = [];

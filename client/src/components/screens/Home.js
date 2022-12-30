@@ -15,7 +15,7 @@ const Home = () => {
       },
     };
     try {
-      await axios.get("/api/private", config);
+      await axios.get(`${process.env.REACT_APP_API_URI}api/private`, config);
     } catch (error) {
       localStorage.removeItem("authToken");
       navigate("/login");

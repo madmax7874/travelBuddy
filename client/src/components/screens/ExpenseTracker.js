@@ -27,7 +27,7 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/expensetracker/1`;
+      const url = `${process.env.REACT_APP_API_URI}api/private/expensetracker/1`;
       try {
         const { data } = await axios.get(url, config);
         setExpenseHistory(data);
@@ -85,7 +85,7 @@ function ExpenseTracker() {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-      const url = `/api/private/expensetracker/1`;
+      const url = `${process.env.REACT_APP_API_URI}api/private/expensetracker/1`;
       const { data } = await axios.post(url, value, config);
       if (data.success) {
         setExpenseHistory([...expenseHistory, data.expense]);
@@ -118,7 +118,7 @@ function ExpenseTracker() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/expensetracker/${expense._id}`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/expensetracker/${expense._id}`;
         const { data } = await axios.delete(url, config);
         if (data.success) {
           const newExpense = [...expenseHistory];
@@ -147,7 +147,7 @@ function ExpenseTracker() {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         };
-        const url = `/api/private/expensetracker/clearingAll`;
+        const url = `${process.env.REACT_APP_API_URI}api/private/expensetracker/clearingAll`;
         const { data } = await axios.delete(url, config);
         if (data.success) {
           const newExpense = [];
