@@ -1,0 +1,38 @@
+.slide:hover {
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+$colors: (
+  slide: #5FA054, 
+);
+
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
+button {  
+  color: var(--color);
+  transition: 0.25s;
+  &:hover { 
+    border-color: var(--hover);
+    color: #fff;
+  }
+}
+
+button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  font-weight: 600;
+  font-size: 18px;
+  // line-height: 1;
+  padding: 0.6rem 1.5rem;
+}
+
+code { 
+  color: #e4cb58;
+  font: inherit;
+}
